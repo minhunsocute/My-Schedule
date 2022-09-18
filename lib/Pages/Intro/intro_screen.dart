@@ -26,25 +26,24 @@ class _IntroScreenState extends State<IntroScreen> {
     var widthDevice = MediaQuery.of(context).size.width;
     List<Widget> listViewIntro = [
       MainPageViewIntro(
+          heightDevice: heightDevice,
+          gifPath: 'assets/images/intro1.png',
+          mainTitle: 'Manage your team & everything with MSchedule',
+          title:
+              'When you ar e overwhelmed by the amount of work you have on yout plate, stop and rethink'),
+      MainPageViewIntro(
         heightDevice: heightDevice,
-        gifPath: 'assets/gift/Workout2.gif',
-        mainTitle: 'Track Your Goal',
+        gifPath: 'assets/images/intro2.png',
+        mainTitle: 'Increase Work Effectiveness',
         title:
-            'Don\'t worry if you have trouble determining your goals. We can help you determine your goals and track your goals',
+            'Time management and the determination of more important tasks will give your job statictics better and always improve',
       ),
       MainPageViewIntro(
         heightDevice: heightDevice,
-        gifPath: 'assets/gift/Workout3.gif',
-        mainTitle: 'Get Burn',
+        gifPath: 'assets/images/intro3.png',
+        mainTitle: 'Reminder Notification',
         title:
-            'Let\'s keep burning, to achive yours goals, it hurts only temporaily, if you give up now you will be in pain forever',
-      ),
-      MainPageViewIntro(
-        heightDevice: heightDevice,
-        gifPath: 'assets/gift/Workout1.gif',
-        mainTitle: 'Eat Well',
-        title:
-            'Let\'t start a healthy lifestyle with us, we can determine your diet every day, healthy eating is fun',
+            'The advantage of this application is that it also provides reminders for you so you don\'t forget to keep doing your assignments well and according to the time you have set',
       ),
     ];
     return Scaffold(
@@ -56,6 +55,40 @@ class _IntroScreenState extends State<IntroScreen> {
           children: [
             const SizedBox(height: 20),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: 30,
+                  height: 30,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Image.asset('assets/images/icon.png'),
+                ),
+                const SizedBox(width: 5),
+                RichText(
+                  text: const TextSpan(
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    children: [
+                      TextSpan(
+                          text: 'Hello, I am ',
+                          style: TextStyle(color: AppColors.textColor)),
+                      TextSpan(
+                        text: 'MSchedule',
+                        style: TextStyle(
+                            color: AppColors.primaryColor,
+                            decoration: TextDecoration.underline),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
@@ -63,7 +96,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   width: 200,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 3,
+                    itemCount: listViewIntro.length,
                     itemBuilder: (context, index) => buildIndicator(
                         _currentIndex == index, MediaQuery.of(context).size),
                   ),
@@ -95,7 +128,7 @@ class _IntroScreenState extends State<IntroScreen> {
               ),
             ),
             ButtonMain(
-                title: 'Let\'s Start',
+                title: (_currentIndex == 2) ? 'Let\'s Start' : 'Next',
                 press: () {
                   setState(() {
                     if (_currentIndex == 0) {
@@ -152,7 +185,16 @@ class MainPageViewIntro extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Spacer(),
-        SizedBox(child: Image.asset(gifPath)),
+        Container(
+          width: 300,
+          height: 300,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(gifPath),
+            ),
+          ),
+        ),
         const Spacer(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -161,7 +203,7 @@ class MainPageViewIntro extends StatelessWidget {
             children: [
               Text(
                 mainTitle,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.textColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -169,10 +211,10 @@ class MainPageViewIntro extends StatelessWidget {
               ),
               Text(
                 title,
-                style: TextStyle(
-                  color: AppColors.textColor,
+                style: const TextStyle(
+                  color: AppColors.textColor1,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 12,
                 ),
               ),
             ],
