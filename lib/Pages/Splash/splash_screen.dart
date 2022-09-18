@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.mainColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,6 +36,7 @@ class SplashScreen extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 23,
+                  fontFamily: 'Montserrat',
                 ),
                 children: [
                   TextSpan(
@@ -44,7 +45,7 @@ class SplashScreen extends StatelessWidget {
                   ),
                   TextSpan(
                     text: 'App',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.textColor),
                   ),
                 ],
               ),
@@ -54,7 +55,7 @@ class SplashScreen extends StatelessWidget {
               'You can easily manage your schedule \nwith MScheudle',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.grey,
+                color: AppColors.textColor1,
                 fontSize: 11,
               ),
             ),

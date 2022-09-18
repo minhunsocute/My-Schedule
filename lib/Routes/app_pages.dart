@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:my_schedule/Pages/Splash/splash_binding.dart';
 import 'package:my_schedule/Routes/route_name.dart';
 
+import '../Pages/Intro/intro_screen.dart';
 import '../Pages/Splash/splash_screen.dart';
 
 class AppPages {
@@ -10,6 +11,10 @@ class AppPages {
       name: RouteNames.splashScreen,
       page: () => SplashScreen(),
       // binding: SplashB(),
-    )
+    ),
+    GetPage(
+      name: RouteNames.introScreen,
+      page: () => const IntroScreen(),
+    ),
   ];
 }
