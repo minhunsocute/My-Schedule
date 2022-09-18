@@ -37,3 +37,5 @@ Tải bản demo của ứng dụng [tại](https://drive.google.com/file/d/1Q6u
 <img width="200" src=".\UI\3.png"></a>
 <img width="200" src=".\UI\4.png"></a>
 
+### Sign In and Sign Up
+<img width="200" src=".\UI\5.png"></a>
