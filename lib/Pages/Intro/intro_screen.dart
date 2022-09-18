@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_schedule/Routes/route_name.dart';
 import 'package:my_schedule/Templates/Misc/color.dart';
+import 'package:my_schedule/Widgets/app_header.dart';
 import 'package:my_schedule/Widgets/button_custom.dart';
 
 //Function page controller
 PageController pageController = PageController(initialPage: 0, keepPage: true);
 void onButtonTape(int index) {
   pageController.animateToPage(index,
-      duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+      duration: const Duration(milliseconds: 600), curve: Curves.fastOutSlowIn);
 //  pageController.jumpToPage(index);
 }
 
@@ -54,39 +57,7 @@ class _IntroScreenState extends State<IntroScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: 30,
-                  height: 30,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Image.asset('assets/images/icon.png'),
-                ),
-                const SizedBox(width: 5),
-                RichText(
-                  text: const TextSpan(
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                    children: [
-                      TextSpan(
-                          text: 'Hello, I am ',
-                          style: TextStyle(color: AppColors.textColor)),
-                      TextSpan(
-                        text: 'MSchedule',
-                        style: TextStyle(
-                            color: AppColors.primaryColor,
-                            decoration: TextDecoration.underline),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            const AppHeader(),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,7 +73,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Get.toNamed(RouteNames.signInScreen),
                   child: const Text(
                     'Skip',
                     style: TextStyle(
@@ -135,7 +106,9 @@ class _IntroScreenState extends State<IntroScreen> {
                       onButtonTape(1);
                     } else if (_currentIndex == 1) {
                       onButtonTape(2);
-                    } else {}
+                    } else {
+                      Get.toNamed(RouteNames.signInScreen);
+                    }
                   });
                 }),
             const SizedBox(height: 20),
