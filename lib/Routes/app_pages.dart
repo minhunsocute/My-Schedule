@@ -4,7 +4,6 @@ import 'package:my_schedule/Pages/Splash/splash_binding.dart';
 import 'package:my_schedule/Routes/route_name.dart';
 
 import '../Pages/Intro/intro_screen.dart';
-import '../Pages/Sign_up_in/sign_in_binding.dart';
 import '../Pages/Splash/splash_screen.dart';
 
 class AppPages {
@@ -21,7 +20,7 @@ class AppPages {
     GetPage(
       name: RouteNames.signInScreen,
       page: () => SignInScreen(),
-      binding: SignInB(),
+      // binding: SignInB(),
     ),
   ];
 }

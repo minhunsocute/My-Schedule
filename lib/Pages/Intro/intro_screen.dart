@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_schedule/Pages/Sign_up_in/screen/sign_in_screen.dart';
 import 'package:my_schedule/Routes/route_name.dart';
 import 'package:my_schedule/Templates/Misc/color.dart';
 import 'package:my_schedule/Widgets/app_header.dart';
@@ -107,7 +108,12 @@ class _IntroScreenState extends State<IntroScreen> {
                     } else if (_currentIndex == 1) {
                       onButtonTape(2);
                     } else {
-                      Get.toNamed(RouteNames.signInScreen);
+                      Get.to(
+                        () => SignInScreen(),
+                        transition: Transition.rightToLeft,
+                        duration: const Duration(milliseconds: 300),
+                      );
+                      // Get.toNamed(RouteNames.signInScreen);
                     }
                   });
                 }),
@@ -169,29 +175,26 @@ class MainPageViewIntro extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                mainTitle,
-                style: const TextStyle(
-                  color: AppColors.textColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              mainTitle,
+              style: const TextStyle(
+                color: AppColors.textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: AppColors.textColor1,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                ),
+            ),
+            Text(
+              title,
+              style: const TextStyle(
+                color: AppColors.textColor1,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         SizedBox(
           height: heightDevice / 20,
