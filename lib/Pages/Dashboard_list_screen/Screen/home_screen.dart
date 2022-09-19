@@ -374,6 +374,7 @@ class AllScehduleCard extends StatelessWidget {
         color: Colors.grey.withOpacity(0.1),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
