@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:my_schedule/Pages/Sign_up_in/screen/forgot_password_screen.dart';
 import 'package:my_schedule/Pages/Sign_up_in/screen/sign_up_screen.dart';
 import 'package:my_schedule/Widgets/button_custom.dart';
 
@@ -74,7 +75,7 @@ class SignInScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () async => await showCupertinoModalBottomSheet(
                   context: context,
-                  builder: (context) => ,
+                  builder: (context) => ForgotPasswordScreen(),
                 ),
                 child: const Text('Forgot Password?',
                     style: TextStyle(
