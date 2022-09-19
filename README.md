@@ -39,3 +39,12 @@ Tải bản demo của ứng dụng [tại](https://drive.google.com/file/d/1Q6u
 
 ### Sign In and Sign Up
 <img width="200" src=".\UI\5.png"></a>
+<img width="200" src=".\UI\6.png"></a>
+<img width="200" src=".\UI\9.png"></a>
+
+### Home Screen
+
+<img width="200" src=".\UI\7.png"></a>
+<img width="200" src=".\UI\8.png"></a>
+
+
