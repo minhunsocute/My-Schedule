@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:my_schedule/Pages/Dashboard_list_screen/Screen/dashboard_screen.dart';
 import 'package:my_schedule/Pages/Sign_up_in/screen/sign_in_screen.dart';
 import 'package:my_schedule/Pages/Splash/splash_binding.dart';
 import 'package:my_schedule/Routes/route_name.dart';
 
+import '../Pages/Dashboard_list_screen/Binding/dashboard_binding.dart';
 import '../Pages/Intro/intro_screen.dart';
 import '../Pages/Splash/splash_screen.dart';
 
@@ -21,6 +23,11 @@ class AppPages {
       name: RouteNames.signInScreen,
       page: () => SignInScreen(),
       // binding: SignInB(),
+    ),
+    GetPage(
+      name: RouteNames.dashBoardScreen,
+      page: () => DashBoardScreen(),
+      binding: DashBoardB(),
     ),
   ];
 }

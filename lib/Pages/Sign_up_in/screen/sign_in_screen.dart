@@ -5,6 +5,7 @@ import 'package:my_schedule/Pages/Sign_up_in/screen/forgot_password_screen.dart'
 import 'package:my_schedule/Pages/Sign_up_in/screen/sign_up_screen.dart';
 import 'package:my_schedule/Widgets/button_custom.dart';
 
+import '../../../Routes/route_name.dart';
 import '../../../Templates/Misc/color.dart';
 import '../../../Widgets/app_header.dart';
 import '../../../Widgets/text_filed_custom.dart';
@@ -68,7 +69,9 @@ class SignInScreen extends StatelessWidget {
               hintText: 'Password',
             ),
             const SizedBox(height: 20),
-            ButtonMain(title: 'Logn In', press: () {}),
+            ButtonMain(
+                title: 'Logn In',
+                press: () => Get.toNamed(RouteNames.dashBoardScreen)),
             const SizedBox(height: 10),
             Align(
               alignment: Alignment.center,
