@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../Templates/Misc/color.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+
+import '../../Sign_up_in/screen/forgot_password_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -47,7 +50,56 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: () {},
+                    onTap: () async => await showCupertinoModalBottomSheet(
+                      context: context,
+                      builder: (context) => Scaffold(
+                        appBar: AppBar(
+                          centerTitle: true,
+                          title: const Text(
+                            'ToDay Schedule',
+                            style: TextStyle(
+                              color: AppColors.textColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          leading: InkWell(
+                            onTap: () => Navigator.pop(context),
+                            child: const Icon(
+                              Icons.close,
+                              color: Colors.white,
+                            ),
+                          ),
+                          elevation: 0,
+                          backgroundColor: AppColors.mainColor,
+                        ),
+                        backgroundColor: AppColors.mainColor,
+                        body: ListView(
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          children: [
+                            AllScehduleCard(
+                              time: DateTime.now(),
+                              mainTitle: 'Grocert shopping add design',
+                              title: 'Marget Research',
+                              type: 1,
+                            ),
+                            AllScehduleCard(
+                              time: DateTime.now(),
+                              title: 'Create Low-fidelity Wireframe',
+                              mainTitle: 'Uber Eats redesign challange',
+                              type: 0,
+                            ),
+                            AllScehduleCard(
+                              time: DateTime.now(),
+                              title: 'How to picth a Design Sprint',
+                              mainTitle: 'About design sprint',
+                              type: 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     child: const Text(
                       'See More',
                       style: TextStyle(color: AppColors.textColor1),
@@ -294,6 +346,112 @@ class HomeScreen extends StatelessWidget {
           height: 25,
         ),
       ],
+    );
+  }
+}
+
+class AllScehduleCard extends StatelessWidget {
+  const AllScehduleCard({
+    Key? key,
+    required this.mainTitle,
+    required this.title,
+    required this.type,
+    required this.time,
+  }) : super(key: key);
+  final String mainTitle;
+  final String title;
+  final int type;
+  final DateTime time;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.grey.withOpacity(0.1),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                mainTitle,
+                style: const TextStyle(
+                  color: AppColors.textColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.primaryColor1.withOpacity(0.2)),
+                child: const Icon(
+                  Icons.work,
+                  color: AppColors.primaryColor1,
+                  size: 20,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            title,
+            style: const TextStyle(
+                color: AppColors.textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 18),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              const Icon(Icons.timelapse_outlined,
+                  color: AppColors.primaryColor),
+              Text(
+                ' ${DateFormat().add_jm().format(time)}',
+                style: const TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: type == 0
+                      ? Colors.blue.withOpacity(0.2)
+                      : type == 1
+                          ? Colors.orange.withOpacity(0.2)
+                          : Colors.purple.withOpacity(0.2),
+                ),
+                child: Text(
+                  type == 0
+                      ? 'To-do'
+                      : type == 1
+                          ? 'In Progress'
+                          : 'Done',
+                  style: TextStyle(
+                      color: type == 0
+                          ? Colors.blue
+                          : type == 1
+                              ? Colors.orange
+                              : Colors.purple,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
