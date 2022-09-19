@@ -59,7 +59,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.grey.withOpacity(0.2),
+          color: Colors.grey.withOpacity(0.3),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),

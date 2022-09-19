@@ -62,8 +62,8 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Today Deadline',
                     style: TextStyle(
                       color: AppColors.textColor,
@@ -71,7 +71,26 @@ class HomeScreen extends StatelessWidget {
                       fontSize: 17,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(5),
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      width: 70,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: AppColors.primaryColor.withOpacity(0.8)),
+                      child: const Text(
+                        'All',
+                        style: TextStyle(
+                            color: AppColors.textColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -147,7 +166,7 @@ class HomeScreen extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: (widthDevice - 80) / 2,
+            width: (widthDevice - 80) / 2 + 20,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -156,49 +175,23 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(color: AppColors.textColor),
                 ),
                 const SizedBox(height: 40),
-                Container(
-                  height: 30,
-                  width: 101,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: AppColors.primaryColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.2),
-                        offset: const Offset(2, 3),
-                        blurRadius: 2,
+                Row(
+                  children: const [
+                    Icon(Icons.task, color: AppColors.primaryColor),
+                    Text(
+                      ' Schedule Done: ',
+                      style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.bold,
                       ),
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.2),
-                        offset: const Offset(-2, -3),
-                        blurRadius: 2,
-                      )
-                    ],
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      // ignore: deprecated_member_use
-                      primary: Colors.transparent,
-                      shadowColor: Colors.transparent,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          'View Task',
-                          style: TextStyle(
-                            color: AppColors.textColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      '3/8',
+                      style: TextStyle(
+                          color: AppColors.textColor,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
