@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:intl/intl.dart';
 import '../../../Templates/Misc/color.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
               child: Row(
                 children: [
                   const Text(
-                    'In Progress',
+                    'Today Schedule',
                     style: TextStyle(
                       color: AppColors.textColor,
                       fontWeight: FontWeight.bold,
@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            inProgressField(),
+            toDayScheduleField(),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -75,42 +75,35 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: AppColors.textColor1.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.primaryColor.withOpacity(0.2),
-                          ),
-                          child: SvgPicture.asset('assets/icons/Message.svg',
-                              color: AppColors.primaryColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            const SizedBox(height: 10),
+            todayDeadlineField(widthDevice),
           ],
         ),
       ),
     );
   }
 
-  SizedBox inProgressField() {
+  Padding todayDeadlineField(double widthDevice) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          DeadlineProjectCard(
+            mainTitle: 'CSC002 Project',
+            percent: 0.8,
+            deadTime: DateTime.now(),
+          ),
+          DeadlineExerciseCard(
+            mainTitle: 'CSC002 Project',
+            checkComplete: true,
+            deadTime: DateTime.now(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  SizedBox toDayScheduleField() {
     return SizedBox(
       width: double.infinity,
       height: 150,
@@ -120,76 +113,24 @@ class HomeScreen extends StatelessWidget {
           parent: AlwaysScrollableScrollPhysics(),
         ),
         children: [
-          for (int i = 0; i < 5; i++)
-            Container(
-              margin: const EdgeInsets.only(left: 20),
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              width: 250,
-              decoration: BoxDecoration(
-                color: (i % 3 == 0)
-                    ? AppColors.primaryColor.withOpacity(0.2)
-                    : (i % 2 == 0)
-                        ? AppColors.primaryColor1
-                        : AppColors.primaryColor2.withOpacity(0.6),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Office Project',
-                            style: TextStyle(color: AppColors.textColor),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.primaryColor.withOpacity(0.2)),
-                            child: Image.asset(
-                              'assets/images/gmail.png',
-                              height: 15,
-                              width: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Grocery shopping app design',
-                        style: TextStyle(
-                          color: AppColors.textColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ]),
-                  ),
-                  const Spacer(),
-                  LinearPercentIndicator(
-                    lineHeight: 15,
-                    percent: 0.5,
-                    backgroundColor: (i % 3 == 0)
-                        ? AppColors.primaryColor.withOpacity(0.05)
-                        : (i % 2 == 0)
-                            ? AppColors.primaryColor1.withOpacity(0.5)
-                            : AppColors.primaryColor2.withOpacity(0.1),
-                    progressColor: (i % 3 == 0)
-                        ? AppColors.primaryColor
-                        : (i % 2 == 0)
-                            ? AppColors.primaryColor1
-                            : AppColors.primaryColor2,
-                    animation: true,
-                    animationDuration: 1000,
-                    barRadius: const Radius.circular(20),
-                  ),
-                ],
-              ),
-            ),
+          ScheduleCard(
+            date: DateTime.now(),
+            mainTitle: 'Grocert shopping add design',
+            title: 'Marget Research',
+            type: 1,
+          ),
+          ScheduleCard(
+            date: DateTime.now(),
+            title: 'Create Low-fidelity Wireframe',
+            mainTitle: 'Uber Eats redesign challange',
+            type: 0,
+          ),
+          ScheduleCard(
+            date: DateTime.now(),
+            title: 'How to picth a Design Sprint',
+            mainTitle: 'About design sprint',
+            type: 2,
+          ),
         ],
       ),
     );
@@ -360,6 +301,356 @@ class HomeScreen extends StatelessWidget {
           height: 25,
         ),
       ],
+    );
+  }
+}
+
+class ScheduleCard extends StatelessWidget {
+  const ScheduleCard({
+    Key? key,
+    required this.date,
+    required this.title,
+    required this.mainTitle,
+    required this.type,
+  }) : super(key: key);
+
+  final DateTime date;
+  final String title;
+  final String mainTitle;
+  final int type; // 0: to-do , 1: In Progress, 2: Done
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      width: 250,
+      decoration: BoxDecoration(
+        color: (type == 0)
+            ? AppColors.primaryColor.withOpacity(0.2)
+            : (type == 1)
+                ? AppColors.primaryColor1
+                : AppColors.primaryColor2.withOpacity(0.6),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 180,
+                    child: Text(
+                      mainTitle,
+                      overflow: TextOverflow.fade,
+                      style: const TextStyle(
+                        color: AppColors.textColor,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor.withOpacity(0.2)),
+                    child: Image.asset(
+                      'assets/images/gmail.png',
+                      height: 15,
+                      width: 15,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                title,
+                style: const TextStyle(
+                  color: AppColors.textColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                ),
+              ),
+            ]),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                Icon(Icons.access_time_filled_outlined,
+                    color: (type == 0)
+                        ? AppColors.primaryColor
+                        : (type == 1)
+                            ? AppColors.primaryColor1
+                            : AppColors.primaryColor2),
+                Text(
+                  ' ${DateFormat().add_jm().format(date)}',
+                  overflow: TextOverflow.fade,
+                  style:
+                      const TextStyle(color: AppColors.textColor, fontSize: 12),
+                ),
+                const Spacer(),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: (type == 0)
+                          ? AppColors.primaryColor.withOpacity(0.3)
+                          : (type == 1)
+                              ? AppColors.primaryColor1.withOpacity(0.3)
+                              : AppColors.primaryColor2.withOpacity(0.3)),
+                  child: Text(
+                    type == 0
+                        ? 'To-do'
+                        : type == 1
+                            ? 'In Progress'
+                            : 'Done',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: (type == 0)
+                          ? AppColors.primaryColor
+                          : (type == 1)
+                              ? AppColors.primaryColor1
+                              : AppColors.primaryColor2,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DeadlineExerciseCard extends StatelessWidget {
+  const DeadlineExerciseCard({
+    Key? key,
+    required this.mainTitle,
+    required this.checkComplete,
+    required this.deadTime,
+  }) : super(key: key);
+  final String mainTitle;
+  final bool checkComplete;
+  final DateTime deadTime;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColors.textColor1.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    mainTitle,
+                    style: const TextStyle(
+                      color: AppColors.textColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Icon(Icons.access_time_filled_sharp,
+                          color: Colors.red.withOpacity(0.5)),
+                      Text(
+                        ' ${DateFormat().add_MMMEd().format(deadTime)} / ${DateFormat().add_jm().format(deadTime)}',
+                        overflow: TextOverflow.fade,
+                        style: const TextStyle(
+                            color: AppColors.textColor1, fontSize: 12),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: (checkComplete)
+                      ? Colors.green.withOpacity(0.4)
+                      : Colors.red.withOpacity(0.4),
+                  border: Border.all(
+                    width: 1,
+                    color: (checkComplete) ? Colors.green : Colors.red,
+                  ),
+                ),
+                child: Text(
+                  (checkComplete) ? 'Done' : 'Undone',
+                  style: TextStyle(
+                    color: (checkComplete) ? Colors.green : Colors.red,
+                    fontSize: 11,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DeadlineProjectCard extends StatelessWidget {
+  const DeadlineProjectCard({
+    Key? key,
+    required this.mainTitle,
+    required this.percent,
+    required this.deadTime,
+  }) : super(key: key);
+  final String mainTitle;
+  final double percent;
+  final DateTime deadTime;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColors.textColor1.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                mainTitle,
+                style: const TextStyle(
+                  color: AppColors.textColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: (percent >= 1)
+                      ? Colors.green.withOpacity(0.4)
+                      : Colors.red.withOpacity(0.4),
+                  border: Border.all(
+                    width: 1,
+                    color: (percent >= 1) ? Colors.green : Colors.red,
+                  ),
+                ),
+                child: Text(
+                  (percent >= 1) ? 'Done' : 'Undone',
+                  style: TextStyle(
+                    color: (percent >= 1) ? Colors.green : Colors.red,
+                    fontSize: 11,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              SizedBox(
+                width: (MediaQuery.of(context).size.width - 40) / 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Team members',
+                      style: TextStyle(
+                        color: AppColors.textColor1,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        for (int i = 0; i < 3; i++)
+                          Container(
+                            width: 20,
+                            height: 20,
+                            margin: const EdgeInsets.only(right: 10),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/hoang.png'),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      children: [
+                        Icon(Icons.access_time_filled_sharp,
+                            color: Colors.red.withOpacity(0.5)),
+                        Text(
+                          ' ${DateFormat().add_MMMEd().format(deadTime)} / ${DateFormat().add_jm().format(deadTime)}',
+                          overflow: TextOverflow.fade,
+                          style: const TextStyle(
+                              color: AppColors.textColor1, fontSize: 12),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: CircularPercentIndicator(
+                      center: Text(
+                        '${(percent * 100).round()}%',
+                        style: const TextStyle(
+                          color: AppColors.primaryColor1,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                      animation: true,
+                      animationDuration: 600,
+                      circularStrokeCap: CircularStrokeCap.round,
+                      radius: 30,
+                      lineWidth: 3.0,
+                      percent: percent,
+                      backgroundColor: (percent < 1)
+                          ? AppColors.primaryColor1.withOpacity(0.1)
+                          : Colors.green.withOpacity(0.1),
+                      progressColor: (percent < 1)
+                          ? AppColors.primaryColor1
+                          : Colors.green,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 }
