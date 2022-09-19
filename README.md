@@ -1,16 +1,41 @@
-# my_schedule
+# MSchedule
+![tag](https://img.shields.io/badge/-workout-F44336)
+![tag](https://img.shields.io/badge/-fitness-F44336)
+![os](https://img.shields.io/badge/-android-32DE84)
+![framework](https://img.shields.io/badge/-dart-2196F3)
+![framework](https://img.shields.io/badge/-flutter-2196F3)
 
-A new Flutter project.
+<br>
 
-## Getting Started
+<p align="center">
+ <img src="./assets/images/icon.png" alt="ViPT Logo" height = "400"></a>
+</p>
+<p align="center">
+<b>MSchedule App</b>
+<br/>
+</p>
 
-This project is a starting point for a Flutter application.
+## 📄 Giới thiệu
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 💻 Công nghệ 
+* Ngôn ngữ: Dart
+* Framework: Flutter
+* Database: Firebase
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 👨‍💻 Người thực hiện
+* Nguyễn Minh Hưng: 20120491
+
+## 🔧 Cài đặt
+Tải bản demo của ứng dụng [tại](https://drive.google.com/file/d/1Q6uHuzpmWjfTnLM8-9dGC-BUri70H-Wr/view?usp=sharing)
+
+## 📱 GIao diện
+
+### Splash and Intro UI
+<img width="200" src=".\UI\1.png"></a>
+<img width="200" src=".\UI\2.png"></a>
+<img width="200" src=".\UI\3.png"></a>
+<img width="200" src=".\UI\4.png"></a>
+
+### Sign In and Sign Up
+<img width="200" src=".\UI\5.png"></a>
