@@ -1,3 +1,4 @@
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:my_schedule/Routes/app_pages.dart';
@@ -12,17 +13,20 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'Montserrat',
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return CalendarControllerProvider(
+      controller: EventController(),
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          fontFamily: 'Montserrat',
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        initialRoute: RouteNames.splashScreen,
+        getPages: AppPages.pages,
+        defaultTransition: Transition.cupertino,
       ),
-      initialRoute: RouteNames.splashScreen,
-      getPages: AppPages.pages,
-      defaultTransition: Transition.cupertino,
     );
   }
 }

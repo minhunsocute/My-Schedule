@@ -7,6 +7,9 @@ import '../../../Templates/Misc/color.dart';
 class CalenderScreen extends StatelessWidget {
   CalenderScreen({super.key});
   RxInt select = 0.obs;
+  String convertTime(int value) {
+    return '${value >= 12 ? value - 12 : value}:00 ${value >= 12 ? 'PM' : 'AM'}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class CalenderScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: const Text(
-          'Todays Task',
+          'Todays Schedule',
           style: TextStyle(
             color: AppColors.textColor,
             fontSize: 17,
@@ -122,6 +125,34 @@ class CalenderScreen extends StatelessWidget {
                 child: Container(height: 1, color: AppColors.primaryColor),
               ),
             ],
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            height: 1500,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 3,
+                  child: Column(
+                    children: [
+                      for (int i = 0; i < 24; i++)
+                        Container(
+                          height: 60,
+                          alignment: Alignment.center,
+                          child: Text(
+                            convertTime(i),
+                            style: const TextStyle(
+                              color: AppColors.textColor1,
+                              fontSize: 12,
+                            ),
+                          ),
+                        )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
