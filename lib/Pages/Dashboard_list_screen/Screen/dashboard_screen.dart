@@ -4,6 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../Templates/Misc/color.dart';
 import '../Controller/dashboard_controller.dart';
+import 'calender_screen.dart';
 import 'home_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
 
   final List<Widget> listPage = [
     const HomeScreen(),
-    const HomeScreen(),
+    CalenderScreen(),
     const HomeScreen(),
     const HomeScreen(),
   ];
