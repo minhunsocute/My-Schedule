@@ -26,9 +26,14 @@ int checkDateBetween(DateTime start, DateTime end) {
   return 1;
 }
 
+List<Widget> pagesTest = [
+  TodaysTaskScreen(),
+  TodayScheduleScreen(),
+];
+
 class CalenderScreen extends StatelessWidget {
   CalenderScreen({super.key});
-
+  RxInt check = 0.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +53,9 @@ class CalenderScreen extends StatelessWidget {
         ),
         leading: InkWell(
           borderRadius: BorderRadius.circular(50),
-          onTap: () {},
+          onTap: () {
+            check.value = 1 - check.value;
+          },
           child: const Icon(
             Icons.change_circle,
             color: AppColors.primaryColor,
@@ -69,7 +76,9 @@ class CalenderScreen extends StatelessWidget {
           const SizedBox(width: 20),
         ],
       ),
-      body: TodaysTaskScreen(),
+      body: Obx(
+        () => pagesTest[check.value],
+      ),
     );
   }
 }
