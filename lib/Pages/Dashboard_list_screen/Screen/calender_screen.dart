@@ -213,13 +213,31 @@ class _TodaysTaskScreenState extends State<TodaysTaskScreen> {
         const SizedBox(height: 20),
         Column(
           children: [
-            TaskCard(
+            TaskProjectCard(
               mainTitle: 'Windows Development',
               title: 'My Schedule App Project',
               members: 3,
               time: DateTime.now(),
               percent: 0.9,
               type: 0,
+            ),
+            TaskExerciseCard(
+              mainTitle: 'Windows Development',
+              title: 'My Schedule App Project',
+              time: DateTime.now(),
+              type: 0,
+            ),
+            TaskExerciseCard(
+              mainTitle: 'Windows Development',
+              title: 'My Schedule App Project',
+              time: DateTime.now(),
+              type: 1,
+            ),
+            TaskExerciseCard(
+              mainTitle: 'Windows Development',
+              title: 'My Schedule App Project',
+              time: DateTime.now(),
+              type: 2,
             ),
           ],
         )
@@ -228,8 +246,129 @@ class _TodaysTaskScreenState extends State<TodaysTaskScreen> {
   }
 }
 
-class TaskCard extends StatelessWidget {
-  const TaskCard({
+class TaskExerciseCard extends StatelessWidget {
+  const TaskExerciseCard({
+    Key? key,
+    required this.mainTitle,
+    required this.title,
+    required this.type,
+    required this.time,
+  }) : super(key: key);
+  final String mainTitle;
+  final String title;
+  final int type;
+  final DateTime time;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                mainTitle,
+                style: const TextStyle(
+                  color: AppColors.textColor1,
+                  fontSize: 12,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor2.withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Icon(
+                  Icons.person,
+                  color: AppColors.primaryColor2,
+                  size: 18,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: AppColors.textColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Icon(Icons.timelapse_outlined, color: Colors.red, size: 18),
+              Text(
+                ' ${DateFormat().add_jm().format(time)}',
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+              const Spacer(),
+              CheckContainer(type: type),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class CheckContainer extends StatelessWidget {
+  const CheckContainer({
+    Key? key,
+    required this.type,
+  }) : super(key: key);
+
+  final int type;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: type == 0
+            ? Colors.blue.withOpacity(0.2)
+            : type == 1
+                ? Colors.orange.withOpacity(0.2)
+                : Colors.purple.withOpacity(0.2),
+      ),
+      child: Text(
+        type == 0
+            ? 'To-do'
+            : type == 1
+                ? 'In Progress'
+                : 'Done',
+        style: TextStyle(
+            color: type == 0
+                ? Colors.blue
+                : type == 1
+                    ? Colors.orange
+                    : Colors.purple,
+            fontSize: 12,
+            fontWeight: FontWeight.w400),
+      ),
+    );
+  }
+}
+
+class TaskProjectCard extends StatelessWidget {
+  const TaskProjectCard({
     Key? key,
     required this.mainTitle,
     required this.title,
@@ -249,7 +388,7 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.grey.withOpacity(0.4),
@@ -378,33 +517,7 @@ class TaskCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: type == 0
-                      ? Colors.blue.withOpacity(0.2)
-                      : type == 1
-                          ? Colors.orange.withOpacity(0.2)
-                          : Colors.purple.withOpacity(0.2),
-                ),
-                child: Text(
-                  type == 0
-                      ? 'To-do'
-                      : type == 1
-                          ? 'In Progress'
-                          : 'Done',
-                  style: TextStyle(
-                      color: type == 0
-                          ? Colors.blue
-                          : type == 1
-                              ? Colors.orange
-                              : Colors.purple,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400),
-                ),
-              ),
+              CheckContainer(type: type),
             ],
           )
         ],
