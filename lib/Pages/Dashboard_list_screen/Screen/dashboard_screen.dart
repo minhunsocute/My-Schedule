@@ -78,7 +78,10 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             tabBackgroundColor: Colors.grey.withOpacity(0.2),
             tabBorderRadius: 5,
             textStyle: const TextStyle(
-                fontWeight: FontWeight.bold, color: AppColors.primaryColor),
+              fontWeight: FontWeight.bold,
+              color: AppColors.primaryColor,
+              fontFamily: 'Montserrat',
+            ),
             tabs: const [
               GButton(
                 icon: Icons.home,

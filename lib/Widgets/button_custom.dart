@@ -40,6 +40,7 @@ class ButtonMain extends StatelessWidget {
         child: Text(
           title,
           style: const TextStyle(
+            fontFamily: 'Montserrat',
             color: AppColors.textColor,
             fontWeight: FontWeight.bold,
             fontSize: 18,

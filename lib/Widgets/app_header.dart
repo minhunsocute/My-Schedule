@@ -24,14 +24,19 @@ class AppHeader extends StatelessWidget {
         const SizedBox(width: 5),
         RichText(
           text: const TextSpan(
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.bold,
+                fontSize: 14),
             children: [
               TextSpan(
                   text: 'Hello, I am ',
-                  style: TextStyle(color: AppColors.textColor)),
+                  style: TextStyle(
+                      fontFamily: 'Montserrat', color: AppColors.textColor)),
               TextSpan(
                 text: 'MSchedule',
                 style: TextStyle(
+                    fontFamily: 'Montserrat',
                     color: AppColors.primaryColor,
                     decoration: TextDecoration.underline),
               )

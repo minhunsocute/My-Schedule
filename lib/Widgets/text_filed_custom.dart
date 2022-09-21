@@ -62,6 +62,7 @@ class _PasswordFieldCustomState extends State<PasswordFieldCustom> {
               obscureText: checkShow,
               controller: widget.controller,
               style: const TextStyle(
+                fontFamily: 'Montserrat',
                 color: AppColors.textColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 13,
@@ -70,6 +71,7 @@ class _PasswordFieldCustomState extends State<PasswordFieldCustom> {
                 border: InputBorder.none,
                 hintText: widget.hintText,
                 hintStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
                   color: AppColors.textColor1,
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
@@ -127,6 +129,7 @@ class TextFieldCustom extends StatelessWidget {
             child: TextFormField(
               controller: controller,
               style: const TextStyle(
+                fontFamily: 'Montserrat',
                 color: AppColors.textColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 13,
@@ -135,6 +138,7 @@ class TextFieldCustom extends StatelessWidget {
                 border: InputBorder.none,
                 hintText: hintText,
                 hintStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
                   color: AppColors.textColor1,
                   fontWeight: FontWeight.bold,
                   fontSize: 13,

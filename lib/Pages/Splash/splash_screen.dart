@@ -41,11 +41,14 @@ class SplashScreen extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: 'MSchedule ',
-                    style: TextStyle(color: AppColors.primaryColor),
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: AppColors.primaryColor),
                   ),
                   TextSpan(
                     text: 'App',
-                    style: TextStyle(color: AppColors.textColor),
+                    style: TextStyle(
+                        fontFamily: 'Montserrat', color: AppColors.textColor),
                   ),
                 ],
               ),
@@ -55,6 +58,7 @@ class SplashScreen extends StatelessWidget {
               'You can easily manage your schedule \nwith MScheudle',
               textAlign: TextAlign.center,
               style: TextStyle(
+                fontFamily: 'Montserrat',
                 color: AppColors.textColor1,
                 fontSize: 11,
               ),
