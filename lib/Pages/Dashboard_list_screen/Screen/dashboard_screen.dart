@@ -17,7 +17,7 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen>
     with SingleTickerProviderStateMixin {
   final _dashBoardScreenC = Get.find<DashBoardC>();
-  final Duration animDuration = const Duration(seconds: 2);
+  // final Duration animDuration = const Duration(seconds: 2);
   bool isLoading = false;
 
   final List<Widget> listPage = [
@@ -45,17 +45,18 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.mainColor,
-      body: FutureBuilder(
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              return snapshot.data as Widget;
-            }
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
-        future: refreshPage(),
-      ),
+      body: listPage[_dashBoardScreenC.tabIndex.value],
+      //  FutureBuilder(
+      //   builder: (context, snapshot) {
+      //     if (snapshot.connectionState == ConnectionState.done) {
+      //       if (snapshot.hasData) {
+      //         return snapshot.data as Widget;
+      //       }
+      //     }
+      //     return const Center(child: CircularProgressIndicator());
+      //   },
+      //   // future: refreshPage(),
+      // ),
       bottomNavigationBar: Container(
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
