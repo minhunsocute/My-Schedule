@@ -13,6 +13,7 @@ import 'today_task_screen.dart';
 List<Widget> pagesTest = [
   TodaysTaskScreen(),
   TodayScheduleScreen(),
+  const EventsScreen(),
 ];
 
 class CalenderScreen extends StatelessWidget {
@@ -38,7 +39,11 @@ class CalenderScreen extends StatelessWidget {
         leading: InkWell(
           borderRadius: BorderRadius.circular(50),
           onTap: () {
-            check.value = 1 - check.value;
+            check.value == 0
+                ? check.value = 1
+                : check.value == 1
+                    ? check.value = 2
+                    : check.value = 0;
           },
           child: const Icon(
             Icons.change_circle,
@@ -60,10 +65,9 @@ class CalenderScreen extends StatelessWidget {
           const SizedBox(width: 20),
         ],
       ),
-      body: EventsScreen(),
-      // Obx(
-      //   () => pagesTest[check.value],
-      // ),
+      body: Obx(
+        () => pagesTest[check.value],
+      ),
     );
   }
 }

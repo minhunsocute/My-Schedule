@@ -325,7 +325,7 @@ class EventRPCard extends StatelessWidget {
                   color: AppColors.primaryColor1, size: 18),
               Text(
                 ' ${data.location}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.textColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
