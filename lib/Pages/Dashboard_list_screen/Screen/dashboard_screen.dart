@@ -19,6 +19,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   final _dashBoardScreenC = Get.find<DashBoardC>();
   // final Duration animDuration = const Duration(seconds: 2);
   bool isLoading = false;
+  late PageController _pageController = PageController();
 
   final List<Widget> listPage = [
     const HomeScreen(),
@@ -26,13 +27,27 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     const HomeScreen(),
     const HomeScreen(),
   ];
+  int _page = 0;
 
   bool isPressButton = false;
 
-  Future<Widget> refreshPage() async {
-    final result =
-        await Future<Widget>.value(listPage[_dashBoardScreenC.tabIndex.value]);
-    return result;
+  // Future<Widget> refreshPage() async {
+  //   final result =
+  //       await Future<Widget>.value(listPage[_dashBoardScreenC.tabIndex.value]);
+  //   return result;
+  // }
+
+  void NavigatorTapped(int val) {
+    _pageController.jumpToPage(val);
+    setState(() {
+      _page = val;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
   }
 
   @override
@@ -45,7 +60,16 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.mainColor,
-      body: listPage[_dashBoardScreenC.tabIndex.value],
+      body: PageView(
+        controller: _pageController,
+        children: [
+          const HomeScreen(),
+          CalenderScreen(),
+          const HomeScreen(),
+          const HomeScreen(),
+        ],
+      ),
+
       //  FutureBuilder(
       //   builder: (context, snapshot) {
       //     if (snapshot.connectionState == ConnectionState.done) {
@@ -67,9 +91,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           child: GNav(
             onTabChange: (value) {
-              setState(() {
-                _dashBoardScreenC.tabIndex.value = value;
-              });
+              NavigatorTapped(value);
             },
             color: Colors.black,
             activeColor: AppColors.primaryColor,
