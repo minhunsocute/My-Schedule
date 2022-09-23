@@ -163,6 +163,7 @@ class HomeScreen extends StatelessWidget {
             mainTitle: 'CSC002 Project',
             percent: 0.8,
             deadTime: DateTime.now(),
+            press: () {},
           ),
           DeadlineExerciseCard(
             mainTitle: 'CSC002 Project',
@@ -669,141 +670,170 @@ class DeadlineProjectCard extends StatelessWidget {
     required this.mainTitle,
     required this.percent,
     required this.deadTime,
+    required this.press,
   }) : super(key: key);
   final String mainTitle;
   final double percent;
   final DateTime deadTime;
+  final Function() press;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.textColor1.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                mainTitle,
-                style: const TextStyle(
-                  color: AppColors.textColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
-              ),
-              const Spacer(),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: (percent >= 1)
-                      ? Colors.green.withOpacity(0.4)
-                      : Colors.red.withOpacity(0.4),
-                  border: Border.all(
-                    width: 1,
-                    color: (percent >= 1) ? Colors.green : Colors.red,
+    return InkWell(
+      onTap: press,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(20),
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: AppColors.textColor1.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  mainTitle,
+                  style: const TextStyle(
+                    color: AppColors.textColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
                   ),
                 ),
-                child: Text(
-                  (percent >= 1) ? 'Done' : 'Undone',
-                  style: TextStyle(
-                    color: (percent >= 1) ? Colors.green : Colors.red,
-                    fontSize: 11,
+                const Spacer(),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: (percent >= 1)
+                        ? Colors.green.withOpacity(0.4)
+                        : Colors.red.withOpacity(0.4),
+                    border: Border.all(
+                      width: 1,
+                      color: (percent >= 1) ? Colors.green : Colors.red,
+                    ),
+                  ),
+                  child: Text(
+                    (percent >= 1) ? 'Done' : 'Undone',
+                    style: TextStyle(
+                      color: (percent >= 1) ? Colors.green : Colors.red,
+                      fontSize: 11,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              SizedBox(
-                width: (MediaQuery.of(context).size.width - 40) / 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Team members',
-                      style: TextStyle(
-                        color: AppColors.textColor1,
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        for (int i = 0; i < 3; i++)
-                          Container(
-                            width: 20,
-                            height: 20,
-                            margin: const EdgeInsets.only(right: 10),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/hoang.png'),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Icon(Icons.access_time_filled_sharp,
-                            color: Colors.red.withOpacity(0.5)),
-                        Text(
-                          ' ${DateFormat().add_MMMEd().format(deadTime)} / ${DateFormat().add_jm().format(deadTime)}',
-                          overflow: TextOverflow.fade,
-                          style: const TextStyle(
-                              color: AppColors.textColor1, fontSize: 12),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: CircularPercentIndicator(
-                      center: Text(
-                        '${(percent * 100).round()}%',
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                SizedBox(
+                  width: (MediaQuery.of(context).size.width - 40) / 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Team members',
                         style: TextStyle(
-                          color: percent >= 1
-                              ? Colors.green
-                              : AppColors.primaryColor1,
-                          fontWeight: FontWeight.bold,
+                          color: AppColors.textColor1,
                           fontSize: 12,
                         ),
                       ),
-                      animation: true,
-                      animationDuration: 600,
-                      circularStrokeCap: CircularStrokeCap.round,
-                      radius: 30,
-                      lineWidth: 3.0,
-                      percent: percent,
-                      backgroundColor: (percent < 1)
-                          ? AppColors.primaryColor1.withOpacity(0.1)
-                          : Colors.green.withOpacity(0.1),
-                      progressColor: (percent < 1)
-                          ? AppColors.primaryColor1
-                          : Colors.green,
-                    ),
+                      const SizedBox(height: 10),
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Stack(
+                            children: [
+                              for (int i = 1; i <= 3; i++)
+                                Container(
+                                  width: 22,
+                                  height: 22,
+                                  margin: EdgeInsets.only(left: (14 * i) * 1.0),
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image:
+                                          AssetImage('assets/images/hoang.png'),
+                                    ),
+                                  ),
+                                ),
+                              Container(
+                                  width: 22,
+                                  height: 22,
+                                  alignment: Alignment.center,
+                                  margin: const EdgeInsets.only(
+                                      left: (14 * 4) * 1.0),
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppColors.textColor1,
+                                  ),
+                                  child: const Text(
+                                    '+2',
+                                    style: TextStyle(
+                                      color: AppColors.textColor,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )),
+                            ],
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Icon(Icons.access_time_filled_sharp,
+                              color: Colors.red.withOpacity(0.5)),
+                          Text(
+                            ' ${DateFormat().add_MMMEd().format(deadTime)} / ${DateFormat().add_jm().format(deadTime)}',
+                            overflow: TextOverflow.fade,
+                            style: const TextStyle(
+                                color: AppColors.textColor1, fontSize: 12),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              )
-            ],
-          )
-        ],
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: CircularPercentIndicator(
+                        center: Text(
+                          '${(percent * 100).round()}%',
+                          style: TextStyle(
+                            color: percent >= 1
+                                ? Colors.green
+                                : AppColors.primaryColor1,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                        animation: true,
+                        animationDuration: 600,
+                        circularStrokeCap: CircularStrokeCap.round,
+                        radius: 30,
+                        lineWidth: 3.0,
+                        percent: percent,
+                        backgroundColor: (percent < 1)
+                            ? AppColors.primaryColor1.withOpacity(0.1)
+                            : Colors.green.withOpacity(0.1),
+                        progressColor: (percent < 1)
+                            ? AppColors.primaryColor1
+                            : Colors.green,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

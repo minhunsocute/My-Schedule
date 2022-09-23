@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:my_schedule/Pages/Today_deadline/Screen/view_project_screen.dart';
+import 'package:my_schedule/Pages/Project_manage/screen/project_manage_screen.dart';
 import 'package:my_schedule/Pages/Today_deadline/Widgets/task_exercise_card.dart';
 import 'package:my_schedule/Pages/Today_deadline/Widgets/task_project_card.dart';
 
@@ -156,7 +156,7 @@ class _TodaysTaskScreenState extends State<TodaysTaskScreen> {
               type: 0,
               press: () {
                 Get.to(
-                  () => ViewProjectScreen(),
+                  () => const ProjectManageScreen(),
                   transition: Transition.downToUp,
                 );
               },

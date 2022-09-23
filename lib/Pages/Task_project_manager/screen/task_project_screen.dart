@@ -2,15 +2,17 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:my_schedule/Routes/route_name.dart';
 import 'package:my_schedule/Templates/Misc/color.dart';
 
 import '../../../Templates/fake_data.dart';
 import '../../Dashboard_list_screen/Screen/home_screen.dart';
+import '../../Project_manage/screen/project_manage_screen.dart';
 
 class TaskProjectScreen extends StatelessWidget {
   TaskProjectScreen({super.key});
   RxInt touchedIndex = (-1).obs;
-  RxInt select = 1.obs;
+  RxInt select = 0.obs;
 
   List<Widget> listPage = [
     ProjectField(),
@@ -453,16 +455,21 @@ class ProjectField extends StatelessWidget {
             mainTitle: 'CSC002 Project',
             percent: 0.8,
             deadTime: DateTime.now(),
+            press: () {
+              Get.to(ProjectManageScreen(), transition: Transition.downToUp);
+            },
           ),
           DeadlineProjectCard(
             mainTitle: 'CSC002 Project',
             percent: 1,
             deadTime: DateTime.now(),
+            press: () {},
           ),
           DeadlineProjectCard(
             mainTitle: 'CSC002 Project',
             percent: 0.8,
             deadTime: DateTime.now(),
+            press: () {},
           ),
         ],
       ),
