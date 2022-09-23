@@ -456,7 +456,8 @@ class ProjectField extends StatelessWidget {
             percent: 0.8,
             deadTime: DateTime.now(),
             press: () {
-              Get.to(ProjectManageScreen(), transition: Transition.downToUp);
+              Get.to(() => ProjectManageScreen(),
+                  transition: Transition.downToUp);
             },
           ),
           DeadlineProjectCard(
