@@ -55,3 +55,35 @@ List<String> listMainTitle = [
   'Working time',
   'Learning time',
 ];
+
+class Data {
+  final String name;
+  final double percents;
+  final Color color;
+  final String imagePath;
+  Data(
+      {required this.imagePath,
+      required this.name,
+      required this.percents,
+      required this.color});
+}
+
+List<Data> data = [
+  Data(
+      name: 'now',
+      percents: (30.1 / 80.1 * 100).round().toDouble(),
+      color: AppColors.primaryColor,
+      imagePath: 'assets/images/work-process.png'),
+  Data(
+    name: '',
+    percents: (20 / 80.1 * 100).round().toDouble(),
+    color: AppColors.primaryColor1,
+    imagePath: 'assets/images/to-do-list.png',
+  ),
+  Data(
+    name: '',
+    percents: (30 / 80.1 * 100).round().toDouble(),
+    color: AppColors.primaryColor2,
+    imagePath: 'assets/images/checked.png',
+  ),
+];

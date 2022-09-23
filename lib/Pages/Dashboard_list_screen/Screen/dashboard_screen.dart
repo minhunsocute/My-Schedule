@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:my_schedule/Pages/Task_project_manager/screen/task_project_screen.dart';
 
 import '../../../Templates/Misc/color.dart';
 import '../Controller/dashboard_controller.dart';
@@ -65,7 +66,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         children: [
           const HomeScreen(),
           CalenderScreen(),
-          const HomeScreen(),
+          TaskProjectScreen(),
           const HomeScreen(),
         ],
       ),
@@ -85,7 +86,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.grey.withOpacity(0.3),
+          border: Border.all(width: 1, color: Colors.grey),
+          color: Colors.black,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
@@ -116,8 +118,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 iconColor: Colors.white,
               ),
               GButton(
-                icon: Icons.confirmation_num,
-                text: 'Money',
+                icon: Icons.task,
+                text: 'Task',
                 iconColor: Colors.white,
               ),
               GButton(

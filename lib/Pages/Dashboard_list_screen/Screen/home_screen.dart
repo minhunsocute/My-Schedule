@@ -777,8 +777,10 @@ class DeadlineProjectCard extends StatelessWidget {
                     child: CircularPercentIndicator(
                       center: Text(
                         '${(percent * 100).round()}%',
-                        style: const TextStyle(
-                          color: AppColors.primaryColor1,
+                        style: TextStyle(
+                          color: percent >= 1
+                              ? Colors.green
+                              : AppColors.primaryColor1,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:my_schedule/Pages/Dashboard_list_screen/Screen/widgets/task_exercise_card.dart';
-import 'package:my_schedule/Pages/Dashboard_list_screen/Screen/widgets/task_project_card.dart';
+import 'package:my_schedule/Pages/Today_deadline/Screen/view_project_screen.dart';
+import 'package:my_schedule/Pages/Today_deadline/Widgets/task_exercise_card.dart';
+import 'package:my_schedule/Pages/Today_deadline/Widgets/task_project_card.dart';
 
 import '../../../Templates/Misc/color.dart';
 import '../../../Widgets/pub_dev/calender_setup.dart';
@@ -153,6 +154,12 @@ class _TodaysTaskScreenState extends State<TodaysTaskScreen> {
               time: DateTime.now(),
               percent: 0.9,
               type: 0,
+              press: () {
+                Get.to(
+                  () => ViewProjectScreen(),
+                  transition: Transition.downToUp,
+                );
+              },
             ),
             TaskExerciseCard(
               mainTitle: 'Windows Development',

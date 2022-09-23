@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../Templates/Misc/color.dart';
-import '../../../../Widgets/check_container.dart';
+import '../../../Templates/Misc/color.dart';
+import '../../../Widgets/check_container.dart';
 
 class TaskExerciseCard extends StatelessWidget {
   const TaskExerciseCard({

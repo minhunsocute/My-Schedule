@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:my_schedule/Pages/Dashboard_list_screen/Screen/today_schedule_screen.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-
 import '../../../Templates/Misc/color.dart';
-import '../../../Templates/fake_data.dart';
-import '../../../Widgets/pub_dev/calender_setup.dart';
 import 'all_events_screen.dart';
-import 'today_task_screen.dart';
+import '../../Today_deadline/Screen/today_deadline_screen.dart';
 
 List<Widget> pagesTest = [
   TodaysTaskScreen(),
   TodayScheduleScreen(),
   const EventsScreen(),
+];
+List<String> pagesText = [
+  'Todays Deadline',
+  'Todays Schedule',
+  'All Events',
 ];
 
 class CalenderScreen extends StatelessWidget {
@@ -28,14 +28,9 @@ class CalenderScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: const Text(
-          'All Events',
-          style: TextStyle(
-            color: AppColors.textColor,
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: Obx(() => Text(pagesText[check.value],
+            style: const TextStyle(
+                color: AppColors.textColor, fontWeight: FontWeight.bold))),
         leading: InkWell(
           borderRadius: BorderRadius.circular(50),
           onTap: () {
