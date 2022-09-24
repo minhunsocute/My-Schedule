@@ -2,11 +2,15 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:my_schedule/Pages/Profile/screen/profile_screen.dart';
 import 'package:my_schedule/Widgets/check_container.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../../Templates/Misc/color.dart';
 import '../../../Widgets/List_chart/column_chart_2_column.dart';
+import '../../Profile/screen/profile_dif_screen.dart';
+import '../../Task_project_manager/screen/task_project_screen.dart';
 
 class ProjectManageScreen extends StatelessWidget {
   const ProjectManageScreen({super.key});
@@ -382,7 +386,61 @@ class ProjectManageScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 InkWell(
-                  onTap: () {},
+                  onTap: () async => await showCupertinoModalBottomSheet(
+                    context: context,
+                    builder: (context) => Scaffold(
+                      appBar: AppBar(
+                        centerTitle: true,
+                        title: const Text(
+                          'My Task',
+                          style: TextStyle(
+                            color: AppColors.textColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        leading: InkWell(
+                          onTap: () => Navigator.pop(context),
+                          child: const Icon(
+                            Icons.close,
+                            color: Colors.white,
+                          ),
+                        ),
+                        elevation: 0,
+                        backgroundColor: AppColors.mainColor,
+                      ),
+                      backgroundColor: AppColors.mainColor,
+                      body: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ListView(
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          children: [
+                            TaskCard(
+                              type: 2,
+                              title: 'Meeting UI/UX',
+                              date: DateTime.now(),
+                            ),
+                            TaskCard(
+                              type: 0,
+                              title: 'Meeting UI/UX',
+                              date: DateTime.now(),
+                            ),
+                            TaskCard(
+                              type: 1,
+                              title: 'Meeting UI/UX',
+                              date: DateTime.now(),
+                            ),
+                            TaskCard(
+                              type: 2,
+                              title: 'Meeting UI/UX',
+                              date: DateTime.now(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                   child: const Text(
                     'My Task',
                     style: TextStyle(
@@ -557,7 +615,10 @@ class ProjectManageScreen extends StatelessWidget {
                     name: e['name'],
                     imagePath: e['imagePath'],
                     type: e['type'],
-                    press: () {},
+                    press: () => Get.to(
+                      () => const ProfileDiffScreen(),
+                      transition: Transition.rightToLeft,
+                    ),
                   ),
                 ),
               ],
