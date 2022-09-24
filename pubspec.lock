@@ -97,6 +97,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  flutter_heatmap_calendar:
+    dependency: "direct main"
+    description:
+      name: flutter_heatmap_calendar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -130,6 +137,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.6"
+  heatmap_calendar:
+    dependency: "direct main"
+    description:
+      name: heatmap_calendar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.8"
   intl:
     dependency: "direct main"
     description:

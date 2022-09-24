@@ -49,6 +49,8 @@ dependencies:
   flutter_advanced_calendar: ^1.2.0
   table_calendar: ^3.0.0  
   fl_chart: ^0.55.1
+  flutter_heatmap_calendar: ^1.0.5
+  heatmap_calendar: ^1.2.8
 
 dev_dependencies:
   flutter_test:
