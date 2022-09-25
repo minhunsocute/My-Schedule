@@ -616,7 +616,7 @@ class ProjectManageScreen extends StatelessWidget {
                     imagePath: e['imagePath'],
                     type: e['type'],
                     press: () => Get.to(
-                      () => const ProfileDiffScreen(),
+                      () => ProfileDiffScreen(),
                       transition: Transition.rightToLeft,
                     ),
                   ),
