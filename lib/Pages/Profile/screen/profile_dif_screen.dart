@@ -7,6 +7,85 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 class ProfileDiffScreen extends StatelessWidget {
   ProfileDiffScreen({super.key});
   DateRangePickerController dateController = DateRangePickerController();
+  List<Map<String, dynamic>> fakeDataCommit = [
+    {
+      'time': DateTime.now().subtract(const Duration(days: 8)),
+      'commit': 2,
+    },
+    {
+      'time': DateTime.now().subtract(const Duration(days: 7)),
+      'commit': 2,
+    },
+    {
+      'time': DateTime.now(),
+      'commit': 2,
+    },
+    {
+      'time': DateTime.now().subtract(const Duration(days: 2)),
+      'commit': 2,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 20)),
+      'commit': 2,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 1)),
+      'commit': 15,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 2)),
+      'commit': 6,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 3)),
+      'commit': 7,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 4)),
+      'commit': 3,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 5)),
+      'commit': 4,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 6)),
+      'commit': 10,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 88)),
+      'commit': 18,
+    }
+  ];
+  DateTime timeTemp = DateTime.now().subtract(const Duration(days: 10));
+  List<DateTime> listDateTime = [
+    for (int i = 0; i < 100; i++)
+      DateTime.now().subtract(const Duration(days: 10)).add(Duration(days: i))
+  ];
+  int checkConstainInList(DateTime time) {
+    for (var item in fakeDataCommit) {
+      if (time.day == item['time'].day &&
+          time.month == item['time'].month &&
+          time.year == item['time'].year) {
+        return item['commit'];
+      }
+    }
+    return -1;
+  }
+
+  int get maxList => fakeDataCommit.fold<int>(
+      0, (max, e) => e['commit'] > max ? e['commit'] : max);
+  int getStart() {
+    int count = 0;
+    for (var item in listDateTime) {
+      if (item.weekday != 1) {
+        count++;
+      } else {
+        break;
+      }
+    }
+    return count;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,67 +151,135 @@ class ProfileDiffScreen extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 140,
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 30,
-                          height: 140,
-                          child: Column(
-                            children: [
-                              ...weekDays.map(
-                                (e) => Expanded(
-                                  child: Text(
-                                    e,
-                                    style: const TextStyle(
-                                      color: AppColors.textColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 11,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics(),
-                            ),
-                            children: [
-                              for (int i = 0; i < 20; i++)
-                                Column(
-                                  children: [
-                                    for (int i = 0; i < 7; i++)
-                                      Expanded(
-                                        child: Container(
-                                          height: 15,
-                                          width: 15,
-                                          margin: const EdgeInsets.all(2),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(2),
-                                            color: AppColors.textColor1
-                                                .withOpacity(0.2),
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  )
+                  gitHubCommitField()
                 ],
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  SizedBox gitHubCommitField() {
+    return SizedBox(
+      width: double.infinity,
+      height: 140,
+      child: Row(
+        children: [
+          SizedBox(
+            width: 30,
+            height: 140,
+            child: Column(
+              children: [
+                ...weekDays.map(
+                  (e) => Expanded(
+                    child: Text(
+                      e,
+                      style: const TextStyle(
+                        color: AppColors.textColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
+              children: middleGithubField(getStart(), maxList),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  List<Widget> middleGithubField(int middleData, int maxOfList) {
+    int middle = ((listDateTime.length - middleData) / 7).floor();
+
+    return [
+      Column(
+        children: [
+          for (int i = 1; i <= 7; i++) startContainerGit(i, maxOfList),
+        ],
+      ),
+      for (int i = 0; i < middle; i++)
+        Column(
+          children: [
+            for (int j = 0; j < 7; j++)
+              middleContainerGIt(middleData, i, j, maxOfList),
+          ],
+        ),
+      Column(
+        children: [
+          for (int i = 0;
+              i <
+                  (listDateTime.length - middleData) -
+                      ((listDateTime.length - middleData) / 7).floor() * 7;
+              i++)
+            endContainerGit(middle, i, middleData, maxOfList),
+        ],
+      )
+    ];
+  }
+
+  Expanded startContainerGit(int i, int maxList) {
+    int check = 0;
+    if (i >= listDateTime[0].weekday) {
+      check = checkConstainInList(listDateTime[i - listDateTime[0].weekday]);
+    }
+    return Expanded(
+      child: Container(
+        height: 15,
+        width: 15,
+        margin: const EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(2),
+          color: (i >= listDateTime[0].weekday)
+              ? (check > 0)
+                  ? AppColors.primaryColor.withOpacity(check / maxList)
+                  : AppColors.textColor1.withOpacity(0.2)
+              : Colors.transparent,
+        ),
+      ),
+    );
+  }
+
+  Container endContainerGit(int middle, int i, int middleData, int maxOfList) {
+    int check =
+        (checkConstainInList(listDateTime[middle * 7 + i + middleData]));
+    return Container(
+      height: 16,
+      width: 16,
+      margin: const EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(2),
+        color: (check > 0)
+            ? AppColors.primaryColor.withOpacity(check / maxOfList)
+            : AppColors.textColor1.withOpacity(0.2),
+      ),
+    );
+  }
+
+  Expanded middleContainerGIt(int middleData, int i, int j, int maxOfList) {
+    int check = checkConstainInList(listDateTime[middleData + 7 * i + j]);
+    return Expanded(
+      child: Container(
+        height: 15,
+        width: 15,
+        margin: const EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(2),
+          color: (check > 0)
+              ? AppColors.primaryColor.withOpacity(check / maxOfList)
+              : AppColors.textColor1.withOpacity(0.2),
         ),
       ),
     );
@@ -362,22 +509,25 @@ class ProfileDiffScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         child: Container(
           padding: const EdgeInsets.all(10),
-          height: 430,
+          height: 400,
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: AppColors.mainColor,
+            border: Border.all(width: 2, color: AppColors.textColor1),
           ),
           child: Column(
             children: [
-              Card(
-                elevation: 2,
+              Container(
+                color: AppColors.mainColor,
+                // elevation: 2,
                 child: SfDateRangePicker(
-                  selectionTextStyle:
-                      const TextStyle(fontWeight: FontWeight.bold),
+                  selectionTextStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                   rangeTextStyle: const TextStyle(fontWeight: FontWeight.bold),
                   headerStyle: const DateRangePickerHeaderStyle(
-                    backgroundColor: AppColors.primaryColor1,
+                    backgroundColor: AppColors.primaryColor,
                     textStyle: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -388,45 +538,77 @@ class ProfileDiffScreen extends StatelessWidget {
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
                     ),
+                    todayTextStyle: TextStyle(
+                      color: AppColors.textColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    // weekendTextStyle: TextStyle(
+                    //   color: AppColors.textColor,
+                    //   fontWeight: FontWeight.bold,
+                    // ),
                   ),
-                  selectionColor: AppColors.primaryColor1,
-                  rangeSelectionColor: AppColors.primaryColor1,
-                  todayHighlightColor: AppColors.primaryColor1,
+                  selectionColor: AppColors.primaryColor,
+                  rangeSelectionColor: AppColors.primaryColor,
+                  todayHighlightColor: AppColors.primaryColor,
+                  startRangeSelectionColor: AppColors.primaryColor,
+                  endRangeSelectionColor: AppColors.primaryColor,
+                  // selectionRadius: 20,
                   controller: dateController,
                   view: DateRangePickerView.month,
                   selectionMode: DateRangePickerSelectionMode.range,
                   // onSelectionChanged: controller.selectionChanged,
                   monthViewSettings: const DateRangePickerMonthViewSettings(
-                      enableSwipeSelection: false),
+                    enableSwipeSelection: false,
+                  ),
                 ),
               ),
               const Spacer(),
-              Container(
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: AppColors.primaryColor,
-                ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    color: AppColors.mainColor,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        // ignore: deprecated_member_use
+                        primary: Colors.transparent,
+                        shadowColor: Colors.transparent,
                       ),
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent),
-                  child: const Text(
-                    'Done',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      onPressed: () {},
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        child: const Text(
+                          'Cancle',
+                          style: TextStyle(
+                            color: AppColors.textColor1,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Container(
+                    color: AppColors.mainColor,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        // ignore: deprecated_member_use
+                        primary: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                      ),
+                      onPressed: () {},
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        child: const Text(
+                          'Done',
+                          style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -436,15 +618,7 @@ class ProfileDiffScreen extends StatelessWidget {
   }
 }
 
-List<String> weekDays = [
-  'Sun',
-  'Mon',
-  'Tue',
-  'Wed',
-  'Thu',
-  'Fri',
-  'Sat',
-];
+List<String> weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 class Over extends StatelessWidget {
   const Over({
