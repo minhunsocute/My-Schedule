@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:my_schedule/Templates/Misc/color.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+
+import '../../../Widgets/task_card.dart';
+import '../../../Widgets/task_control.dart';
 
 class ProfileDiffScreen extends StatelessWidget {
   ProfileDiffScreen({super.key});
   DateRangePickerController dateController = DateRangePickerController();
+  RxInt select = 0.obs;
+
   List<Map<String, dynamic>> fakeDataCommit = [
     {
       'time': DateTime.now().subtract(const Duration(days: 8)),
@@ -93,6 +100,10 @@ class ProfileDiffScreen extends StatelessWidget {
     var widthDevice = MediaQuery.of(context).size.width;
     DateRangePickerController dateController = DateRangePickerController();
 
+    List<Widget> listPage = [
+      projectField(),
+      taskField(),
+    ];
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       extendBody: true,
@@ -154,10 +165,267 @@ class ProfileDiffScreen extends StatelessWidget {
                   gitHubCommitField()
                 ],
               ),
-            )
+            ),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Contribution activity',
+                  style: TextStyle(
+                    color: AppColors.textColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  contributionAcitvityField(DateTime.now()),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Obx(
+                () => Align(
+                  alignment: Alignment.centerLeft,
+                  child: TabControl(
+                    check: select.value,
+                    control1: {
+                      'title': 'Project',
+                      'press': () {
+                        select.value = 0;
+                      },
+                    },
+                    control2: {
+                      'title': 'Task',
+                      'press': () {
+                        select.value = 1;
+                      },
+                    },
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Obx(
+              () => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: listPage[select.value],
+              ),
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
+    );
+  }
+
+  Widget projectField() {
+    return Column(
+      children: [
+        for (int i = 0; i < 3; i++)
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              border: Border.all(width: 2, color: AppColors.textColor1),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.laptop_chromebook_outlined,
+                        color: AppColors.primaryColor),
+                    const Text(
+                      ' Gold Health',
+                      style: TextStyle(
+                          color: AppColors.textColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () {},
+                      child: const Icon(Icons.more_horiz,
+                          color: AppColors.textColor),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                const Text(
+                  'No description provided',
+                  style: TextStyle(color: AppColors.textColor1, fontSize: 12),
+                ),
+                Row(
+                  children: const [
+                    Icon(Icons.star_border, color: AppColors.primaryColor1),
+                    Text(
+                      ' 2 people',
+                      style: TextStyle(
+                          color: AppColors.textColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget taskField() {
+    return Column(
+      children: [
+        for (int i = 0; i < 3; i++)
+          TaskCard(
+            type: 2,
+            title: 'Meeting UI/UX',
+            date: DateTime.now(),
+          ),
+      ],
+    );
+  }
+
+  Widget contributionAcitvityField(DateTime time) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              '${DateFormat().add_MMM().format(time)} ${time.year} ',
+              style: const TextStyle(
+                  color: AppColors.textColor,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12),
+            ),
+            Expanded(
+              child: Container(height: 0.5, color: AppColors.textColor1),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            Column(
+              children: [
+                Container(
+                  width: 2,
+                  height: 10,
+                  color: AppColors.textColor1.withOpacity(0.5),
+                ),
+                Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    color: AppColors.textColor1.withOpacity(0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.publish,
+                    color: AppColors.textColor1.withOpacity(0.5),
+                    size: 12,
+                  ),
+                ),
+                Container(
+                  width: 2,
+                  height: 5,
+                  color: AppColors.textColor1.withOpacity(0.5),
+                )
+              ],
+            ),
+            const SizedBox(width: 10),
+            const Text(
+              'Created 1 commit in 1 repository',
+              style: TextStyle(
+                color: AppColors.textColor,
+                fontSize: 14,
+              ),
+            ),
+            const Spacer(),
+            InkWell(
+              onTap: () {},
+              child: const Icon(Icons.more_vert, color: AppColors.textColor),
+            ),
+          ],
+        ),
+        for (int i = 0; i < 2; i++)
+          SizedBox(
+            // color: Colors.red,
+            height: 50,
+            width: double.infinity,
+            // padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: 2,
+                  height: 50,
+                  margin: const EdgeInsets.only(left: 9),
+                  color: AppColors.textColor1.withOpacity(0.5),
+                ),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 190,
+                          child: Text(
+                            'minhunsocute/GHealth',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: AppColors.primaryColor1.withOpacity(1),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        // const Spacer(),
+                        SizedBox(
+                          width: 100,
+                          height: 10,
+                          child: LinearPercentIndicator(
+                            lineHeight: 20,
+                            percent: 0.4,
+                            progressColor: AppColors.primaryColor,
+                            backgroundColor: Colors.grey.withOpacity(0.2),
+                            animation: true,
+                            animationDuration: 1000,
+                            barRadius: const Radius.circular(20),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 2),
+                    const Text(
+                      '155 commits',
+                      style: TextStyle(
+                        color: AppColors.textColor1,
+                        fontSize: 12,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+      ],
     );
   }
 
@@ -670,15 +938,12 @@ class Over extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ConstrainedBox(
-                      constraints: BoxConstraints(minHeight: heightDevice),
-                      child: Container(
-                          width: double.maxFinite,
-                          decoration: const BoxDecoration(
-                            color: AppColors.mainColor,
-                          ),
-                          child: listView),
-                    )
+                    Container(
+                        width: double.maxFinite,
+                        decoration: const BoxDecoration(
+                          color: AppColors.mainColor,
+                        ),
+                        child: listView)
                   ],
                 )
               ],

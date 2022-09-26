@@ -9,6 +9,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../../Templates/Misc/color.dart';
 import '../../../Widgets/List_chart/column_chart_2_column.dart';
+import '../../../Widgets/task_card.dart';
 import '../../Profile/screen/profile_dif_screen.dart';
 import '../../Task_project_manager/screen/task_project_screen.dart';
 

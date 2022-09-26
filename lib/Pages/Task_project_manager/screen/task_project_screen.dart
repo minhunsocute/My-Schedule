@@ -6,6 +6,8 @@ import 'package:my_schedule/Routes/route_name.dart';
 import 'package:my_schedule/Templates/Misc/color.dart';
 
 import '../../../Templates/fake_data.dart';
+import '../../../Widgets/task_card.dart';
+import '../../../Widgets/task_control.dart';
 import '../../Dashboard_list_screen/Screen/home_screen.dart';
 import '../../Project_manage/screen/project_manage_screen.dart';
 
@@ -58,67 +60,20 @@ class TaskProjectScreen extends StatelessWidget {
           Obx(
             () => Align(
               alignment: Alignment.center,
-              child: Container(
-                width: 140,
-                padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: AppColors.textColor1.withOpacity(0.6),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          select.value = 0;
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: (select.value == 0)
-                                ? AppColors.primaryColor
-                                : Colors.transparent,
-                          ),
-                          child: const Text(
-                            'Project',
-                            style: TextStyle(
-                              color: AppColors.textColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          select.value = 1;
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: (select.value == 1)
-                                ? AppColors.primaryColor
-                                : Colors.transparent,
-                          ),
-                          child: const Text(
-                            'Task',
-                            style: TextStyle(
-                              color: AppColors.textColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              child: TabControl(
+                check: select.value,
+                control1: {
+                  'title': 'Project',
+                  'press': () {
+                    select.value = 0;
+                  },
+                },
+                control2: {
+                  'title': 'My Task',
+                  'press': () {
+                    select.value = 1;
+                  },
+                },
               ),
             ),
           ),
@@ -302,100 +257,6 @@ class TaskField extends StatelessWidget {
             type: 2,
             title: 'Meeting UI/UX',
             date: DateTime.now(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class TaskCard extends StatelessWidget {
-  const TaskCard({
-    Key? key,
-    required this.type,
-    required this.title,
-    required this.date,
-  }) : super(key: key);
-  final int type;
-  final String title;
-  final DateTime date;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: AppColors.textColor1.withOpacity(0.4),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 50,
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  width: 2,
-                  color: type == 2 ? AppColors.primaryColor : Colors.grey,
-                ),
-              ),
-              child: type == 2
-                  ? const Icon(Icons.check,
-                      color: AppColors.primaryColor, size: 12)
-                  : const SizedBox(height: 10),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  color: AppColors.textColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                DateFormat().add_MMMEd().format(date),
-                style: const TextStyle(
-                  color: AppColors.primaryColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                ),
-              )
-            ],
-          ),
-          const Spacer(),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: type == 0
-                  ? Colors.blue.withOpacity(0.2)
-                  : type == 1
-                      ? Colors.orange.withOpacity(0.2)
-                      : AppColors.primaryColor2.withOpacity(0.2),
-            ),
-            child: Text(
-              type == 0
-                  ? 'To-do'
-                  : type == 1
-                      ? 'In Progress'
-                      : 'Done',
-              style: TextStyle(
-                  color: type == 0
-                      ? Colors.blue
-                      : type == 1
-                          ? Colors.orange
-                          : AppColors.primaryColor2,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400),
-            ),
           ),
         ],
       ),
