@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_schedule/Pages/Profile/screen/profile_screen.dart';
+import 'package:my_schedule/Pages/Project_manage/screen/add_task_screen.dart';
 import 'package:my_schedule/Widgets/check_container.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -529,7 +530,12 @@ class ProjectManageScreen extends StatelessWidget {
                       ),
                     ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(
+                        () => AddTaskScreen(),
+                        transition: Transition.rightToLeft,
+                      );
+                    },
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(8),
