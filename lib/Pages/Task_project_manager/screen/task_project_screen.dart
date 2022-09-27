@@ -290,24 +290,25 @@ class ProjectField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 onTap: () {},
                 child: Container(
-                    height: 30,
-                    width: 80,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: AppColors.primaryColor.withOpacity(0.9)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          'All',
-                          style: TextStyle(
-                            color: AppColors.textColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  height: 30,
+                  width: 80,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColors.primaryColor.withOpacity(0.9)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'All',
+                        style: TextStyle(
+                          color: AppColors.textColor,
+                          fontWeight: FontWeight.bold,
                         ),
-                        Icon(Icons.arrow_drop_down_sharp, color: Colors.white),
-                      ],
-                    )),
+                      ),
+                      Icon(Icons.arrow_drop_down_sharp, color: Colors.white),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

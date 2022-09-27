@@ -11,6 +11,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../Templates/Misc/color.dart';
 import '../../../Widgets/List_chart/column_chart_2_column.dart';
 import '../../../Widgets/task_card.dart';
+import '../../Messenger/screen/mess_group_screen.dart';
 import '../../Profile/screen/profile_dif_screen.dart';
 import '../../Task_project_manager/screen/task_project_screen.dart';
 
@@ -298,7 +299,7 @@ class ProjectManageScreen extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
                 const Text(
@@ -576,7 +577,10 @@ class ProjectManageScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Get.to(
+                    () => MessGroupScreen(),
+                    transition: Transition.rightToLeft,
+                  ),
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

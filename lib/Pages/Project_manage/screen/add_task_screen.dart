@@ -256,14 +256,15 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                                           ),
                                         ),
                                         Expanded(
-                                            child: InkWell(
-                                          onTap: () {},
-                                          child: const Icon(
-                                            Icons.close,
-                                            color: AppColors.textColor,
-                                            size: 12,
+                                          child: InkWell(
+                                            onTap: () {},
+                                            child: const Icon(
+                                              Icons.close,
+                                              color: AppColors.textColor,
+                                              size: 12,
+                                            ),
                                           ),
-                                        ))
+                                        )
                                       ],
                                     ),
                                   ),
@@ -367,7 +368,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
               ),
             ),
             child: TextFormField(
-              enableIMEPersonalizedLearning: false,
+              autofocus: true,
               controller: control,
               autocorrect: false,
               style: const TextStyle(
