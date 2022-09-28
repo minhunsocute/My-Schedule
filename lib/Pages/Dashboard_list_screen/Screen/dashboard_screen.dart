@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:my_schedule/Pages/Messenger/screen/main_message_screen.dart';
 import 'package:my_schedule/Pages/Task_project_manager/screen/task_project_screen.dart';
 
 import '../../../Templates/Misc/color.dart';
@@ -67,6 +68,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
           const HomeScreen(),
           CalenderScreen(),
           TaskProjectScreen(),
+          MainMessageScreen(),
           const HomeScreen(),
         ],
       ),
@@ -120,6 +122,11 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               GButton(
                 icon: Icons.task,
                 text: 'Task',
+                iconColor: Colors.white,
+              ),
+              GButton(
+                icon: Icons.send,
+                text: 'Message',
                 iconColor: Colors.white,
               ),
               GButton(

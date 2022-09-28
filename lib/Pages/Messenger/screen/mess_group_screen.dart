@@ -1,58 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:my_schedule/Pages/Messenger/screen/widgets/recieve_card.dart';
+import 'package:my_schedule/Pages/Messenger/screen/widgets/send_card.dart';
 
 import '../../../Templates/Misc/color.dart';
 
 class MessGroupScreen extends StatelessWidget {
-  const MessGroupScreen({super.key});
+  MessGroupScreen({super.key});
+  final TextEditingController messController = TextEditingController();
 
   @override
+  RxList<Map<String, dynamic>> listMess = [
+    {
+      'title': 'Hi Team, I just mode the latest wireform update please check',
+      'rs': 0,
+      'typeMess': 0,
+      'date': DateTime.now(),
+    },
+    {
+      'title': 'Wow. I have checked your work. I like it very much ',
+      'rs': 1,
+      'typeMess': 0,
+      'date': DateTime.now(),
+    },
+    {
+      'title': 'Ok let\'t do it',
+      'rs': 1,
+      'typeMess': 0,
+      'date': DateTime.now(),
+    },
+    {
+      'title': 'assets/images/hoang.png',
+      'rs': 0,
+      'typeMess': 1,
+      'date': DateTime.now(),
+    },
+    {
+      'title': 'Hahahahaha it\'t so funny',
+      'rs': 0,
+      'typeMess': 0,
+      'date': DateTime.now(),
+    },
+    {
+      'title': 'assets/images/face.png',
+      'rs': 1,
+      'typeMess': 1,
+      'date': DateTime.now(),
+    },
+    {
+      'title': 'Let\'t meet tomrrow',
+      'rs': 1,
+      'typeMess': 0,
+      'date': DateTime.now(),
+    },
+    {
+      'title': 'We will talk about this project',
+      'rs': 1,
+      'typeMess': 0,
+      'date': DateTime.now(),
+    }
+  ].obs;
+  void sendMess() {
+    listMess.value.add({
+      'title': messController.text,
+      'rs': 0,
+      'typeMess': 0,
+      'date': DateTime.now(),
+    });
+  }
+
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> listMess = [
-      {
-        'title': 'Hi Team, I just mode the latest wireform update please check',
-        'rs': 0,
-        'typeMess': 0,
-      },
-      {
-        'title': 'Wow. I have checked your work. I like it very much ',
-        'rs': 1,
-        'typeMess': 0,
-      },
-      {
-        'title': 'Ok let\'t do it',
-        'rs': 1,
-        'typeMess': 0,
-      },
-      {
-        'title': 'assets/images/hoang.png',
-        'rs': 0,
-        'typeMess': 1,
-      },
-      {
-        'title': 'Hahahahaha it\'t so funny',
-        'rs': 0,
-        'typeMess': 0,
-      },
-      {
-        'title': 'assets/images/face.png',
-        'rs': 1,
-        'typeMess': 1,
-      },
-      {
-        'title': 'Let\'t meet tomrrow',
-        'rs': 1,
-        'typeMess': 0,
-      },
-      {
-        'title': 'We will talk about this project',
-        'rs': 1,
-        'typeMess': 0,
-      }
-    ];
     return Scaffold(
-      backgroundColor: AppColors.mainColor,
+      backgroundColor: AppColors.primaryColor.withOpacity(0.8),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: InkWell(
@@ -68,7 +88,7 @@ class MessGroupScreen extends StatelessWidget {
             fontSize: 17,
           ),
         ),
-        elevation: 2,
+        elevation: 0,
         actions: [
           Padding(
             padding: const EdgeInsets.all(15.0),
@@ -93,21 +113,38 @@ class MessGroupScreen extends StatelessWidget {
       // bottomNavigationBar:
       body: Stack(
         children: <Widget>[
-          ListView(
-            physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics(),
-            ),
-            children: [
-              LocateTime(
-                date: DateTime.now().subtract(
-                  const Duration(days: 1),
-                ),
+          Obx(
+            () => Container(
+              decoration: const BoxDecoration(
+                color: AppColors.mainColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40)),
               ),
-              ...listMess.map((e) => (e['rs'] == 0)
-                  ? SendCard(title: e['title'], typeMess: e['typeMess'])
-                  : ReciveCard(title: e['title'], typeMess: e['typeMess'])),
-              const SizedBox(height: 80),
-            ],
+              child: ListView(
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
+                children: [
+                  const SizedBox(height: 20),
+                  LocateTime(
+                    date: DateTime.now().subtract(
+                      const Duration(days: 1),
+                    ),
+                  ),
+                  ...listMess.value.map((e) => (e['rs'] == 0)
+                      ? SendCard(
+                          title: e['title'],
+                          typeMess: e['typeMess'],
+                          time: e['date'])
+                      : ReciveCard(
+                          title: e['title'],
+                          typeMess: e['typeMess'],
+                          time: e['date'])),
+                  const SizedBox(height: 80),
+                ],
+              ),
+            ),
           ),
           _inputField()
         ],
@@ -139,6 +176,7 @@ class MessGroupScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: TextFormField(
+                          controller: messController,
                           style: const TextStyle(
                             color: AppColors.textColor,
                             fontWeight: FontWeight.bold,
@@ -149,7 +187,7 @@ class MessGroupScreen extends StatelessWidget {
                             border: InputBorder.none,
                             hintText: 'Type Message',
                             hintStyle: TextStyle(
-                              color: AppColors.mainColor,
+                              color: AppColors.textColor1,
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -161,7 +199,7 @@ class MessGroupScreen extends StatelessWidget {
                       width: 40,
                       height: 40,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () => sendMess,
                         child: const Icon(Icons.camera_alt_outlined,
                             color: AppColors.textColor),
                       ),
@@ -227,202 +265,6 @@ class LocateTime extends StatelessWidget {
             fontSize: 12,
           ),
         ),
-      ),
-    );
-  }
-}
-
-class ReciveCard extends StatelessWidget {
-  final String title;
-  final int typeMess;
-  const ReciveCard({
-    Key? key,
-    required this.title,
-    required this.typeMess,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(width: 5),
-          Container(
-            height: 25,
-            width: 25,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage(
-                  'assets/images/hoang.png',
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 5),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.72,
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-            decoration: BoxDecoration(
-              color: AppColors.textColor1.withOpacity(0.4),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(2),
-                topRight: Radius.circular(25),
-                bottomLeft: Radius.circular(25),
-                bottomRight: Radius.circular(25),
-              ),
-            ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.72 - 90,
-                    child: (typeMess == 0)
-                        ? Text(
-                            title,
-                            style: const TextStyle(
-                              color: AppColors.textColor1,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          )
-                        : Container(
-                            width:
-                                MediaQuery.of(context).size.width * 0.72 - 90,
-                            height:
-                                MediaQuery.of(context).size.width * 0.72 - 90,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  title,
-                                ),
-                              ),
-                            ),
-                          ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Icon(
-                        Icons.airplane_ticket,
-                        size: 20,
-                        color: Color.fromARGB(255, 3, 99, 177),
-                      ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        child: const Text(
-                          '19:30',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SendCard extends StatelessWidget {
-  final String title;
-  final int typeMess;
-  const SendCard({
-    Key? key,
-    required this.title,
-    required this.typeMess,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width * 0.72,
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-            decoration: const BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25),
-                topRight: Radius.circular(25),
-                bottomLeft: Radius.circular(25),
-                bottomRight: Radius.circular(2),
-              ),
-            ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  (typeMess == 0)
-                      ? SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.72 - 90,
-                          child: Text(
-                            title,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )
-                      : Container(
-                          width: MediaQuery.of(context).size.width * 0.72 - 90,
-                          height: MediaQuery.of(context).size.width * 0.72 - 90,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                title,
-                              ),
-                            ),
-                          ),
-                        ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Icon(
-                        Icons.airplane_ticket,
-                        size: 20,
-                        color: Color.fromARGB(255, 3, 99, 177),
-                      ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        child: const Text(
-                          '19:30',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(width: 20),
-        ],
       ),
     );
   }
