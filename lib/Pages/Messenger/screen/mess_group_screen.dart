@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:my_schedule/Pages/Messenger/screen/inf_mess_project_screen.dart';
 import 'package:my_schedule/Pages/Messenger/screen/widgets/recieve_card.dart';
 import 'package:my_schedule/Pages/Messenger/screen/widgets/send_card.dart';
 
@@ -93,7 +94,10 @@ class MessGroupScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: InkWell(
-              onTap: () {},
+              onTap: () => Get.to(
+                () => InFMessGroupScreen(),
+                transition: Transition.rightToLeft,
+              ),
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
