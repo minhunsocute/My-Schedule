@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_schedule/Pages/Messenger/screen/widgets/build_image_group.dart';
 
 import '../../../Templates/Misc/color.dart';
@@ -138,7 +139,7 @@ class InFMessGroupScreen extends StatelessWidget {
               InkWell(
                 onTap: () {},
                 child: SizedBox(
-                  width: 60,
+                  width: 70,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: const [
@@ -170,7 +171,7 @@ class InFMessGroupScreen extends StatelessWidget {
               InkWell(
                 onTap: () {},
                 child: SizedBox(
-                  width: 60,
+                  width: 70,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: const [
@@ -216,17 +217,23 @@ class InFMessGroupScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 InkWell(
-                  onTap: () {},
+                  onTap: () async => await showCupertinoModalBottomSheet(
+                    context: context,
+                    builder: (context) => ViiewPhotosInChat(),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Row(
                       children: const [
-                        Text(
-                          'Media,Links and Docs....',
-                          style: TextStyle(
-                            color: AppColors.textColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                        Hero(
+                          tag: 'media,links and docs tag',
+                          child: Text(
+                            'Media,Links and Docs....',
+                            style: TextStyle(
+                              color: AppColors.textColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         Spacer(),
@@ -437,6 +444,83 @@ class InFMessGroupScreen extends StatelessWidget {
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class ViiewPhotosInChat extends StatelessWidget {
+  ViiewPhotosInChat({
+    Key? key,
+  }) : super(key: key);
+  List<String> fakeDataImage = [
+    'assets/images/hoang.png',
+    'assets/images/face.png',
+    'assets/images/intro1.png',
+    'assets/images/intro2.png',
+    'assets/images/intro3.png',
+    'assets/images/gmail.png'
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.mainColor,
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
+        elevation: 0,
+        title: const Text(
+          'Media,Links and Docs....',
+          style: TextStyle(
+            color: AppColors.textColor,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: AppColors.mainColor,
+      ),
+      body: ListView(
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
+        children: [
+          const Divider(
+            color: AppColors.textColor1,
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            height: Get.height,
+            width: double.infinity,
+            child: GridView.count(
+              primary: false,
+              padding: const EdgeInsets.all(20),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 2,
+              children: <Widget>[
+                ...fakeDataImage.map(
+                  (e) => Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      border: Border.all(
+                        width: 1,
+                        color: AppColors.textColor1,
+                      ),
+                      image: DecorationImage(
+                        image: AssetImage(e),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
