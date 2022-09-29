@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:my_schedule/Pages/Messenger/screen/widgets/build_image_group.dart';
 
 import '../../../Templates/Misc/color.dart';
+import 'view_members_screen.dart';
 
 class InFMessGroupScreen extends StatelessWidget {
   InFMessGroupScreen({super.key});
@@ -64,12 +65,12 @@ class InFMessGroupScreen extends StatelessWidget {
             child: Stack(
               children: [
                 BuiltImageGroup(
-                  size: 150,
+                  size: 130,
                   listImage: [for (var item in fakeDataMems) item['avt']],
                 ),
                 Positioned(
-                  top: 120,
-                  left: 120,
+                  top: 100,
+                  left: 100,
                   child: InkWell(
                     onTap: () {},
                     child: Container(
@@ -307,7 +308,10 @@ class InFMessGroupScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Get.to(
+                    () => ViewMemberScreen(),
+                    transition: Transition.rightToLeft,
+                  ),
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -430,7 +434,6 @@ class _ToggleButtonIosState extends State<ToggleButtonIos> {
       value: widget.val,
       onChanged: (bool value) async {
         widget.val = value;
-
         setState(() {});
       },
     );
