@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:my_schedule/Pages/Messenger/screen/widgets/recieve_card.dart';
-import 'package:my_schedule/Pages/Messenger/screen/widgets/send_card.dart';
 
 import '../../../Templates/Misc/color.dart';
+import 'mess_group_screen.dart';
+import 'widgets/recieve_card.dart';
+import 'widgets/send_card.dart';
 
-class MessGroupScreen extends StatelessWidget {
-  MessGroupScreen({super.key});
+class MessPersonScreen extends StatelessWidget {
+  MessPersonScreen({super.key});
   final TextEditingController messController = TextEditingController();
-
-  @override
   RxList<Map<String, dynamic>> listMess = [
     {
       'title': 'Hi Team, I just mode the latest wireform update please check',
@@ -61,56 +61,77 @@ class MessGroupScreen extends StatelessWidget {
       'date': DateTime.now(),
     }
   ].obs;
-  void sendMess() {
-    listMess.value.add({
-      'title': messController.text,
-      'rs': 0,
-      'typeMess': 0,
-      'date': DateTime.now(),
-    });
-  }
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.mainColor,
+      backgroundColor: AppColors.mainColor.withOpacity(0.2),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        elevation: 0,
+        backgroundColor: AppColors.textColor1.withOpacity(0.2),
         leading: InkWell(
           onTap: () => Get.back(),
-          child: const Icon(Icons.arrow_back_ios, color: AppColors.textColor),
-        ),
-        title: const Text(
-          'Tiki Mobile App',
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: AppColors.textColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+          child: Container(
+            alignment: Alignment.center,
+            height: 50,
+            width: 50,
+            margin: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: AppColors.primaryColor.withOpacity(0.7),
+            ),
+            child: const Icon(
+              Icons.arrow_back_ios,
+              color: AppColors.textColor,
+              size: 14,
+            ),
           ),
         ),
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: InkWell(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: AppColors.textColor1.withOpacity(0.5),
+        centerTitle: true,
+        title: Column(
+          children: [
+            const Text(
+              'Truong Huynh Duoc Hoang',
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: AppColors.textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 17,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.green.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              child: const Text(
+                'Online',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12,
                 ),
-                child: const Icon(
-                  Icons.more_horiz,
-                  color: AppColors.textColor,
-                  size: 18,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          Container(
+            height: 50,
+            width: 50,
+            margin: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage(
+                  'assets/images/hoang.png',
                 ),
               ),
             ),
           ),
         ],
       ),
-      // bottomNavigationBar:
       body: Stack(
         children: <Widget>[
           Obx(
@@ -143,7 +164,7 @@ class MessGroupScreen extends StatelessWidget {
               ),
             ),
           ),
-          _inputField()
+          _inputField(),
         ],
       ),
     );
@@ -192,12 +213,12 @@ class MessGroupScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                       height: 40,
                       child: InkWell(
-                        onTap: () => sendMess,
-                        child: const Icon(Icons.camera_alt_outlined,
+                        // onTap: () => sendMess,
+                        child: Icon(Icons.camera_alt_outlined,
                             color: AppColors.textColor),
                       ),
                     ),
@@ -226,41 +247,6 @@ class MessGroupScreen extends StatelessWidget {
               ),
             )
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class LocateTime extends StatelessWidget {
-  const LocateTime({
-    Key? key,
-    required this.date,
-  }) : super(key: key);
-  final DateTime date;
-
-  @override
-  Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(width: 1, color: AppColors.textColor),
-        ),
-        child: Text(
-          (date.year == now.year &&
-                  date.month == now.month &&
-                  date.day == now.day)
-              ? 'Today'
-              : DateFormat().add_MEd().format(date),
-          style: const TextStyle(
-            color: AppColors.textColor,
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
-          ),
         ),
       ),
     );
