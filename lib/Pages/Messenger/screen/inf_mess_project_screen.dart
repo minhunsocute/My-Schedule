@@ -21,7 +21,31 @@ class InFMessGroupScreen extends StatelessWidget {
     {
       'name': 'Truong Huynh Duc Hoang',
       'avt': 'assets/images/gmail.png',
-    }
+    },
+    {
+      'name': 'Nguyen Minh Hung',
+      'avt': 'assets/images/intro1.png',
+    },
+    {
+      'name': 'Truong Huynh Duc Hoang',
+      'avt': 'assets/images/intro2.png',
+    },
+    {
+      'name': 'Truong Huynh Duc Hoang',
+      'avt': 'assets/images/intro3.png',
+    },
+    {
+      'name': 'Nguyen Minh Hung',
+      'avt': 'assets/images/face.png',
+    },
+    {
+      'name': 'Truong Huynh Duc Hoang',
+      'avt': 'assets/images/hoang.png',
+    },
+    {
+      'name': 'Truong Huynh Duc Hoang',
+      'avt': 'assets/images/gmail.png',
+    },
   ];
   @override
   Widget build(BuildContext context) {
