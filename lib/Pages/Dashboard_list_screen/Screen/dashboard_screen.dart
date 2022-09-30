@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:my_schedule/Pages/Messenger/screen/main_message_screen.dart';
+import 'package:my_schedule/Pages/Profile/screen/profile_screen.dart';
 import 'package:my_schedule/Pages/Task_project_manager/screen/task_project_screen.dart';
 
 import '../../../Templates/Misc/color.dart';
@@ -69,7 +70,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
           CalenderScreen(),
           TaskProjectScreen(),
           MainMessageScreen(),
-          const HomeScreen(),
+          const ProfileScreen(),
         ],
       ),
 
