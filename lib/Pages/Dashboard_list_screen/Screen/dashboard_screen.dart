@@ -70,7 +70,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
           CalenderScreen(),
           TaskProjectScreen(),
           MainMessageScreen(),
-          const ProfileScreen(),
+          ProfileScreen(),
         ],
       ),
 

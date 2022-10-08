@@ -86,8 +86,7 @@ class MessGroupScreen extends StatelessWidget {
           style: TextStyle(
             color: AppColors.textColor,
             fontWeight: FontWeight.bold,
-            fontSize: 17,
-          ),
+            fontSize: 17,),
         ),
         elevation: 0,
         actions: [

@@ -4,8 +4,60 @@ import 'package:my_schedule/Pages/Profile/screen/profile_dif_screen.dart';
 import 'package:my_schedule/Templates/Misc/color.dart';
 import 'package:badges/badges.dart';
 
+import 'Widgets/github_calender_built.dart';
+
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
+  List<Map<String, dynamic>> fakeDataCommit = [
+    {
+      'time': DateTime.now().subtract(const Duration(days: 8)),
+      'commit': 2,
+    },
+    {
+      'time': DateTime.now().subtract(const Duration(days: 7)),
+      'commit': 2,
+    },
+    {
+      'time': DateTime.now(),
+      'commit': 2,
+    },
+    {
+      'time': DateTime.now().subtract(const Duration(days: 2)),
+      'commit': 2,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 20)),
+      'commit': 2,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 1)),
+      'commit': 15,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 2)),
+      'commit': 6,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 3)),
+      'commit': 7,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 4)),
+      'commit': 3,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 5)),
+      'commit': 4,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 6)),
+      'commit': 10,
+    },
+    {
+      'time': DateTime.now().add(const Duration(days: 88)),
+      'commit': 18,
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +117,8 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
+                  GitHubCalenderBuit(fakeDataCommit: fakeDataCommit)
+
                   // gitHubCommitField()
                 ],
               ),
