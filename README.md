@@ -58,6 +58,12 @@ Tải bản demo của ứng dụng [tại](https://drive.google.com/file/d/1Q6u
 <img width="200" src=".\UI\16.png"></a>
 <img width="200" src=".\UI\17.png"></a>
 <img width="200" src=".\UI\18.png"></a>
+<img width="200" src=".\UI\19.png"></a>
+<img width="200" src=".\UI\20.png"></a>
+<img width="200" src=".\UI\21.png"></a>
+<img width="200" src=".\UI\22.png"></a>
+<img width="200" src=".\UI\23.png"></a>
+
 
 
 
