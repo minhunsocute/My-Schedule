@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_schedule/Pages/Sign_up_in/screen/forgot_password_screen.dart';
 import 'package:my_schedule/Pages/Sign_up_in/screen/sign_up_screen.dart';
+import 'package:my_schedule/Widgets/app_decoration.dart';
 import 'package:my_schedule/Widgets/button_custom.dart';
 
 import '../../../Routes/route_name.dart';
@@ -18,6 +19,8 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // var heightDevice = MediaQuery.of(context).size.height;
+    var widthDevice = MediaQuery.of(context).size.width;
+    var heigtDevice = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppColors.mainColor,
       appBar: AppBar(
@@ -33,21 +36,16 @@ class SignInScreen extends StatelessWidget {
             parent: AlwaysScrollableScrollPhysics(),
           ),
           children: [
-            const SizedBox(height: 10),
-            Container(
-              width: 300,
-              height: 300,
-              decoration: const BoxDecoration(
-                // border: Border.all(width: 1, color: AppColors.primaryColor),
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  invertColors: true,
-                  image: AssetImage('assets/gift/task.gif'),
-                ),
+            SizedBox(height: heigtDevice / 20),
+            const Text(
+              'Create your \nAccount',
+              style: TextStyle(
+                color: AppColors.textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 30.0,
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: heigtDevice / 40),
             const Text(
               'Login to your account',
               textAlign: TextAlign.center,
@@ -57,16 +55,20 @@ class SignInScreen extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            const SizedBox(height: 30),
-            TextFieldCustom(
+            const SizedBox(height: 20),
+            CustomTextFormField(
+              hint: "Enter username",
+              title: "Username",
               controller: controller.emailController,
-              hintText: 'Email',
-              icon: Icons.person,
+              trailingIcon: const Icon(Icons.email),
             ),
             const SizedBox(height: 20),
-            PasswordFieldCustom(
+            CustomTextFormField(
+              hint: "Enter password",
+              title: "Password",
               controller: controller.passwordController,
-              hintText: 'Password',
+              isPasswordField: true,
+              trailingIcon: const Icon(Icons.lock),
             ),
             const SizedBox(height: 20),
             ButtonMain(
@@ -89,32 +91,33 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Divider(color: AppColors.textColor1),
-            ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 20,
-                  height: 1,
-                  color: AppColors.primaryColor,
-                ),
-                const Text(
-                  ' Or Login with ',
-                  style: TextStyle(
-                    color: AppColors.textColor,
-                    fontWeight: FontWeight.w400,
+            SizedBox(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 0.6,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                ),
-                Container(
-                  width: 20,
-                  height: 1,
-                  color: AppColors.primaryColor,
-                ),
-              ],
+                  const Text(
+                    ' Or Login with ',
+                    style: TextStyle(
+                      color: AppColors.textColor,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 0.6,
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             Row(
@@ -127,11 +130,11 @@ class SignInScreen extends StatelessWidget {
                     height: 50,
                     width: 50,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.blue),
+                        borderRadius: BorderRadius.circular(15),
+                        border: AppDecoration.blackBorder),
                     child: const Icon(
                       Icons.facebook,
-                      color: Colors.white,
+                      color: Colors.blue,
                       size: 30,
                     ),
                   ),
@@ -145,8 +148,9 @@ class SignInScreen extends StatelessWidget {
                     width: 50,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white),
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white,
+                        border: AppDecoration.blackBorder),
                     child: Image.asset(
                       'assets/images/google.png',
                       height: 25,
@@ -161,9 +165,9 @@ class SignInScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Don\'t have account ',
+                  'Already have an account? ',
                   style: TextStyle(
-                      color: AppColors.textColor,
+                      color: AppColors.textColor1,
                       fontWeight: FontWeight.bold,
                       fontSize: 14),
                 ),

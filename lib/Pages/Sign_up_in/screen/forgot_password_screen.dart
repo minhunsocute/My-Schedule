@@ -70,52 +70,50 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: Container(
-                  height: 50,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: AppColors.primaryColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.2),
-                        offset: const Offset(2, 3),
-                        blurRadius: 2,
-                      ),
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.2),
-                        offset: const Offset(-2, -3),
-                        blurRadius: 2,
-                      )
-                    ],
+              Container(
+                height: 50,
+                margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: AppColors.primaryColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.2),
+                      offset: const Offset(2, 3),
+                      blurRadius: 2,
+                    ),
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.2),
+                      offset: const Offset(-2, -3),
+                      blurRadius: 2,
+                    )
+                  ],
+                ),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    // ignore: deprecated_member_use
+                    primary: AppColors.primaryColor,
+                    shadowColor: AppColors.primaryColor,
                   ),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      // ignore: deprecated_member_use
-                      primary: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          'Submit',
-                          style: TextStyle(
-                            color: AppColors.textColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Submit ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
-                        SizedBox(width: 5),
-                        Icon(Icons.check_circle, color: Colors.white),
-                      ],
-                    ),
+                      ),
+                      SizedBox(width: 5),
+                      Icon(Icons.check_circle, color: Colors.white),
+                    ],
                   ),
                 ),
               )

@@ -8,7 +8,7 @@ import 'mess_group_screen.dart';
 import 'mess_person_screen.dart';
 
 class MainMessageScreen extends StatelessWidget {
-  const MainMessageScreen({super.key});
+  MainMessageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

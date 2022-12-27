@@ -19,137 +19,171 @@ class HomeScreen extends StatelessWidget {
         toolbarHeight: 70,
         title: headerField(),
         elevation: 0,
-        backgroundColor: AppColors.mainColor,
+        backgroundColor: AppColors.greyBackground,
         automaticallyImplyLeading: false,
       ),
-      backgroundColor: AppColors.mainColor,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: ListView(
-          physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
-          children: [
-            // headerField(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: checkTaskField(widthDevice),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  const Text(
-                    'Today Schedule',
-                    style: TextStyle(
-                      color: AppColors.textColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () async => await showCupertinoModalBottomSheet(
-                      context: context,
-                      builder: (context) => Scaffold(
-                        appBar: AppBar(
-                          centerTitle: true,
-                          title: const Text(
-                            'ToDay Schedule',
-                            style: TextStyle(
-                              color: AppColors.textColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          leading: InkWell(
-                            onTap: () => Navigator.pop(context),
-                            child: const Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            ),
-                          ),
-                          elevation: 0,
-                          backgroundColor: AppColors.mainColor,
-                        ),
-                        backgroundColor: AppColors.mainColor,
-                        body: ListView(
-                          physics: const BouncingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
-                          children: [
-                            AllScehduleCard(
-                              time: DateTime.now(),
-                              mainTitle: 'Grocert shopping add design',
-                              title: 'Marget Research',
-                              type: 1,
-                            ),
-                            AllScehduleCard(
-                              time: DateTime.now(),
-                              title: 'Create Low-fidelity Wireframe',
-                              mainTitle: 'Uber Eats redesign challange',
-                              type: 0,
-                            ),
-                            AllScehduleCard(
-                              time: DateTime.now(),
-                              title: 'How to picth a Design Sprint',
-                              mainTitle: 'About design sprint',
-                              type: 2,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    child: const Text(
-                      'See More',
-                      style: TextStyle(color: AppColors.textColor1),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            toDayScheduleField(),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Today Deadline',
-                    style: TextStyle(
-                      color: AppColors.textColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    borderRadius: BorderRadius.circular(5),
-                    onTap: () {},
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      width: 70,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppColors.primaryColor.withOpacity(0.8)),
-                      child: const Text(
-                        'All',
-                        style: TextStyle(
-                            color: AppColors.textColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            todayDeadlineField(widthDevice),
-          ],
+      backgroundColor: AppColors.greyBackground,
+      body: ListView(
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
         ),
+        children: [
+          // headerField(),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              color: Colors.grey.withOpacity(0.15),
+            ),
+            child: Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Icon(Icons.search, color: Colors.grey),
+                ),
+                Expanded(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Search here...',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                //   child: InkWell(
+                //     onTap: () {},
+                //     child: const Icon(
+                //       Icons.,
+                //       color: AppColors.primaryColor,
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: checkTaskField(widthDevice),
+          ),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                const Text(
+                  'Today Schedule',
+                  style: TextStyle(
+                    color: AppColors.textColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),
+                ),
+                const Spacer(),
+                InkWell(
+                  onTap: () async => await showCupertinoModalBottomSheet(
+                    context: context,
+                    builder: (context) => Scaffold(
+                      appBar: AppBar(
+                        centerTitle: true,
+                        title: const Text(
+                          'ToDay Schedule',
+                          style: TextStyle(
+                            color: AppColors.textColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        leading: InkWell(
+                          onTap: () => Navigator.pop(context),
+                          child: const Icon(
+                            Icons.close,
+                            color: Colors.black,
+                          ),
+                        ),
+                        elevation: 0,
+                        backgroundColor: AppColors.greyBackground,
+                      ),
+                      backgroundColor: AppColors.greyBackground,
+                      body: ListView(
+                        physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        children: [
+                          AllScehduleCard(
+                            time: DateTime.now(),
+                            mainTitle: 'Grocert shopping add design',
+                            title: 'Marget Research',
+                            type: 1,
+                          ),
+                          AllScehduleCard(
+                            time: DateTime.now(),
+                            title: 'Create Low-fidelity Wireframe',
+                            mainTitle: 'Uber Eats redesign challange',
+                            type: 0,
+                          ),
+                          AllScehduleCard(
+                            time: DateTime.now(),
+                            title: 'How to picth a Design Sprint',
+                            mainTitle: 'About design sprint',
+                            type: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    'See More',
+                    style: TextStyle(color: AppColors.textColor1),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          toDayScheduleField(),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Row(
+              children: [
+                const Text(
+                  'Today Deadline',
+                  style: TextStyle(
+                    color: AppColors.textColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),
+                ),
+                const Spacer(),
+                InkWell(
+                  borderRadius: BorderRadius.circular(5),
+                  onTap: () {},
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    width: 70,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.primaryColor.withOpacity(0.8)),
+                    child: const Text(
+                      'All',
+                      style: TextStyle(
+                          color: AppColors.mainColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          todayDeadlineField(widthDevice),
+        ],
       ),
     );
   }
@@ -178,7 +212,7 @@ class HomeScreen extends StatelessWidget {
   SizedBox toDayScheduleField() {
     return SizedBox(
       width: double.infinity,
-      height: 150,
+      height: 170,
       child: ListView(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(
@@ -213,7 +247,7 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       width: widthDevice,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(15.0),
         color: AppColors.primaryColor.withOpacity(0.2),
       ),
       child: Row(
@@ -308,13 +342,13 @@ class HomeScreen extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-              shape: BoxShape.circle, color: Colors.grey.withOpacity(0.3)),
+          decoration:
+              BoxDecoration(shape: BoxShape.circle, color: Colors.blue[100]),
           padding: const EdgeInsets.all(10),
           child: const Icon(
             Icons.person,
             color: AppColors.primaryColor,
-            size: 30,
+            size: 20,
           ),
         ),
         const SizedBox(width: 5),
@@ -323,7 +357,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Text(
-              'Hello!',
+              ' Hello!',
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -331,7 +365,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             Text(
-              'Nguyen Minh Hung',
+              ' Nguyen Minh Hung',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 18,
@@ -343,7 +377,7 @@ class HomeScreen extends StatelessWidget {
         const Spacer(),
         SvgPicture.asset(
           'assets/icons/Notification-Icon.svg',
-          color: Colors.white,
+          color: Colors.black,
           height: 25,
         ),
       ],
@@ -371,8 +405,9 @@ class AllScehduleCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(15.0),
+        color: AppColors.mainColor,
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -391,7 +426,7 @@ class AllScehduleCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(15.0),
                     color: AppColors.primaryColor1.withOpacity(0.2)),
                 child: const Icon(
                   Icons.work,
@@ -474,16 +509,13 @@ class ScheduleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 20),
+      margin: const EdgeInsets.only(left: 20, top: 10.0, bottom: 10.0),
       padding: const EdgeInsets.symmetric(vertical: 10),
       width: 250,
       decoration: BoxDecoration(
-        color: (type == 0)
-            ? AppColors.primaryColor.withOpacity(0.2)
-            : (type == 1)
-                ? AppColors.primaryColor1
-                : AppColors.primaryColor2.withOpacity(0.6),
-        borderRadius: BorderRadius.circular(10),
+        color: AppColors.mainColor,
+        borderRadius: BorderRadius.circular(15.0),
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
       ),
       child: Column(
         children: [
@@ -538,7 +570,7 @@ class ScheduleCard extends StatelessWidget {
                     color: (type == 0)
                         ? AppColors.primaryColor
                         : (type == 1)
-                            ? AppColors.primaryColor1
+                            ? AppColors.primaryColor
                             : AppColors.primaryColor2),
                 Text(
                   ' ${DateFormat().add_jm().format(date)}',
@@ -551,12 +583,13 @@ class ScheduleCard extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: (type == 0)
-                          ? AppColors.primaryColor.withOpacity(0.3)
-                          : (type == 1)
-                              ? AppColors.primaryColor1.withOpacity(0.3)
-                              : AppColors.primaryColor2.withOpacity(0.3)),
+                    borderRadius: BorderRadius.circular(20),
+                    color: (type == 0)
+                        ? AppColors.primaryColor.withOpacity(0.3)
+                        : (type == 1)
+                            ? AppColors.primaryColor1.withOpacity(0.3)
+                            : AppColors.primaryColor2.withOpacity(0.3),
+                  ),
                   child: Text(
                     type == 0
                         ? 'To-do'
@@ -568,8 +601,8 @@ class ScheduleCard extends StatelessWidget {
                       color: (type == 0)
                           ? AppColors.primaryColor
                           : (type == 1)
-                              ? AppColors.primaryColor1
-                              : AppColors.primaryColor2,
+                              ? AppColors.primaryColor
+                              : Colors.green,
                       fontSize: 12,
                     ),
                   ),
@@ -601,8 +634,9 @@ class DeadlineExerciseCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.textColor1.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(10),
+        color: AppColors.mainColor,
+        borderRadius: BorderRadius.circular(15.0),
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
       ),
       child: Column(
         children: [
@@ -622,8 +656,8 @@ class DeadlineExerciseCard extends StatelessWidget {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      Icon(Icons.access_time_filled_sharp,
-                          color: Colors.red.withOpacity(0.5)),
+                      const Icon(Icons.access_time_filled_sharp,
+                          color: Colors.red),
                       Text(
                         ' ${DateFormat().add_MMMEd().format(deadTime)} / ${DateFormat().add_jm().format(deadTime)}',
                         overflow: TextOverflow.fade,
@@ -685,8 +719,9 @@ class DeadlineProjectCard extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          color: AppColors.textColor1.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(10),
+          color: AppColors.mainColor,
+          borderRadius: BorderRadius.circular(15.0),
+          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
         ),
         child: Column(
           children: [
@@ -748,8 +783,8 @@ class DeadlineProjectCard extends StatelessWidget {
                             children: [
                               for (int i = 1; i <= 3; i++)
                                 Container(
-                                  width: 22,
-                                  height: 22,
+                                  width: 24,
+                                  height: 24,
                                   margin: EdgeInsets.only(left: (14 * i) * 1.0),
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
@@ -757,17 +792,29 @@ class DeadlineProjectCard extends StatelessWidget {
                                       image:
                                           AssetImage('assets/images/hoang.png'),
                                     ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 10.0,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               Container(
-                                  width: 22,
-                                  height: 22,
+                                  width: 24,
+                                  height: 24,
                                   alignment: Alignment.center,
                                   margin: const EdgeInsets.only(
                                       left: (14 * 4) * 1.0),
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: AppColors.textColor1,
+                                    color: AppColors.mainColor,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 10.0,
+                                      ),
+                                    ],
                                   ),
                                   child: const Text(
                                     '+2',
@@ -784,8 +831,8 @@ class DeadlineProjectCard extends StatelessWidget {
                       const SizedBox(height: 15),
                       Row(
                         children: [
-                          Icon(Icons.access_time_filled_sharp,
-                              color: Colors.red.withOpacity(0.5)),
+                          const Icon(Icons.access_time_filled_sharp,
+                              color: Colors.red),
                           Text(
                             ' ${DateFormat().add_MMMEd().format(deadTime)} / ${DateFormat().add_jm().format(deadTime)}',
                             overflow: TextOverflow.fade,
@@ -809,7 +856,7 @@ class DeadlineProjectCard extends StatelessWidget {
                           style: TextStyle(
                             color: percent >= 1
                                 ? Colors.green
-                                : AppColors.primaryColor1,
+                                : AppColors.primaryColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
@@ -821,10 +868,10 @@ class DeadlineProjectCard extends StatelessWidget {
                         lineWidth: 3.0,
                         percent: percent,
                         backgroundColor: (percent < 1)
-                            ? AppColors.primaryColor1.withOpacity(0.1)
+                            ? AppColors.primaryColor.withOpacity(0.1)
                             : Colors.green.withOpacity(0.1),
                         progressColor: (percent < 1)
-                            ? AppColors.primaryColor1
+                            ? AppColors.primaryColor
                             : Colors.green,
                       ),
                     ),

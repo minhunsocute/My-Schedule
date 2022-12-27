@@ -19,7 +19,8 @@ class AppHeader extends StatelessWidget {
             color: AppColors.primaryColor.withOpacity(0.3),
             borderRadius: BorderRadius.circular(5),
           ),
-          child: Image.asset('assets/images/icon.png'),
+          child: Image.asset('assets/images/icon.png',
+              color: AppColors.primaryColor),
         ),
         const SizedBox(width: 5),
         RichText(

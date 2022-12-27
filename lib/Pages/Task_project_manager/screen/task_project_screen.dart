@@ -158,8 +158,8 @@ class TaskProjectScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            SizedBox(
-              width: 180,
+            Expanded(
+              // width: 180,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

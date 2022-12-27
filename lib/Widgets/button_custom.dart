@@ -12,7 +12,7 @@ class ButtonMain extends StatelessWidget {
       height: 50,
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(20),
         color: AppColors.primaryColor,
         boxShadow: [
           BoxShadow(
@@ -31,17 +31,17 @@ class ButtonMain extends StatelessWidget {
         onPressed: press,
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(20),
           ),
           // ignore: deprecated_member_use
-          primary: Colors.transparent,
-          shadowColor: Colors.transparent,
+          primary: AppColors.primaryColor,
+          shadowColor: AppColors.primaryColor,
         ),
         child: Text(
           title,
           style: const TextStyle(
             fontFamily: 'Montserrat',
-            color: AppColors.textColor,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),

@@ -52,6 +52,8 @@ dependencies:
   flutter_heatmap_calendar: ^1.0.5
   heatmap_calendar: ^1.2.8
   badges: ^2.0.3
+  flutter_vector_icons: ^2.0.0
+  animated_bottom_navigation_bar: ^1.1.0
 
 dev_dependencies:
   flutter_test:

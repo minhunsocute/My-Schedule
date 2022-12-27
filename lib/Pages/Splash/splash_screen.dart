@@ -25,7 +25,6 @@ class SplashScreen extends StatelessWidget {
                 shape: BoxShape.circle,
                 image: const DecorationImage(
                   fit: BoxFit.cover,
-                  invertColors: true,
                   image: AssetImage('assets/gift/task.gif'),
                 ),
               ),

@@ -63,7 +63,10 @@ class _EventsScreenState extends State<EventsScreen> {
   DateTime focusedDay = DateTime.now();
 
   TextEditingController _eventController = TextEditingController();
-
+  bool checkIsSameDate(DateTime date1, DateTime date2) =>
+      (date1.year == date2.year &&
+          date1.month == date2.month &&
+          date1.day == date2.day);
   @override
   void initState() {
     super.initState();
@@ -91,108 +94,122 @@ class _EventsScreenState extends State<EventsScreen> {
         parent: AlwaysScrollableScrollPhysics(),
       ),
       children: [
-        Container(
-          margin: const EdgeInsets.all(20.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            color: AppColors.textColor1.withOpacity(0.4),
-          ),
-          child: TableCalendar(
-            focusedDay: selectedDay,
-            firstDay: DateTime(1990),
-            lastDay: DateTime(2050),
-            calendarFormat: format,
-            onFormatChanged: (CalendarFormat _format) {
-              setState(() {
-                format = _format;
-              });
-            },
-            startingDayOfWeek: StartingDayOfWeek.sunday,
-            daysOfWeekVisible: true,
+        TableCalendar(
+          rowHeight: 60.0,
+          daysOfWeekHeight: 30.0,
+          focusedDay: selectedDay,
+          firstDay: DateTime(1990),
+          lastDay: DateTime(2050),
+          calendarFormat: format,
 
-            //Day Changed
-            onDaySelected: (DateTime selectDay, DateTime focusDay) {
-              setState(() {
-                selectedDay = selectDay;
-                focusedDay = focusDay;
-              });
-            },
-            selectedDayPredicate: (DateTime date) {
-              return isSameDay(selectedDay, date);
-            },
-            eventLoader: getEventsfromDay,
+          calendarBuilders: CalendarBuilders(
+            dowBuilder: (context, day) {
+              final text = DateFormat.E().format(day);
 
-            calendarStyle: CalendarStyle(
-              isTodayHighlighted: true,
-              selectedDecoration: BoxDecoration(
-                color: Colors.redAccent[100],
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              markerDecoration: const BoxDecoration(
-                  color: AppColors.primaryColor2, shape: BoxShape.circle),
-              selectedTextStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              todayDecoration: BoxDecoration(
-                color: AppColors.primaryColor.withOpacity(0.5),
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              defaultDecoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              weekendDecoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              todayTextStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              weekendTextStyle: const TextStyle(
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
-              defaultTextStyle: const TextStyle(
-                color: AppColors.textColor,
-              ),
-            ),
-            daysOfWeekStyle: const DaysOfWeekStyle(
-              weekdayStyle: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              weekendStyle: TextStyle(
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            headerStyle: HeaderStyle(
-              leftChevronIcon:
-                  const Icon(Icons.chevron_left, color: AppColors.textColor),
-              rightChevronIcon:
-                  const Icon(Icons.chevron_right, color: AppColors.textColor),
-              titleTextStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              formatButtonVisible: true,
-              titleCentered: true,
-              formatButtonShowsNext: false,
-              formatButtonDecoration: BoxDecoration(
-                color: Colors.redAccent[100],
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              formatButtonTextStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            // daysOfWeekStyle: TextStyle(),
+              return Center(
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    color: day.day == DateTime.sunday ||
+                            day.weekday == DateTime.saturday
+                        ? AppColors.primaryColor
+                        : Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12.0,
+                  ),
+                ),
+              );
+            },
+            prioritizedBuilder: ((context, day, focusedDay) => Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 2.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: checkIsSameDate(day, focusedDay)
+                              ? AppColors.primaryColor
+                              : Colors.transparent,
+                        ),
+                        child: Text(
+                          day.day.toString(),
+                          style: TextStyle(
+                            color: checkIsSameDate(day, focusedDay)
+                                ? Colors.white
+                                : AppColors.textColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 10.0,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage(
+                                      'assets/images/app_icon.png'))),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
           ),
+
+          onFormatChanged: (CalendarFormat _format) {
+            setState(() {
+              format = _format;
+            });
+          },
+          startingDayOfWeek: StartingDayOfWeek.sunday,
+          daysOfWeekVisible: true,
+
+          //Day Changed
+          onDaySelected: (DateTime selectDay, DateTime focusDay) {
+            setState(() {
+              selectedDay = selectDay;
+              focusedDay = focusDay;
+            });
+          },
+          selectedDayPredicate: (DateTime date) {
+            return isSameDay(selectedDay, date);
+          },
+          eventLoader: getEventsfromDay,
+
+          daysOfWeekStyle: const DaysOfWeekStyle(
+            weekdayStyle: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            weekendStyle: TextStyle(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          headerStyle: HeaderStyle(
+            leftChevronIcon:
+                const Icon(Icons.chevron_left, color: AppColors.textColor),
+            rightChevronIcon:
+                const Icon(Icons.chevron_right, color: AppColors.textColor),
+            titleTextStyle: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            formatButtonVisible: true,
+            titleCentered: true,
+            formatButtonShowsNext: false,
+            formatButtonDecoration: BoxDecoration(
+              color: Colors.redAccent[100],
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            formatButtonTextStyle: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          // daysOfWeekStyle: TextStyle(),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -221,7 +238,7 @@ class _EventsScreenState extends State<EventsScreen> {
                       Text(
                         'All',
                         style: TextStyle(
-                          color: AppColors.textColor,
+                          color: AppColors.mainColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -259,8 +276,9 @@ class EventRPCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: AppColors.textColor1.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(15.0),
+        color: AppColors.mainColor,
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -355,8 +373,9 @@ class EventSDCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: AppColors.textColor1.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(15.0),
+        color: AppColors.mainColor,
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -429,8 +448,9 @@ class EventsExCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: AppColors.textColor1.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(15.0),
+        color: AppColors.mainColor,
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -453,7 +473,7 @@ class EventsExCard extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.school,
-                  color: AppColors.primaryColor2,
+                  color: Colors.green,
                   size: 18,
                 ),
               ),
