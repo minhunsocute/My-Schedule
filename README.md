@@ -21,7 +21,8 @@
 ## 💻 Công nghệ 
 * Ngôn ngữ: Dart
 * Framework: Flutter
-* Database: Firebase
+* Database: MongoDB
+* Backend: Java Spring
 
 ## 👨‍💻 Người thực hiện
 * Nguyễn Minh Hưng: 20120491
