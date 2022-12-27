@@ -11,13 +11,15 @@ class Event {
   final int type;
   final String description;
   final String location;
+  final bool check;
   final DateTime time;
   Event(
       {required this.type,
       required this.time,
       required this.description,
       required this.location,
-      required this.title});
+      required this.title,
+      required this.check});
 }
 
 class EventsScreen extends StatefulWidget {
@@ -41,20 +43,23 @@ class _EventsScreenState extends State<EventsScreen> {
             'The final exam will be held at 7:30 am, in room A202 at the School of Natural Sciences',
         location: '',
         title: 'Windows Develop Exam',
+        check: true,
       ),
       Event(
         type: 1,
         time: DateTime.now(),
-        description: '',
+        description: 'Oke oke oke oke oke ooke',
         location: '',
         title: 'Special Day',
+        check: true,
       ),
       Event(
         type: 2,
         time: DateTime.now(),
-        description: '',
+        description: 'Js java  C# C++',
         location: ' Ho Chi Minh City, University of Sciece',
         title: 'IT Festival ',
+        check: false,
       )
     ],
   };
@@ -101,62 +106,67 @@ class _EventsScreenState extends State<EventsScreen> {
           firstDay: DateTime(1990),
           lastDay: DateTime(2050),
           calendarFormat: format,
+          headerVisible: false,
+          calendarBuilders: CalendarBuilders(dowBuilder: (context, day) {
+            final text = DateFormat.E().format(day);
 
-          calendarBuilders: CalendarBuilders(
-            dowBuilder: (context, day) {
-              final text = DateFormat.E().format(day);
-
-              return Center(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    color: day.day == DateTime.sunday ||
-                            day.weekday == DateTime.saturday
-                        ? AppColors.primaryColor
-                        : Colors.grey,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.0,
-                  ),
+            return Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: day.day == DateTime.sunday ||
+                          day.weekday == DateTime.saturday
+                      ? AppColors.primaryColor
+                      : Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12.0,
                 ),
-              );
-            },
-            prioritizedBuilder: ((context, day, focusedDay) => Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 2.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0),
-                          color: checkIsSameDate(day, focusedDay)
-                              ? AppColors.primaryColor
-                              : Colors.transparent,
-                        ),
-                        child: Text(
-                          day.day.toString(),
-                          style: TextStyle(
-                            color: checkIsSameDate(day, focusedDay)
-                                ? Colors.white
-                                : AppColors.textColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 10.0,
+              ),
+            );
+          }, //app_icon1.png
+              prioritizedBuilder: ((context, day, focusedDay) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 2.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      color: checkIsSameDate(day, focusedDay)
+                          ? AppColors.primaryColor
+                          : Colors.transparent,
+                    ),
+                    child: Text(
+                      day.day.toString(),
+                      style: TextStyle(
+                        color: checkIsSameDate(day, focusedDay)
+                            ? Colors.white
+                            : AppColors.textColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 10.0,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(
+                            (!checkIsSameDate(day, DateTime.now()))
+                                ? 'assets/images/app_icon.png'
+                                : 'assets/images/app_icon1.png',
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                      'assets/images/app_icon.png'))),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                )),
-          ),
+                ],
+              ),
+            );
+          })),
 
           onFormatChanged: (CalendarFormat _format) {
             setState(() {
@@ -188,249 +198,16 @@ class _EventsScreenState extends State<EventsScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          headerStyle: HeaderStyle(
-            leftChevronIcon:
-                const Icon(Icons.chevron_left, color: AppColors.textColor),
-            rightChevronIcon:
-                const Icon(Icons.chevron_right, color: AppColors.textColor),
-            titleTextStyle: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-            formatButtonVisible: true,
-            titleCentered: true,
-            formatButtonShowsNext: false,
-            formatButtonDecoration: BoxDecoration(
-              color: Colors.redAccent[100],
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            formatButtonTextStyle: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+
           // daysOfWeekStyle: TextStyle(),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(children: [
-            const Text(
-              'Events',
-              style: TextStyle(
-                color: AppColors.textColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-              ),
-            ),
-            const Spacer(),
-            InkWell(
-              borderRadius: BorderRadius.circular(5),
-              onTap: () {},
-              child: Container(
-                  height: 30,
-                  width: 80,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: AppColors.primaryColor.withOpacity(0.9)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'All',
-                        style: TextStyle(
-                          color: AppColors.mainColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Icon(Icons.arrow_drop_down_sharp, color: Colors.white),
-                    ],
-                  )),
-            ),
-          ]),
-        ),
-        const SizedBox(height: 15.0),
+        const SizedBox(height: 10.0),
+        const Divider(thickness: 1),
+        const SizedBox(height: 10.0),
         ...getEventsfromDay(selectedDay).map(
-          (e) => (e.type == 0)
-              ? EventsExCard(data: e)
-              : e.type == 1
-                  ? EventSDCard(
-                      data: e,
-                    )
-                  : EventRPCard(data: e),
+          (e) => EventsExCard(data: e),
         ),
       ],
-    );
-  }
-}
-
-class EventRPCard extends StatelessWidget {
-  const EventRPCard({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-  final Event data;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.0),
-        color: AppColors.mainColor,
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Text(
-                'Relax,Play time',
-                style: TextStyle(
-                  color: AppColors.textColor,
-                  fontSize: 12,
-                ),
-              ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: AppColors.primaryColor1.withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Icon(
-                  Icons.tag_faces_rounded,
-                  color: AppColors.primaryColor1,
-                  size: 18,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Text(
-            data.title,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: AppColors.textColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Icon(Icons.timelapse_outlined,
-                  color: AppColors.primaryColor1, size: 18),
-              Text(
-                ' ${DateFormat().add_jm().format(data.time)}',
-                style: const TextStyle(
-                  color: AppColors.textColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-              ),
-              const Spacer(),
-              // CheckContainer(type: type),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Icon(Icons.location_on,
-                  color: AppColors.primaryColor1, size: 18),
-              Text(
-                ' ${data.location}',
-                style: const TextStyle(
-                  color: AppColors.textColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-              ),
-              const Spacer(),
-              Container(),
-              // CheckContainer(type: type),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class EventSDCard extends StatelessWidget {
-  const EventSDCard({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-  final Event data;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.0),
-        color: AppColors.mainColor,
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Text(
-                'Special Day',
-                style: TextStyle(
-                  color: AppColors.textColor,
-                  fontSize: 12,
-                ),
-              ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: Colors.redAccent.withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Icon(
-                  Icons.cake,
-                  color: Colors.redAccent,
-                  size: 18,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Text(
-            data.title,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: AppColors.textColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              const Icon(Icons.timelapse_outlined,
-                  color: Colors.redAccent, size: 18),
-              Text(
-                ' ${DateFormat().add_MMMEd().format(data.time)}',
-                style: const TextStyle(
-                  color: AppColors.textColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }
@@ -443,96 +220,144 @@ class EventsExCard extends StatelessWidget {
   final Event data;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.0),
-        color: AppColors.mainColor,
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Text(
-                'Exams and presentations',
-                style: TextStyle(
-                  color: AppColors.textColor,
-                  fontSize: 12,
-                ),
-              ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: AppColors.primaryColor2.withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Icon(
-                  Icons.school,
-                  color: Colors.green,
-                  size: 18,
-                ),
-              ),
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: 120,
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: AppColors.mainColor,
+            boxShadow: const [
+              BoxShadow(color: Colors.black12, blurRadius: 10.0)
             ],
           ),
-          const SizedBox(height: 10),
-          Text(
-            data.title,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: AppColors.textColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(height: 5),
-          Row(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(width: 20),
-              Container(
-                height: 7,
-                width: 7,
-                decoration: const BoxDecoration(
-                  color: AppColors.primaryColor,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 5),
               Expanded(
-                child: Text(
-                  data.description,
-                  style: const TextStyle(
-                    color: AppColors.textColor1,
-                    fontSize: 12,
-                  ),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Icon(Icons.timelapse_outlined,
-                  color: AppColors.primaryColor2, size: 18),
-              Text(
-                ' ${DateFormat().add_jm().format(data.time)}',
-                style: const TextStyle(
-                  color: AppColors.textColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+                  flex: 1,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) => Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/app_icon1.png',
+                          height: constraints.maxWidth / 1.2,
+                          width: constraints.maxWidth,
+                        ),
+                        Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 3.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.0),
+                              color: AppColors.primaryColor,
+                            ),
+                            child: Text(
+                              DateFormat().add_jm().format(data.time),
+                              style: const TextStyle(
+                                color: AppColors.mainColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 11.0,
+                              ),
+                            )),
+                      ],
+                    ),
+                  )),
+              Container(
+                width: 0.5,
+                height: double.infinity,
+                color: Colors.black,
+                margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              ),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.title,
+                      style: const TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        color: AppColors.textColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    const SizedBox(height: 4.0),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 7.0,
+                          height: 7.0,
+                          margin: const EdgeInsets.only(right: 10.0),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            data.description,
+                            maxLines: 3,
+                            style: const TextStyle(
+                              color: AppColors.textColor,
+                              fontSize: 11.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 4.0),
+                          decoration: BoxDecoration(
+                            color: data.check
+                                ? Colors.green[100]
+                                : Colors.red[100],
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Text(
+                            data.check ? 'Completed' : 'Un Completed',
+                            style: TextStyle(
+                              color: data.check ? Colors.green : Colors.red,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: const Icon(
+                            Icons.delete,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              const Spacer(),
-              // CheckContainer(type: type),
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.topLeft,
+          child: Image.asset(
+            'assets/images/app_icon2.png',
+            height: 50.0,
+            width: 50.0,
+          ),
+        ),
+      ],
     );
   }
 }
