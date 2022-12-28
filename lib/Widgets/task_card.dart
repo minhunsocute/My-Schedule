@@ -16,31 +16,22 @@ class TaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: AppColors.textColor1.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(20.0),
+        color: AppColors.mainColor,
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
       ),
       child: Row(
         children: [
-          SizedBox(
-            width: 50,
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  width: 2,
-                  color: type == 2 ? AppColors.primaryColor : Colors.grey,
-                ),
-              ),
-              child: type == 2
-                  ? const Icon(Icons.check,
-                      color: AppColors.primaryColor, size: 12)
-                  : const SizedBox(height: 10),
-            ),
+          Image.asset(
+            type == 1
+                ? 'assets/images/app_icon.png'
+                : 'assets/images/app_icon1.png',
+            width: 50.0,
+            height: 50.0,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +64,7 @@ class TaskCard extends StatelessWidget {
                   ? Colors.blue.withOpacity(0.2)
                   : type == 1
                       ? Colors.orange.withOpacity(0.2)
-                      : AppColors.primaryColor2.withOpacity(0.2),
+                      : Colors.green.withOpacity(0.2),
             ),
             child: Text(
               type == 0
@@ -86,9 +77,9 @@ class TaskCard extends StatelessWidget {
                       ? Colors.blue
                       : type == 1
                           ? Colors.orange
-                          : AppColors.primaryColor2,
+                          : Colors.green,
                   fontSize: 12,
-                  fontWeight: FontWeight.w400),
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ],

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:my_schedule/Pages/Dashboard_list_screen/Screen/widgets/event_ex_card.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../Templates/Misc/color.dart';
@@ -62,6 +63,44 @@ class _EventsScreenState extends State<EventsScreen> {
         check: false,
       )
     ],
+    '${now.year}/${now.month}/${now.day - 1}': [
+      Event(
+        type: 0,
+        time: DateTime.now(),
+        description:
+            'The final exam will be held at 7:30 am, in room A202 at the School of Natural Sciences',
+        location: '',
+        title: 'Windows Develop Exam',
+        check: true,
+      ),
+      Event(
+        type: 1,
+        time: DateTime.now(),
+        description: 'Oke oke oke oke oke ooke',
+        location: '',
+        title: 'Special Day',
+        check: true,
+      ),
+    ],
+    '${now.year}/${now.month}/${now.day - 2}': [
+      Event(
+        type: 0,
+        time: DateTime.now(),
+        description:
+            'The final exam will be held at 7:30 am, in room A202 at the School of Natural Sciences',
+        location: '',
+        title: 'Windows Develop Exam',
+        check: true,
+      ),
+      Event(
+        type: 1,
+        time: DateTime.now(),
+        description: 'Oke oke oke oke oke ooke',
+        location: '',
+        title: 'Special Day',
+        check: true,
+      ),
+    ],
   };
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
@@ -75,10 +114,6 @@ class _EventsScreenState extends State<EventsScreen> {
   @override
   void initState() {
     super.initState();
-    print(selectedEvents);
-    // selectedEvents = {
-    //   DateTime.now(): [Event(title: 'OKe')],
-    // };
   }
 
   List<Event> getEventsfromDay(DateTime date) {
@@ -125,6 +160,7 @@ class _EventsScreenState extends State<EventsScreen> {
             );
           }, //app_icon1.png
               prioritizedBuilder: ((context, day, focusedDay) {
+            final key = '${day.year}/${day.month}/${day.day}';
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -156,7 +192,9 @@ class _EventsScreenState extends State<EventsScreen> {
                           fit: BoxFit.cover,
                           image: AssetImage(
                             (!checkIsSameDate(day, DateTime.now()))
-                                ? 'assets/images/app_icon.png'
+                                ? selectedEvents.containsKey(key)
+                                    ? 'assets/images/app_icon.png'
+                                    : 'assets/images/app_icon3.png'
                                 : 'assets/images/app_icon1.png',
                           ),
                         ),
@@ -204,160 +242,50 @@ class _EventsScreenState extends State<EventsScreen> {
         const SizedBox(height: 10.0),
         const Divider(thickness: 1),
         const SizedBox(height: 10.0),
-        ...getEventsfromDay(selectedDay).map(
-          (e) => EventsExCard(data: e),
-        ),
+        (getEventsfromDay(selectedDay).isEmpty)
+            ? Center(
+                child: Container(
+                  width: double.infinity,
+                  height: 150.0,
+                  margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    color: AppColors.mainColor,
+                    boxShadow: const [
+                      BoxShadow(color: Colors.black26, blurRadius: 10.0)
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        fit: BoxFit.cover,
+                        'assets/images/app_icon3.png',
+                        height: 100.0,
+                        width: 100.0,
+                      ),
+                      const Text(
+                        'No active today',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : Column(
+                children: [
+                  ...getEventsfromDay(selectedDay).map(
+                    (e) => EventsExCard(data: e),
+                  ),
+                ],
+              ),
       ],
     );
   }
 }
 
-class EventsExCard extends StatelessWidget {
-  const EventsExCard({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-  final Event data;
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          height: 120,
-          padding: const EdgeInsets.all(10),
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            color: AppColors.mainColor,
-            boxShadow: const [
-              BoxShadow(color: Colors.black12, blurRadius: 10.0)
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: LayoutBuilder(
-                    builder: (context, constraints) => Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/app_icon1.png',
-                          height: constraints.maxWidth / 1.2,
-                          width: constraints.maxWidth,
-                        ),
-                        Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 3.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              color: AppColors.primaryColor,
-                            ),
-                            child: Text(
-                              DateFormat().add_jm().format(data.time),
-                              style: const TextStyle(
-                                color: AppColors.mainColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 11.0,
-                              ),
-                            )),
-                      ],
-                    ),
-                  )),
-              Container(
-                width: 0.5,
-                height: double.infinity,
-                color: Colors.black,
-                margin: const EdgeInsets.symmetric(horizontal: 10.0),
-              ),
-              Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      data.title,
-                      style: const TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        color: AppColors.textColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                    const SizedBox(height: 4.0),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 7.0,
-                          height: 7.0,
-                          margin: const EdgeInsets.only(right: 10.0),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            data.description,
-                            maxLines: 3,
-                            style: const TextStyle(
-                              color: AppColors.textColor,
-                              fontSize: 11.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 4.0),
-                          decoration: BoxDecoration(
-                            color: data.check
-                                ? Colors.green[100]
-                                : Colors.red[100],
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Text(
-                            data.check ? 'Completed' : 'Un Completed',
-                            style: TextStyle(
-                              color: data.check ? Colors.green : Colors.red,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.0,
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: const Icon(
-                            Icons.delete,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: Image.asset(
-            'assets/images/app_icon2.png',
-            height: 50.0,
-            width: 50.0,
-          ),
-        ),
-      ],
-    );
-  }
-}
+//-------------Widget---------------------------

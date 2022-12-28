@@ -72,7 +72,7 @@ class _TodaysTaskScreenState extends State<TodaysTaskScreen> {
                 '10 tasks today',
                 style: TextStyle(
                   color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w600,
                   fontSize: 14,
                 ),
               ),
@@ -101,7 +101,7 @@ class _TodaysTaskScreenState extends State<TodaysTaskScreen> {
         const SizedBox(height: 20),
         Obx(
           () => SizedBox(
-            height: 40,
+            height: 30,
             width: double.infinity,
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -131,7 +131,7 @@ class _TodaysTaskScreenState extends State<TodaysTaskScreen> {
                           listOption[i]['title'],
                           style: TextStyle(
                             color: (onFocus.value == i)
-                                ? AppColors.textColor
+                                ? AppColors.mainColor
                                 : AppColors.primaryColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 15,

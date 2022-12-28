@@ -592,17 +592,17 @@ class DayItem extends StatelessWidget {
                     Theme.of(context).colorScheme.secondary,
                 borderRadius: BorderRadius.circular(12.0),
               )
-            : BoxDecoration(color: Colors.transparent),
+            : const BoxDecoration(color: Colors.transparent),
         height: height,
         width: width,
         child: Column(
           children: <Widget>[
             if (isSelected) ...[
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               _buildDots(),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
             ] else
-              SizedBox(height: 14),
+              const SizedBox(height: 14),
             Text(
               dayNumber.toString(),
               style: isSelected ? selectedStyle : textStyle,

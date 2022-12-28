@@ -18,7 +18,7 @@ class CheckContainer extends StatelessWidget {
             ? Colors.blue.withOpacity(0.2)
             : type == 1
                 ? Colors.orange.withOpacity(0.2)
-                : Colors.purple.withOpacity(0.2),
+                : Colors.green.withOpacity(0.2),
       ),
       child: Text(
         type == 0
@@ -31,9 +31,9 @@ class CheckContainer extends StatelessWidget {
                 ? Colors.blue
                 : type == 1
                     ? Colors.orange
-                    : Colors.purple,
+                    : Colors.green,
             fontSize: 12,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w600),
       ),
     );
   }

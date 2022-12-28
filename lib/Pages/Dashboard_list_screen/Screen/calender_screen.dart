@@ -22,15 +22,19 @@ class CalenderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.mainColor,
+      backgroundColor: AppColors.greyBackground,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Obx(() => Text(pagesText[check.value],
-            style: const TextStyle(
-                color: AppColors.textColor, fontWeight: FontWeight.bold))),
+        title: Obx(() => Text(
+              pagesText[check.value],
+              style: const TextStyle(
+                color: AppColors.textColor,
+                fontWeight: FontWeight.bold,
+              ),
+            )),
         leading: InkWell(
           borderRadius: BorderRadius.circular(50),
           onTap: () {
@@ -50,11 +54,15 @@ class CalenderScreen extends StatelessWidget {
           Container(
             width: 40,
             height: 40,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              image: const DecorationImage(
-                  image: AssetImage('assets/images/face.png')),
-              color: Colors.grey.withOpacity(0.2),
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/app_icon.png')),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(color: Colors.black26, blurRadius: 5.0),
+              ],
             ),
           ),
           const SizedBox(width: 20),

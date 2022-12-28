@@ -9,6 +9,7 @@ import '../../../Templates/fake_data.dart';
 import '../../../Widgets/task_card.dart';
 import '../../../Widgets/task_control.dart';
 import '../../Dashboard_list_screen/Screen/home_screen.dart';
+import '../../Dashboard_list_screen/Screen/widgets/deadline_project_card.dart';
 import '../../Project_manage/screen/project_manage_screen.dart';
 
 class TaskProjectScreen extends StatelessWidget {

@@ -49,84 +49,42 @@ class _DashBoardScreenState extends State<DashBoardScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Scaffold(
-          extendBody: true,
-          backgroundColor: AppColors.mainColor,
-          body: IndexedStack(
-            index: _dashBoardScreenC.tabIndex.value,
-            children: [
-              const HomeScreen(),
-              CalenderScreen(),
-              TaskProjectScreen(),
-              MainMessageScreen(),
-              ProfileScreen(),
-            ],
-          ),
-          bottomNavigationBar: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              height: 53,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(0, 1),
-                    color: Colors.black.withOpacity(0.4),
-                    blurRadius: 20,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Row(
-                children: [
-                  ButtonPages(
-                    icon: Icons.home,
-                    press: () {
-                      _dashBoardScreenC.tabIndex.value = 0;
-                    },
-                    check: _dashBoardScreenC.tabIndex.value == 0,
-                    checkMode: false,
-                  ),
-                  const Spacer(),
-                  ButtonPages(
-                      icon: Icons.calendar_month,
-                      press: () {
-                        _dashBoardScreenC.tabIndex.value = 1;
-                      },
-                      checkMode: false,
-                      check: _dashBoardScreenC.tabIndex.value == 1),
-                  const Spacer(),
-                  ButtonPages(
-                      icon: Icons.task,
-                      press: () {
-                        _dashBoardScreenC.tabIndex.value = 2;
-                      },
-                      checkMode: false,
-                      check: _dashBoardScreenC.tabIndex.value == 2),
-                  const Spacer(),
-                  ButtonPages(
-                      icon: Icons.send,
-                      press: () {
-                        _dashBoardScreenC.tabIndex.value = 3;
-                      },
-                      checkMode: false,
-                      check: _dashBoardScreenC.tabIndex.value == 3),
-                  const Spacer(),
-                  ButtonPages(
-                      icon: Icons.person,
-                      press: () {
-                        _dashBoardScreenC.tabIndex.value = 4;
-                      },
-                      checkMode: false,
-                      check: _dashBoardScreenC.tabIndex.value == 4),
-                ],
-              ),
-            ),
-          ),
-        ));
+    return Obx(
+      () => Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Colors.blue[300],
+          child: Image.asset('assets/images/app_icon.png', fit: BoxFit.fill),
+        ),
+        extendBody: true,
+        backgroundColor: AppColors.greyBackground,
+        body: IndexedStack(
+          index: _dashBoardScreenC.tabIndex.value,
+          children: [
+            const HomeScreen(),
+            CalenderScreen(),
+            TaskProjectScreen(),
+            ProfileScreen(),
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: AnimatedBottomNavigationBar(
+          backgroundColor: Colors.white,
+          activeColor: AppColors.primaryColor,
+          inactiveColor: Colors.grey,
+          icons: const [
+            Icons.home,
+            Icons.calendar_month,
+            Icons.book,
+            Icons.person
+          ],
+          activeIndex: _dashBoardScreenC.tabIndex.value,
+          gapLocation: GapLocation.center,
+          notchSmoothness: NotchSmoothness.softEdge,
+          onTap: (index) => _dashBoardScreenC.tabIndex.value = index,
+        ),
+      ),
+    );
   }
 }
 
@@ -164,59 +122,3 @@ class ButtonPages extends StatelessWidget {
     );
   }
 }
-// Container(
-          //   margin: const EdgeInsets.all(10),
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(10),
-          //     border: Border.all(width: 1, color: Colors.grey),
-          //     color: Colors.white,
-          //   ),
-          //   child: Padding(
-          //     padding:
-          //         const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-          //     child: GNav(
-          //       onTabChange: (value) {
-          //         // NavigatorTapped(value);
-          //         _dashBoardScreenC.tabIndex.value = value;
-          //       },
-          //       color: Colors.white,
-          //       activeColor: AppColors.primaryColor,
-          //       gap: 8,
-          //       padding: const EdgeInsets.all(10),
-          //       tabBackgroundColor: Colors.grey.withOpacity(0.2),
-          //       tabBorderRadius: 5,
-          //       textStyle: const TextStyle(
-          //         fontWeight: FontWeight.bold,
-          //         color: AppColors.primaryColor,
-          //         fontFamily: 'Montserrat',
-          //       ),
-          //       tabs: const [
-          //         GButton(
-          //           icon: Icons.home,
-          //           text: 'Home',
-          //           iconColor: Colors.white,
-          //         ),
-          //         GButton(
-          //           icon: Icons.calendar_month,
-          //           text: 'Schedule',
-          //           iconColor: Colors.white,
-          //         ),
-          //         GButton(
-          //           icon: Icons.task,
-          //           text: 'Task',
-          //           iconColor: Colors.white,
-          //         ),
-          //         GButton(
-          //           icon: Icons.send,
-          //           text: 'Message',
-          //           iconColor: Colors.white,
-          //         ),
-          //         GButton(
-          //           icon: Icons.person,
-          //           text: 'Profile',
-          //           iconColor: Colors.white,
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),

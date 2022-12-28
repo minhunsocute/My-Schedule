@@ -38,67 +38,83 @@ class TodayScheduleScreen extends StatelessWidget {
         parent: AlwaysScrollableScrollPhysics(),
       ),
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${DateFormat().add_MMMM().format(DateTime.now())} ${DateFormat().add_d().format(DateTime.now())}',
-                    style: const TextStyle(
-                      color: AppColors.textColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    '10 tasks today',
-                    style: TextStyle(
-                      color: AppColors.textColor1,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ),
-                  )
-                ],
-              ),
-              const Spacer(),
-              InkWell(
-                borderRadius: BorderRadius.circular(90),
-                onTap: () {},
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.primaryColor.withOpacity(0.7),
-                  ),
-                  child: const Icon(Icons.calendar_month, color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 20.0),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Obx(
-              () => SizedBox(
+              () => Container(
                 width: double.infinity,
-                height: 100,
-                child: Row(
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: AppColors.mainColor,
+                  borderRadius: BorderRadius.circular(15.0),
+                  boxShadow: const [
+                    BoxShadow(color: Colors.black26, blurRadius: 10.0)
+                  ],
+                ),
+                child: Column(
                   children: [
-                    for (int i = 0; i < 7; i++)
-                      Expanded(
-                        flex: 1,
-                        child: itemBuilder(i, weekDays, select.value == i),
-                      )
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${DateFormat().add_MMMM().format(DateTime.now())} ${DateFormat().add_d().format(DateTime.now())}',
+                              style: const TextStyle(
+                                color: AppColors.textColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const Spacer(),
+                            InkWell(
+                              onTap: () {},
+                              child: const Text(
+                                'Select Week',
+                                style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 12.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          '10 tasks',
+                          style: TextStyle(
+                            color: AppColors.textColor1,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 10.0),
+                    SizedBox(
+                      height: 100,
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          for (int i = 0; i < 7; i++)
+                            Expanded(
+                              flex: 1,
+                              child:
+                                  itemBuilder(i, weekDays, select.value == i),
+                            )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
             )),
-        const SizedBox(height: 30),
+        const SizedBox(height: 10),
+        const Divider(thickness: 1),
+        const SizedBox(height: 10.0),
         Row(
           children: [
             SizedBox(width: MediaQuery.of(context).size.width / 4),
@@ -132,8 +148,9 @@ class TodayScheduleScreen extends StatelessWidget {
                         child: Text(
                           convertTime(i),
                           style: const TextStyle(
-                            color: AppColors.textColor1,
-                            fontSize: 12,
+                            color: AppColors.textColor,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -150,15 +167,15 @@ class TodayScheduleScreen extends StatelessWidget {
                               height: getMinBetweenDates(schedule[i - 1]['end'],
                                       schedule[i]['begin']) *
                                   1.0),
-                          scheduleItem(
-                              schedule,
-                              i,
-                              listColor,
-                              getMinBetweenDates(schedule[i]['begin'],
+                          ScheduleItem(
+                              schedule: schedule,
+                              i: i,
+                              listColor: listColor,
+                              height: getMinBetweenDates(schedule[i]['begin'],
                                       schedule[i]['end']) *
                                   1.0,
-                              listIcon,
-                              context),
+                              listIcon: listIcon,
+                              context: context),
                         ],
                       )
                   ],
@@ -168,209 +185,6 @@ class TodayScheduleScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget scheduleItem(
-      List<Map<String, dynamic>> schedule,
-      int i,
-      List<Color> listColor,
-      double height,
-      List<IconData> listIcon,
-      BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        int type = checkDateBetween(schedule[i]['begin'], schedule[i]['end']);
-        await showDialog(
-          useRootNavigator: false,
-          barrierColor: Colors.black54,
-          context: context,
-          builder: (context) {
-            // initAll1(element);
-            return Dialog(
-              backgroundColor: Colors.transparent,
-              child: Container(
-                height: 120,
-                padding: const EdgeInsets.all(10),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.mainColor,
-                    border: Border.all(width: 1, color: Colors.grey)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          '${listMainTitle[schedule[i]['type']]} ',
-                          style: const TextStyle(
-                            color: AppColors.textColor,
-                            // fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: listColor[schedule[i]['type']]
-                                  .withOpacity(0.5)),
-                          child: Icon(listIcon[schedule[i]['type']],
-                              color: listColor[schedule[i]['type']]),
-                        ),
-                      ],
-                    ),
-                    // const SizedBox(height: 10),
-                    Text(
-                      schedule[i]['title'],
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                        color: AppColors.textColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Spacer(),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.timelapse_sharp,
-                          color: listColor[schedule[i]['type']],
-                        ),
-                        Text(
-                          ' ${DateFormat().add_jm().format(schedule[i]['begin'])} - ${DateFormat().add_jm().format(schedule[i]['end'])}',
-                          style: TextStyle(
-                              color: listColor[schedule[i]['type']],
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: type == 0
-                                ? Colors.blue.withOpacity(0.2)
-                                : type == 1
-                                    ? Colors.orange.withOpacity(0.2)
-                                    : Colors.purple.withOpacity(0.2),
-                          ),
-                          child: Text(
-                            type == 0
-                                ? 'To-do'
-                                : type == 1
-                                    ? 'In Progress'
-                                    : 'Done',
-                            style: TextStyle(
-                                color: type == 0
-                                    ? Colors.blue
-                                    : type == 1
-                                        ? Colors.orange
-                                        : Colors.purple,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        height: height,
-        decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.4),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        width: double.infinity,
-        child: height > (60 * 2 - 15)
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        '${listMainTitle[schedule[i]['type']]} ',
-                        style: const TextStyle(
-                          color: AppColors.textColor,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
-                      const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: listColor[schedule[i]['type']]
-                                .withOpacity(0.5)),
-                        child: Icon(listIcon[schedule[i]['type']],
-                            color: listColor[schedule[i]['type']]),
-                      ),
-                    ],
-                  ),
-                  // const SizedBox(height: 10),
-                  Text(
-                    schedule[i]['title'],
-                    textAlign: TextAlign.start,
-                    style: const TextStyle(
-                      color: AppColors.textColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.timelapse_sharp,
-                        color: listColor[schedule[i]['type']],
-                      ),
-                      Text(
-                        ' ${DateFormat().add_jm().format(schedule[i]['begin'])} - ${DateFormat().add_jm().format(schedule[i]['end'])}',
-                        style: TextStyle(
-                            color: listColor[schedule[i]['type']],
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            : Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: listColor[schedule[i]['type']].withOpacity(0.5)),
-                    child: Icon(listIcon[schedule[i]['type']],
-                        color: listColor[schedule[i]['type']]),
-                  ),
-                  const SizedBox(width: 5),
-                  SizedBox(
-                    width: 150,
-                    child: Text(
-                      schedule[i]['title'],
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: AppColors.textColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-      ),
     );
   }
 
@@ -391,7 +205,7 @@ class TodayScheduleScreen extends StatelessWidget {
               width: check ? 50 : 0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(35),
-                color: AppColors.primaryColor,
+                color: Colors.blue[300],
                 boxShadow: [
                   BoxShadow(
                     color: Colors.white.withOpacity(0.5),
@@ -414,34 +228,250 @@ class TodayScheduleScreen extends StatelessWidget {
                   Text(
                     (i + 10).toString(),
                     // textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: AppColors.textColor,
+                    style: TextStyle(
+                      color: check ? Colors.white : AppColors.textColor1,
                       fontSize: 12,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     weekDays[i],
                     // textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: AppColors.textColor,
+                    style: TextStyle(
+                      color: check ? Colors.white : AppColors.textColor1,
                       fontSize: 12,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 10),
                   check
-                      ? Container(
-                          height: 5,
-                          width: 5,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
+                      ? Image.asset(
+                          'assets/images/app_icon.png',
+                          height: 30.0,
+                          width: 30.0,
                         )
-                      : Container(),
+                      : const SizedBox(),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ScheduleItem extends StatelessWidget {
+  const ScheduleItem({
+    Key? key,
+    required this.schedule,
+    required this.i,
+    required this.listColor,
+    required this.height,
+    required this.listIcon,
+    required this.context,
+  }) : super(key: key);
+
+  final List<Map<String, dynamic>> schedule;
+  final int i;
+  final List<Color> listColor;
+  final double height;
+  final List<IconData> listIcon;
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        int type = checkDateBetween(schedule[i]['begin'], schedule[i]['end']);
+        await showDialog(
+          useRootNavigator: false,
+          barrierColor: Colors.black54,
+          context: context,
+          builder: (context) {
+            return Dialog(
+              backgroundColor: Colors.transparent,
+              child: Container(
+                height: 120,
+                padding: const EdgeInsets.all(10),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.mainColor,
+                  border: Border.all(width: 1, color: Colors.grey),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${listMainTitle[schedule[i]['type']]} ',
+                                style: const TextStyle(
+                                  color: AppColors.textColor1,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Text(
+                                schedule[i]['title'],
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                  color: AppColors.textColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Image.asset('assets/images/app_icon1.png',
+                            height: 40.0, width: 40.0),
+                      ],
+                    ),
+                    // const SizedBox(height: 10),
+
+                    const Spacer(),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.timelapse_sharp,
+                          color: AppColors.primaryColor,
+                        ),
+                        Text(
+                          ' ${DateFormat().add_jm().format(schedule[i]['begin'])} - ${DateFormat().add_jm().format(schedule[i]['end'])}',
+                          style: const TextStyle(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: type == 0
+                                ? Colors.blue.withOpacity(0.2)
+                                : type == 1
+                                    ? Colors.orange.withOpacity(0.2)
+                                    : Colors.green.withOpacity(0.2),
+                          ),
+                          child: Text(
+                            type == 0
+                                ? 'To-do'
+                                : type == 1
+                                    ? 'In Progress'
+                                    : 'Done',
+                            style: TextStyle(
+                              color: type == 0
+                                  ? Colors.blue
+                                  : type == 1
+                                      ? Colors.orange
+                                      : Colors.green,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        height: height,
+        margin: const EdgeInsets.only(right: 10.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 10.0)],
+        ),
+        width: double.infinity,
+        child: height > (60 * 2 - 15)
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${listMainTitle[schedule[i]['type']]} ',
+                              style: const TextStyle(
+                                color: AppColors.textColor1,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                            // const SizedBox(height: 10),
+                            Text(
+                              schedule[i]['title'],
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                color: AppColors.textColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Image.asset('assets/images/app_icon1.png',
+                          height: 40.0, width: 40.0),
+                    ],
+                  ),
+                  const Spacer(),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.timelapse_sharp,
+                        color: AppColors.primaryColor,
+                      ),
+                      Text(
+                        ' ${DateFormat().add_jm().format(schedule[i]['begin'])} - ${DateFormat().add_jm().format(schedule[i]['end'])}',
+                        style: const TextStyle(
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : Row(
+                children: [
+                  Image.asset(
+                    'assets/images/app_icon1.png',
+                    height: 50.0,
+                    width: 50.0,
+                  ),
+                  const SizedBox(width: 5),
+                  SizedBox(
+                    width: 150,
+                    child: Text(
+                      schedule[i]['title'],
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: AppColors.textColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }

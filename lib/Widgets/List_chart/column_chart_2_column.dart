@@ -161,8 +161,8 @@ class ColumnChartTwoColumnCustomState
     Widget text = Text(
       titles[value.toInt()],
       style: const TextStyle(
-        color: AppColors.textColor1,
-        fontWeight: FontWeight.bold,
+        color: AppColors.textColor,
+        // fontWeight: FontWeight.bold,
         fontSize: 12,
       ),
     );

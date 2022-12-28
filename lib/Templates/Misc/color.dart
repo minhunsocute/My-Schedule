@@ -8,5 +8,6 @@ class AppColors {
   static const Color primaryColor2 = Color.fromARGB(255, 169, 255, 172);
   static const Color textColor = Colors.black;
   static const Color textColor1 = Colors.black54;
-  static const Color greyBackground = Color.fromARGB(255, 240, 242, 244);
+  static Color textColor2 = Colors.black.withOpacity(0.7);
+  static const Color greyBackground = Color.fromARGB(255, 222, 235, 246);
 }

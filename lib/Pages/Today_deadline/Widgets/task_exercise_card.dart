@@ -23,8 +23,11 @@ class TaskExerciseCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.4),
+        color: AppColors.mainColor,
         borderRadius: BorderRadius.circular(10),
+        boxShadow: const [
+          BoxShadow(color: Colors.black26, blurRadius: 10.0),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,6 +38,7 @@ class TaskExerciseCard extends StatelessWidget {
                 mainTitle,
                 style: const TextStyle(
                   color: AppColors.textColor1,
+                  fontWeight: FontWeight.bold,
                   fontSize: 12,
                 ),
               ),
@@ -42,12 +46,12 @@ class TaskExerciseCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor2.withOpacity(0.4),
+                  color: Colors.green.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: const Icon(
                   Icons.person,
-                  color: AppColors.primaryColor2,
+                  color: Colors.green,
                   size: 18,
                 ),
               ),

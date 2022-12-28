@@ -34,8 +34,11 @@ class TaskProjectCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.4),
+          color: AppColors.mainColor,
           borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(color: Colors.black26, blurRadius: 10.0),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,6 +49,7 @@ class TaskProjectCard extends StatelessWidget {
                   mainTitle,
                   style: const TextStyle(
                     color: AppColors.textColor1,
+                    fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),
                 ),
@@ -53,12 +57,12 @@ class TaskProjectCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryColor1.withOpacity(0.4),
+                    color: AppColors.primaryColor.withOpacity(0.4),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: const Icon(
                     Icons.people,
-                    color: AppColors.primaryColor1,
+                    color: AppColors.primaryColor,
                     size: 18,
                   ),
                 ),
@@ -119,14 +123,9 @@ class TaskProjectCard extends StatelessWidget {
                       width: 60,
                       height: 60,
                       child: CircularPercentIndicator(
-                        center: Text(
-                          '${(percent * 100).round()}%',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
+                        center: Image.asset(percent < 1
+                            ? 'assets/images/app_icon.png'
+                            : 'assets/images/app_icon1.png'),
                         animation: true,
                         animationDuration: 600,
                         circularStrokeCap: CircularStrokeCap.round,
@@ -136,11 +135,11 @@ class TaskProjectCard extends StatelessWidget {
                         backgroundColor:
                             // AppColors.primaryColor.withOpacity(0.1),
                             (percent < 1)
-                                ? AppColors.primaryColor1.withOpacity(0.1)
-                                : Colors.green.withOpacity(0.1),
+                                ? Colors.yellow.withOpacity(0.4)
+                                : AppColors.primaryColor.withOpacity(0.1),
                         progressColor: (percent < 1)
-                            ? AppColors.primaryColor1
-                            : Colors.green,
+                            ? Colors.yellow
+                            : AppColors.primaryColor,
                       ),
                     ),
                   ),
@@ -151,12 +150,12 @@ class TaskProjectCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Icon(Icons.timelapse_outlined,
-                    color: Colors.red, size: 18),
+                Icon(Icons.timelapse_outlined,
+                    color: Colors.red[400], size: 18),
                 Text(
                   ' ${DateFormat().add_jm().format(time)}',
-                  style: const TextStyle(
-                    color: Colors.red,
+                  style: TextStyle(
+                    color: Colors.red[400],
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
