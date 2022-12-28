@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +27,17 @@ class ProfileDiffScreen extends StatelessWidget {
       'data': 200,
     }
   ];
+  List<Map<String, dynamic>> listPageIcon = [
+    {
+      'icon': Icons.bar_chart,
+      'check': 0,
+    },
+    {
+      'icon': Icons.file_copy,
+      'check': 1,
+    }
+  ];
+  RxInt pageCheck = 0.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,59 +69,114 @@ class ProfileDiffScreen extends StatelessWidget {
       body: LayoutBuilder(
         builder: (context, constraints) => Column(
           children: [
+            _topField(constraints),
+            const SizedBox(height: 10.0),
+            const Divider(thickness: 1),
             SizedBox(
+              height: 50.0,
               width: double.infinity,
-              height: constraints.maxHeight / 2.5,
               child: Column(
                 children: [
                   Expanded(
-                    flex: 3,
                     child: Row(
-                      children: [
-                        _avtField(),
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            children: [
-                              _taskField(),
-                              const SizedBox(height: 10.0),
-                              _basicDataProfileField()
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 10.0),
-                        Expanded(
-                          child: CustomButton(
-                            onPress: () {},
-                            title: 'Follow',
-                            height: 40.0,
-                          ),
-                        ),
-                        const SizedBox(width: 10.0),
-                        Expanded(
-                          child: CustomButton(
-                            onPress: () {},
-                            title: 'Message',
-                            height: 40.0,
-                            backgroundColor: Colors.blue[200],
-                          ),
-                        ),
-                        const SizedBox(width: 10.0),
-                      ],
+                      children: listPageIcon
+                          .map((e) => Obx(
+                                () => Expanded(
+                                  child: LayoutBuilder(
+                                    builder: (cContext, cConstraints) =>
+                                        InkWell(
+                                      onTap: () => pageCheck.value = e['check'],
+                                      child: Column(
+                                        children: [
+                                          Center(
+                                            child: Icon(e['icon'],
+                                                color: pageCheck.value ==
+                                                        e['check']
+                                                    ? AppColors.primaryColor
+                                                    : Colors.grey),
+                                          ),
+                                          const Spacer(),
+                                          Align(
+                                            alignment: Alignment.bottomCenter,
+                                            child: AnimatedContainer(
+                                              color: AppColors.primaryColor,
+                                              duration: const Duration(
+                                                  milliseconds: 200),
+                                              height: 2.0,
+                                              width:
+                                                  pageCheck.value == e['check']
+                                                      ? cConstraints.maxWidth
+                                                      : 0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ))
+                          .toList(),
                     ),
                   ),
                 ],
               ),
-            ),
+            )
           ],
         ),
+      ),
+    );
+  }
+
+  SizedBox _topField(BoxConstraints constraints) {
+    return SizedBox(
+      width: double.infinity,
+      height: constraints.maxHeight / 2.7,
+      child: Column(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Row(
+              children: [
+                _avtField(),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      _taskField(),
+                      const SizedBox(height: 10.0),
+                      _basicDataProfileField()
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Row(
+              children: [
+                const SizedBox(width: 10.0),
+                Expanded(
+                  child: CustomButton(
+                    onPress: () {},
+                    title: 'Follow',
+                    height: 40.0,
+                  ),
+                ),
+                const SizedBox(width: 10.0),
+                Expanded(
+                  child: CustomButton(
+                    onPress: () {},
+                    title: 'Message',
+                    height: 40.0,
+                    backgroundColor: Colors.blue[200],
+                  ),
+                ),
+                const SizedBox(width: 10.0),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -119,48 +186,43 @@ class ProfileDiffScreen extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) => Column(
             children: [
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    for (int i = 0; i < listBasicData.length; i++)
-                      Expanded(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                listBasicData[i]['data'].toString(),
-                                style: const TextStyle(
-                                  color: AppColors.textColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                              Text(
-                                listBasicData[i]['title'],
-                                style: const TextStyle(
-                                  color: AppColors.textColor1,
-                                  fontSize: 12.0,
-                                ),
-                              ),
-                            ]),
+              Row(
+                children: [
+                  for (int i = 0; i < listBasicData.length; i++)
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            listBasicData[i]['data'].toString(),
+                            style: const TextStyle(
+                              color: AppColors.textColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          AutoSizeText(
+                            listBasicData[i]['title'],
+                            maxLines: 1,
+                            minFontSize: 5.0,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 12),
+                          )
+                        ],
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
               const Divider(thickness: 1),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    RowBasicData(
-                      title: 'hungnguyen.201102ak@gmail.com',
-                    ),
-                    RowBasicData(
-                      title: DateFormat().add_yMEd().format(DateTime.now()),
-                    ),
-                  ],
-                ),
+              Column(
+                children: [
+                  RowBasicData(
+                    title: 'hungnguyen.201102ak@gmail.com',
+                  ),
+                  RowBasicData(
+                    title: DateFormat().add_yMEd().format(DateTime.now()),
+                  ),
+                ],
               )
             ],
           ),
