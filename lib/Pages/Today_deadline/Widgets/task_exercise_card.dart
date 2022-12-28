@@ -24,7 +24,7 @@ class TaskExerciseCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: AppColors.mainColor,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(15),
         boxShadow: const [
           BoxShadow(color: Colors.black26, blurRadius: 10.0),
         ],

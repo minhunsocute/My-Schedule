@@ -48,6 +48,12 @@ class AppDecoration {
     ],
     borderRadius: AppDecoration.primaryRadiusBorder,
   );
+
+  static final roundOfContainer = BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(15.0),
+    boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5.0)],
+  );
   static const primaryPadding = EdgeInsets.all(15);
 }
 
