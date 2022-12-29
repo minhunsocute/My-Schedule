@@ -1,45 +1,23 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:my_schedule/Pages/Profile/screen/Widgets/github_calender_built.dart';
+import 'package:my_schedule/Pages/Profile/controller/profile_dif_controller.dart';
 import 'package:my_schedule/Templates/Misc/color.dart';
+import 'package:my_schedule/Templates/fake_data.dart';
 import 'package:my_schedule/Widgets/app_decoration.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-import '../../../Widgets/task_card.dart';
-import '../../../Widgets/task_control.dart';
+import '../../../Widgets/line_chart_2_line.dart';
 
 class ProfileDiffScreen extends StatelessWidget {
   ProfileDiffScreen({super.key});
-  List<Map<String, dynamic>> listBasicData = [
-    {
-      'title': 'Follower',
-      'data': 100,
-    },
-    {
-      'title': 'Following',
-      'data': 140,
-    },
-    {
-      'title': 'Projects',
-      'data': 200,
-    }
-  ];
-  List<Map<String, dynamic>> listPageIcon = [
-    {
-      'icon': Icons.bar_chart,
-      'check': 0,
-    },
-    {
-      'icon': Icons.file_copy,
-      'check': 1,
-    }
-  ];
-  RxInt pageCheck = 0.obs;
+
+  final controller = Get.put(ProfileDiffControlelr());
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
+    List<Widget> listPages = [ChartProfileTab(), ListProjectProfileField()];
     return Scaffold(
       backgroundColor: AppColors.greyBackground,
       appBar: AppBar(
@@ -70,59 +48,70 @@ class ProfileDiffScreen extends StatelessWidget {
         builder: (context, constraints) => Column(
           children: [
             _topField(constraints),
-            const SizedBox(height: 10.0),
-            const Divider(thickness: 1),
-            SizedBox(
-              height: 50.0,
-              width: double.infinity,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: listPageIcon
-                          .map((e) => Obx(
-                                () => Expanded(
-                                  child: LayoutBuilder(
-                                    builder: (cContext, cConstraints) =>
-                                        InkWell(
-                                      onTap: () => pageCheck.value = e['check'],
-                                      child: Column(
-                                        children: [
-                                          Center(
-                                            child: Icon(e['icon'],
-                                                color: pageCheck.value ==
-                                                        e['check']
-                                                    ? AppColors.primaryColor
-                                                    : Colors.grey),
-                                          ),
-                                          const Spacer(),
-                                          Align(
-                                            alignment: Alignment.bottomCenter,
-                                            child: AnimatedContainer(
-                                              color: AppColors.primaryColor,
-                                              duration: const Duration(
-                                                  milliseconds: 200),
-                                              height: 2.0,
-                                              width:
-                                                  pageCheck.value == e['check']
-                                                      ? cConstraints.maxWidth
-                                                      : 0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ))
-                          .toList(),
-                    ),
-                  ),
-                ],
+            _pageIconField(widthDevice),
+            Expanded(
+              child: PageView.builder(
+                controller: controller.pageController,
+                itemBuilder: (context, index) => listPages[index],
+                itemCount: 2,
               ),
-            )
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  SizedBox _pageIconField(double widthDevice) {
+    return SizedBox(
+      height: 40.0,
+      width: double.infinity,
+      child: Column(
+        children: [
+          Obx(
+            () => Expanded(
+              child: Row(
+                children: [
+                  ...controller.listPageIcon.map(
+                    (e) => Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          controller.checkTab.value = e['check'];
+                          controller.switchPage(e['check']);
+                        },
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Icon(
+                                e['icon'],
+                                size: 25.0,
+                                color: controller.checkTab.value == e['check']
+                                    ? AppColors.primaryColor
+                                    : Colors.grey,
+                              ),
+                            ),
+                            const Spacer(),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: AnimatedContainer(
+                                color: AppColors.primaryColor,
+                                duration: const Duration(milliseconds: 200),
+                                height: 2.0,
+                                width: controller.checkTab.value == e['check']
+                                    ? widthDevice / 2
+                                    : 0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -130,7 +119,7 @@ class ProfileDiffScreen extends StatelessWidget {
   SizedBox _topField(BoxConstraints constraints) {
     return SizedBox(
       width: double.infinity,
-      height: constraints.maxHeight / 2.7,
+      height: constraints.maxHeight / 2.8,
       child: Column(
         children: [
           Expanded(
@@ -188,13 +177,13 @@ class ProfileDiffScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  for (int i = 0; i < listBasicData.length; i++)
+                  for (int i = 0; i < controller.listBasicData.length; i++)
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            listBasicData[i]['data'].toString(),
+                            controller.listBasicData[i]['data'].toString(),
                             style: const TextStyle(
                               color: AppColors.textColor,
                               fontWeight: FontWeight.bold,
@@ -202,7 +191,7 @@ class ProfileDiffScreen extends StatelessWidget {
                             ),
                           ),
                           AutoSizeText(
-                            listBasicData[i]['title'],
+                            controller.listBasicData[i]['title'],
                             maxLines: 1,
                             minFontSize: 5.0,
                             overflow: TextOverflow.ellipsis,
@@ -442,6 +431,408 @@ class CustomButton extends StatelessWidget {
             fontSize: 14,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ListProjectProfileField extends StatelessWidget {
+  const ListProjectProfileField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
+      children: [
+        const SizedBox(height: 20.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text(
+                'All Projects',
+                style: TextStyle(
+                  color: AppColors.textColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.0,
+                ),
+              ),
+              Text(
+                '10 Projects',
+                style: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12.0,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 15.0),
+        AllProjectDifItem(
+            name: 'Windows Project',
+            time: DateTime.now(),
+            counting: 100,
+            onPress: () {}),
+        AllProjectDifItem(
+            name: 'Android Project',
+            time: DateTime.now(),
+            counting: 10,
+            onPress: () {}),
+        AllProjectDifItem(
+            name: 'AI Project',
+            time: DateTime.now(),
+            counting: 120,
+            onPress: () {}),
+        const SizedBox(height: 40.0),
+      ],
+    );
+  }
+}
+
+class AllProjectDifItem extends StatelessWidget {
+  final String name;
+  final DateTime time;
+  final int counting;
+  final Function() onPress;
+  const AllProjectDifItem({
+    Key? key,
+    required this.name,
+    required this.time,
+    required this.counting,
+    required this.onPress,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      child: Container(
+        width: double.infinity,
+        // padding: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: AppColors.mainColor,
+          boxShadow: const [
+            BoxShadow(color: Colors.black26, blurRadius: 10.0),
+          ],
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 15.0, left: 15.0, bottom: 15.0),
+              child: Image.asset(
+                'assets/images/app_icon1.png',
+                height: 50.0,
+                width: 50.0,
+              ),
+            ),
+            Container(
+              width: 0.5,
+              height: 50.0,
+              color: Colors.black,
+              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      color: AppColors.textColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17.0,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 6.0,
+                        width: 6.0,
+                        margin: const EdgeInsets.only(right: 5.0),
+                        decoration: const BoxDecoration(
+                          color: AppColors.primaryColor,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      Text(
+                        DateFormat().add_yMEd().format(time),
+                        style: const TextStyle(
+                          color: AppColors.textColor1,
+                          fontSize: 12.0,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: onPress,
+              child: Container(
+                width: 50,
+                height: 80.0,
+                margin: const EdgeInsets.all(2.0),
+                decoration: BoxDecoration(
+                  color: Colors.blue[300],
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(15.0),
+                    bottomRight: Radius.circular(15.0),
+                    topLeft: Radius.circular(5.0),
+                    bottomLeft: Radius.circular(5.0),
+                  ),
+                ),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.star, color: Colors.yellow),
+                      Text(
+                        counting.toString(),
+                        style: const TextStyle(
+                          color: AppColors.mainColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ChartProfileTab extends StatelessWidget {
+  const ChartProfileTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
+      scrollDirection: Axis.vertical,
+      children: [
+        const SizedBox(height: 20.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Commit Board',
+                style: TextStyle(
+                  color: AppColors.textColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.0,
+                ),
+              ),
+              InkWell(
+                  onTap: () {},
+                  child: const Text(
+                    'Select Week',
+                    style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12.0,
+                      decoration: TextDecoration.underline,
+                    ),
+                  )),
+            ],
+          ),
+        ),
+        const SizedBox(height: 15.0),
+        Container(
+          padding: const EdgeInsets.all(10.0),
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height / 4,
+          color: AppColors.mainColor,
+          child: const Padding(
+              padding: EdgeInsets.only(
+                right: 16,
+                left: 6,
+                top: 5.0,
+                bottom: 5.0,
+              ),
+              child: LineChart2Line(isShowingMainData: true)),
+        ),
+        const SizedBox(height: 20.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            children: const [
+              Text(
+                'Task View',
+                style: TextStyle(
+                  color: AppColors.textColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 2.3,
+              color: AppColors.mainColor,
+              child: Row(
+                children: [
+                  _doneListField(true),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                    width: 1,
+                    height: double.infinity,
+                    color: AppColors.primaryColor,
+                  ),
+                  _doneListField(false),
+                ],
+              ),
+            ),
+            Positioned(
+              top: -30,
+              left: (MediaQuery.of(context).size.width - 60.0) / 8,
+              child: Image.asset(
+                'assets/images/app_icon.png',
+                height: 60.0,
+                width: 60.0,
+              ),
+            ),
+            Positioned(
+              top: -30,
+              right: (MediaQuery.of(context).size.width - 60.0) / 8,
+              child: Image.asset(
+                'assets/images/app_icon1.png',
+                height: 60.0,
+                width: 60.0,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 40.0),
+      ],
+    );
+  }
+
+  Expanded _doneListField(bool check) {
+    return Expanded(
+      child: ListView(children: [
+        const SizedBox(height: 10.0),
+        Padding(
+          padding: const EdgeInsets.only(top: 15.0, left: 15.0),
+          child: RichText(
+            text: TextSpan(
+              style: const TextStyle(color: AppColors.textColor),
+              children: [
+                const TextSpan(
+                  text: '100',
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(
+                  text: ' tasks (${check ? 'done' : 'todo'})',
+                  style: const TextStyle(
+                    fontSize: 14.0,
+                    color: AppColors.textColor1,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        const Divider(thickness: 1),
+        TaskDataRow(title: 'Windows Dev', time: DateTime.now(), check: check),
+        TaskDataRow(title: 'Windows Dev', time: DateTime.now(), check: check),
+        TaskDataRow(title: 'Windows Dev', time: DateTime.now(), check: check),
+      ]),
+    );
+  }
+}
+
+class TaskDataRow extends StatelessWidget {
+  final String title;
+  final DateTime time;
+  final bool check;
+  const TaskDataRow({
+    Key? key,
+    required this.title,
+    required this.time,
+    required this.check,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        children: [
+          Image.asset(
+            check
+                ? 'assets/images/app_icon.png'
+                : 'assets/images/app_icon1.png',
+            height: 40.0,
+            width: 40.0,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                    color: AppColors.textColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.0,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 6.0,
+                      width: 6.0,
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: BoxDecoration(
+                        color: check ? Colors.yellow : AppColors.primaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    Text(
+                      DateFormat().add_yMEd().format(time),
+                      style: const TextStyle(
+                        color: AppColors.textColor1,
+                        fontSize: 10.0,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
