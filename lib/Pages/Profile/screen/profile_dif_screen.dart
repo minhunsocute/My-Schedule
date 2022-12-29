@@ -9,6 +9,7 @@ import 'package:my_schedule/Templates/fake_data.dart';
 import 'package:my_schedule/Widgets/app_decoration.dart';
 
 import '../../../Widgets/line_chart_2_line.dart';
+import '../../Messenger/screen/mess_person_screen.dart';
 import 'Widgets/chart_profile_tab.dart';
 import 'Widgets/custom_button.dart';
 import 'Widgets/list_project_profile_tab.dart';
@@ -159,7 +160,8 @@ class ProfileDiffScreen extends StatelessWidget {
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: CustomButton(
-                    onPress: () {},
+                    onPress: () => Get.to(() => MessPersonScreen(),
+                        transition: Transition.topLevel),
                     title: 'Message',
                     height: 40.0,
                     backgroundColor: Colors.blue[200],
