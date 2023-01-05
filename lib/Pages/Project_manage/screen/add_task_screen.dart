@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:my_schedule/Pages/Profile/screen/Widgets/custom_button.dart';
 import 'package:my_schedule/Widgets/button_custom.dart';
 
 import '../../../Templates/Misc/color.dart';
+import '../../../Widgets/text_filed_custom.dart';
+import '../../Sign_up_in/screen/forgot_password_screen.dart';
 
 const List<Item> _items = [
   Item(
@@ -67,270 +71,134 @@ class _AddTaskScreenState extends State<AddTaskScreen>
   }
 
   int count = 0;
+  RxInt checkCover = 10.obs;
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
+    var heightDevice = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppColors.mainColor,
       appBar: _buildAppBar(),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: CustomButton(title: 'Add new task', onPress: () {}),
+      ),
       body: ListView(
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),
         ),
         children: [
-          inputField(
-            hintText: 'Enter your title',
-            mainTitle: 'Title',
-            control: controller,
-          ),
-          const SizedBox(height: 20),
-          inputField(
-            hintText: 'Enter your note',
-            mainTitle: 'Note',
-            control: controller,
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Start Date',
-                        style: TextStyle(
-                          color: AppColors.textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+          const SizedBox(height: 10.0),
+          Obx(
+            () => checkCover.value == 0
+                ? InkWell(
+                    onTap: () {},
+                    child: Container(
+                      width: widthDevice,
+                      height: widthDevice / 2.5,
+                      margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                      padding: const EdgeInsets.all(15.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        color: AppColors.mainColor,
+                        border: Border.all(
+                            width: 1,
+                            strokeAlign: StrokeAlign.center,
+                            color: Colors.grey),
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black26, blurRadius: 10.0)
+                        ],
                       ),
-                      const SizedBox(height: 5),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border:
-                              Border.all(width: 1, color: AppColors.textColor1),
-                        ),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  DateFormat()
-                                      .add_MMMEd()
-                                      .format(DateTime.now()),
-                                  style: const TextStyle(
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  DateFormat().add_jm().format(DateTime.now()),
-                                  style: const TextStyle(
-                                    color: AppColors.textColor1,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              ],
-                            ),
-                            const Spacer(),
-                            const Icon(Icons.timelapse_outlined,
-                                color: AppColors.primaryColor),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Due Date',
-                        style: TextStyle(
-                          color: AppColors.textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border:
-                              Border.all(width: 1, color: AppColors.textColor1),
-                        ),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  DateFormat()
-                                      .add_MMMEd()
-                                      .format(DateTime.now()),
-                                  style: const TextStyle(
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  DateFormat().add_jm().format(DateTime.now()),
-                                  style: const TextStyle(
-                                    color: AppColors.textColor1,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              ],
-                            ),
-                            const Spacer(),
-                            const Icon(Icons.timelapse_outlined,
-                                color: AppColors.primaryColor),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ), //
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Executor',
-                  style: TextStyle(
-                    color: AppColors.textColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                DragTarget<Item>(
-                  builder: (context, candidateItems, rejectedItems) {
-                    return (listItem.isNotEmpty)
-                        ? Container(
-                            // padding: const EdgeInsets.all(5),
-
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: AppColors.textColor1.withOpacity(0.4),
-                            ),
-                            child: Wrap(
-                              children: [
-                                ...listItem.map(
-                                  (e) => Container(
-                                    width: 110,
-                                    padding: const EdgeInsets.all(10),
-                                    // height: 20,
-                                    margin: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: AppColors.mainColor,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 80,
-                                          child: Text(
-                                            e.name,
-                                            style: const TextStyle(
-                                              color: AppColors.textColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: InkWell(
-                                            onTap: () {},
-                                            child: const Icon(
-                                              Icons.close,
-                                              color: AppColors.textColor,
-                                              size: 12,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : Container(
-                            height: 80,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: AppColors.textColor1.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.download,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                  Text(
-                                    'Drop Here',
-                                    style: TextStyle(
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Icon(Icons.add, color: Colors.grey),
+                            SizedBox(height: 10.0),
+                            Text(
+                              'Add Cover',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.0,
                               ),
-                            ),
-                          );
-                  },
-                  onAccept: (item) => _itemDroppedOnCustomerCart(item: item),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: 180,
-            width: double.infinity,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics(),
-              ),
-              children: [
-                ..._items.map(
-                  (e) => LongPressDraggable(
-                    data: e,
-                    dragAnchorStrategy: pointerDragAnchorStrategy,
-                    feedback: DraggingListItem(
-                      dragKey: _draggableKey,
-                      photoProvider: AssetImage(e.image),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
-                    child: ItemCard(e: e),
+                  )
+                : Container(
+                    width: widthDevice,
+                    height: widthDevice / 2.5,
+                    margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                    padding: const EdgeInsets.all(15.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      gradient: const LinearGradient(
+                        colors: [Colors.yellow, Colors.purple],
+                      ),
+                      boxShadow: const [
+                        BoxShadow(color: Colors.black26, blurRadius: 10.0)
+                      ],
+                    ),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.edit,
+                          color: AppColors.mainColor,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+          ),
+          const SizedBox(height: 20.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            child: CustomTextFormField(
+              hint: "Enter Task title",
+              title: "Task title",
+              // controller: controller.passwordController,
+              isPasswordField: false,
+              trailingIcon: Icon(Icons.task),
             ),
           ),
-          const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ButtonMain(title: 'Create Task', press: () => Get.back()),
+          const SizedBox(height: 15.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            child: CustomTextFormField(
+              hint: "Enter Description",
+              title: "Description",
+              // controller: controller.passwordController,
+              isPasswordField: false,
+              trailingIcon: Icon(Icons.description),
+            ),
+          ),
+          const SizedBox(height: 15.0),
+          InkWell(
+            onTap: () async => await showCupertinoModalBottomSheet(
+              context: context,
+              builder: (context) => SelectMemberFortask(),
+            ),
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(width: 1, color: Colors.grey),
+              ),
+              child: Text(
+                'Select Team Member',
+                style: TextStyle(
+                    color: Colors.grey[350]!,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14),
+              ),
+            ),
           ),
         ],
       ),
@@ -395,7 +263,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
           onTap: () => Get.back(),
           child: const Icon(Icons.arrow_back_ios, color: AppColors.textColor)),
       title: const Text(
-        'Add Task',
+        'Add new Task',
         style: TextStyle(
           color: AppColors.textColor,
           fontWeight: FontWeight.bold,
@@ -404,6 +272,227 @@ class _AddTaskScreenState extends State<AddTaskScreen>
       ),
       backgroundColor: Colors.transparent,
       elevation: 0,
+    );
+  }
+}
+
+class SelectMemberFortask extends StatefulWidget {
+  const SelectMemberFortask({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<SelectMemberFortask> createState() => _SelectMemberFortaskState();
+}
+
+class _SelectMemberFortaskState extends State<SelectMemberFortask> {
+  final GlobalKey _draggableKey = GlobalKey();
+
+  List<Item> listItem = [];
+  void _itemDroppedOnCustomerCart({
+    required Item item,
+    // required Customer customer,
+  }) {
+    setState(() {
+      listItem.add(item);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: const Icon(
+            Icons.close,
+            color: Colors.black,
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: AppColors.mainColor,
+      ),
+      backgroundColor: AppColors.mainColor,
+      body: ListView(
+        children: [
+          const SizedBox(height: 20.0),
+          // Container(
+          //   margin: const EdgeInsets.symmetric(horizontal: 15.0),
+          //   padding: const EdgeInsets.all(10.0),
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(20.0),
+          //     color: AppColors.mainColor,
+          //     boxShadow: const [
+          //       BoxShadow(color: Colors.black26, blurRadius: 5.0)
+          //     ],
+          //   ),
+          // ),
+          DragTarget<Item>(
+            builder: (context, candidateItems, rejectedItems) {
+              return (listItem.isNotEmpty)
+                  ? Container(
+                      // padding: const EdgeInsets.all(5),
+                      margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                      padding: const EdgeInsets.all(10.0),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: AppColors.mainColor,
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black26, blurRadius: 5.0)
+                        ],
+                      ),
+                      child: Wrap(
+                        children: [
+                          ...listItem.map(
+                            (e) => Container(
+                              width: 110,
+                              padding: const EdgeInsets.all(10),
+                              // height: 20,
+                              margin: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: AppColors.mainColor,
+                              ),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 80,
+                                    child: Text(
+                                      e.name,
+                                      style: const TextStyle(
+                                        color: AppColors.textColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {},
+                                      child: const Icon(
+                                        Icons.close,
+                                        color: AppColors.textColor,
+                                        size: 12,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      height: 80,
+                      padding: const EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: AppColors.mainColor,
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black26, blurRadius: 5.0)
+                        ],
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.download,
+                              color: AppColors.primaryColor,
+                            ),
+                            Text(
+                              'Drop Here',
+                              style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+            },
+            onAccept: (item) => _itemDroppedOnCustomerCart(item: item),
+          ),
+          const SizedBox(height: 10.0),
+          ..._items.map(
+            (e) => LongPressDraggable(
+              data: e,
+              dragAnchorStrategy: pointerDragAnchorStrategy,
+              feedback: DraggingListItem(
+                dragKey: _draggableKey,
+                photoProvider: AssetImage(e.image),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 40.0,
+                      height: 40.0,
+                      margin: const EdgeInsets.only(
+                          right: 10.0, top: 5.0, bottom: 5.0),
+                      decoration: BoxDecoration(
+                          color: AppColors.mainColor,
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage(
+                              e.image,
+                            ),
+                          ),
+                          boxShadow: const [
+                            BoxShadow(color: Colors.black12, blurRadius: 5.0),
+                          ]),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(e.name,
+                              style: const TextStyle(
+                                  color: AppColors.textColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.0)),
+                          Text(
+                            e.type,
+                            style: const TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12.0),
+                          )
+                        ],
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        width: 50.0,
+                        height: 25.0,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: AppColors.primaryColor,
+                        ),
+                        child: const Text(
+                          'View',
+                          style: TextStyle(
+                            color: AppColors.mainColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -511,3 +600,176 @@ class Item {
   final String image;
   String get getID => id;
 }
+
+// inputField(
+//           hintText: 'Enter your title',
+//           mainTitle: 'Title',
+//           control: controller,
+//         ),
+//         const SizedBox(height: 20),
+//         inputField(
+//           hintText: 'Enter your note',
+//           mainTitle: 'Note',
+//           control: controller,
+//         ),
+//         const SizedBox(height: 20),
+//         Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 20),
+//           child: Row(
+//             children: [
+//               Expanded(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     const Text(
+//                       'Start Date',
+//                       style: TextStyle(
+//                         color: AppColors.textColor,
+//                         fontWeight: FontWeight.bold,
+//                         fontSize: 16,
+//                       ),
+//                     ),
+//                     const SizedBox(height: 5),
+//                     Container(
+//                       padding: const EdgeInsets.all(10),
+//                       decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.circular(5),
+//                         border:
+//                             Border.all(width: 1, color: AppColors.textColor1),
+//                       ),
+//                       child: Row(
+//                         children: [
+//                           Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             children: [
+//                               Text(
+//                                 DateFormat()
+//                                     .add_MMMEd()
+//                                     .format(DateTime.now()),
+//                                 style: const TextStyle(
+//                                   color: AppColors.textColor,
+//                                   fontWeight: FontWeight.bold,
+//                                 ),
+//                               ),
+//                               Text(
+//                                 DateFormat().add_jm().format(DateTime.now()),
+//                                 style: const TextStyle(
+//                                   color: AppColors.textColor1,
+//                                   fontSize: 12,
+//                                   fontWeight: FontWeight.bold,
+//                                 ),
+//                               )
+//                             ],
+//                           ),
+//                           const Spacer(),
+//                           const Icon(Icons.timelapse_outlined,
+//                               color: AppColors.primaryColor),
+//                         ],
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//               const SizedBox(width: 5),
+//               Expanded(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     const Text(
+//                       'Due Date',
+//                       style: TextStyle(
+//                         color: AppColors.textColor,
+//                         fontWeight: FontWeight.bold,
+//                         fontSize: 16,
+//                       ),
+//                     ),
+//                     const SizedBox(height: 5),
+//                     Container(
+//                       padding: const EdgeInsets.all(10),
+//                       decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.circular(5),
+//                         border:
+//                             Border.all(width: 1, color: AppColors.textColor1),
+//                       ),
+//                       child: Row(
+//                         children: [
+//                           Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             children: [
+//                               Text(
+//                                 DateFormat()
+//                                     .add_MMMEd()
+//                                     .format(DateTime.now()),
+//                                 style: const TextStyle(
+//                                   color: AppColors.textColor,
+//                                   fontWeight: FontWeight.bold,
+//                                 ),
+//                               ),
+//                               Text(
+//                                 DateFormat().add_jm().format(DateTime.now()),
+//                                 style: const TextStyle(
+//                                   color: AppColors.textColor1,
+//                                   fontSize: 12,
+//                                   fontWeight: FontWeight.bold,
+//                                 ),
+//                               )
+//                             ],
+//                           ),
+//                           const Spacer(),
+//                           const Icon(Icons.timelapse_outlined,
+//                               color: AppColors.primaryColor),
+//                         ],
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               )
+//             ],
+//           ),
+//         ), //
+//         const SizedBox(height: 20),
+//         Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 20),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               const Text(
+//                 'Executor',
+//                 style: TextStyle(
+//                   color: AppColors.textColor,
+//                   fontWeight: FontWeight.bold,
+//                   fontSize: 16,
+//                 ),
+//               ),
+//               const SizedBox(height: 10),
+             
+//         ),
+//         const SizedBox(height: 20),
+//         SizedBox(
+//           height: 180,
+//           width: double.infinity,
+//           child: ListView(
+//             scrollDirection: Axis.horizontal,
+//             physics: const BouncingScrollPhysics(
+//               parent: AlwaysScrollableScrollPhysics(),
+//             ),
+//             children: [
+//               ..._items.map(
+//                 (e) => LongPressDraggable(
+//                   data: e,
+//                   dragAnchorStrategy: pointerDragAnchorStrategy,
+//                   feedback: DraggingListItem(
+//                     dragKey: _draggableKey,
+//                     photoProvider: AssetImage(e.image),
+//                   ),
+//                   child: ItemCard(e: e),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         const SizedBox(height: 40),
+//         Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 20),
+//           child: ButtonMain(title: 'Create Task', press: () => Get.back()),
+//         ),

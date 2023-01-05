@@ -16,7 +16,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           onTap: () => Navigator.pop(context),
           child: const Icon(
             Icons.close,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
         elevation: 0,

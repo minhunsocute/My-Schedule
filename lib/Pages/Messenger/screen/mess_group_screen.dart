@@ -86,7 +86,8 @@ class MessGroupScreen extends StatelessWidget {
           style: TextStyle(
             color: AppColors.textColor,
             fontWeight: FontWeight.bold,
-            fontSize: 17,),
+            fontSize: 17,
+          ),
         ),
         elevation: 0,
         actions: [
@@ -132,15 +133,14 @@ class MessGroupScreen extends StatelessWidget {
                       const Duration(days: 1),
                     ),
                   ),
-                  ...listMess.value.map((e) => (e['rs'] == 0)
-                      ? SendCard(
-                          title: e['title'],
-                          typeMess: e['typeMess'],
-                          time: e['date'])
-                      : ReciveCard(
-                          title: e['title'],
-                          typeMess: e['typeMess'],
-                          time: e['date'])),
+                  // ...listMess.value.map((e) => (e['rs'] == 0)
+                  //     ? SendCard(
+                  //         title: e['title'],
+                  //         typeMess: e['typeMess'],
+                  //         time: e['date'])
+                  //     : RecCard(
+                  //         title: e['title'],
+                  //         time: e['date'])),
                   const SizedBox(height: 80),
                 ],
               ),

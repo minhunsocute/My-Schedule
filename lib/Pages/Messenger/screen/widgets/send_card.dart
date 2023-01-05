@@ -1,94 +1,97 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../Templates/Misc/color.dart';
 
 class SendCard extends StatelessWidget {
   final String title;
+  final bool check;
   final int typeMess;
-  final DateTime time;
-  const SendCard({
+  final String imageMess;
+  SendCard({
     Key? key,
     required this.title,
+    required this.check,
     required this.typeMess,
-    required this.time,
+    required this.imageMess,
   }) : super(key: key);
+
+  String subString() {
+    String result = "";
+    for (int i = 0; i < title.length; i++) {
+      if (i % 30 == 0 && i != 0) {
+        result += '\n';
+      }
+      result += title[i];
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.72,
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-            decoration: const BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25),
-                topRight: Radius.circular(25),
-                bottomLeft: Radius.circular(25),
-                bottomRight: Radius.circular(2),
-              ),
+            margin: const EdgeInsets.only(right: 10.0, top: 2.5, bottom: 2.5),
+            padding: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              color: Colors.blue[600],
+              borderRadius: BorderRadius.circular(15.0),
             ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  (typeMess == 0)
-                      ? SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.72 - 90,
-                          child: Text(
-                            title,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )
-                      : Container(
-                          width: MediaQuery.of(context).size.width * 0.72 - 90,
-                          height: MediaQuery.of(context).size.width * 0.72 - 90,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                title,
-                              ),
-                            ),
-                          ),
-                        ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Icon(
-                        Icons.airplane_ticket,
-                        size: 20,
-                        color: Color.fromARGB(255, 3, 99, 177),
-                      ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        child: Text(
-                          DateFormat().add_jm().format(time),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ],
+            child: typeMess == 0
+                ? Text(
+                    subString(),
+                    style: const TextStyle(
+                      color: AppColors.mainColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12.0,
+                    ),
                   )
-                ],
-              ),
-            ),
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                        Text(
+                          subString(),
+                          style: const TextStyle(
+                              color: AppColors.mainColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12.0),
+                        ),
+                        const SizedBox(height: 10.0),
+                        Container(
+                          width: Get.width / 2,
+                          height: Get.width / 2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 5.0,
+                              ),
+                            ],
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(imageMess),
+                            ),
+                          ),
+                        ),
+                      ]),
           ),
-          const SizedBox(width: 20),
+          check
+              ? Text(
+                  '${DateFormat().add_jm().format(DateTime.now())}    ',
+                  style: const TextStyle(
+                    color: AppColors.textColor1,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10.0,
+                  ),
+                )
+              : const SizedBox(),
+          SizedBox(height: check ? 10.0 : 0)
         ],
       ),
     );
