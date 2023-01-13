@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_schedule/Pages/Profile/screen/Widgets/custom_button.dart';
+import 'package:my_schedule/Templates/fake_data.dart';
 import 'package:my_schedule/Widgets/button_custom.dart';
 
 import '../../../Templates/Misc/color.dart';
@@ -93,7 +94,10 @@ class _AddTaskScreenState extends State<AddTaskScreen>
           Obx(
             () => checkCover.value == 0
                 ? InkWell(
-                    onTap: () {},
+                    onTap: () async => await showCupertinoModalBottomSheet(
+                      context: context,
+                      builder: (context) => SelectCoverScreen(),
+                    ),
                     child: Container(
                       width: widthDevice,
                       height: widthDevice / 2.5,
@@ -107,7 +111,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                             strokeAlign: StrokeAlign.center,
                             color: Colors.grey),
                         boxShadow: const [
-                          BoxShadow(color: Colors.black26, blurRadius: 10.0)
+                          BoxShadow(color: Colors.black26, blurRadius: 5.0)
                         ],
                       ),
                       child: Center(
@@ -134,7 +138,6 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                     width: widthDevice,
                     height: widthDevice / 2.5,
                     margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                    padding: const EdgeInsets.all(15.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.0),
                       gradient: const LinearGradient(
@@ -144,15 +147,31 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                         BoxShadow(color: Colors.black26, blurRadius: 10.0)
                       ],
                     ),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.edit,
-                          color: AppColors.mainColor,
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: IconButton(
+                            onPressed: () async =>
+                                await showCupertinoModalBottomSheet(
+                              context: context,
+                              builder: (context) => SelectCoverScreen(),
+                            ),
+                            icon: const Icon(
+                              Icons.edit,
+                              color: AppColors.mainColor,
+                            ),
+                          ),
                         ),
-                      ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Image.asset(
+                            'assets/images/app_icon.png',
+                            height: 60.0,
+                            width: 60.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
           ),
@@ -198,6 +217,76 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                     fontWeight: FontWeight.w500,
                     fontSize: 14),
               ),
+            ),
+          ),
+          const SizedBox(height: 15.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: CustomTextFormField(
+              hint: "Select Start Date",
+              title: "Start Date",
+              trailingIcon: const Icon(Icons.calendar_month),
+              checkIconButton: true,
+              onTap: () {
+                print(1);
+              },
+            ),
+          ),
+          const SizedBox(height: 15.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: CustomTextFormField(
+              hint: "Select Due Date",
+              title: "Due Date",
+              trailingIcon: const Icon(Icons.calendar_month),
+              checkIconButton: true,
+              onTap: () {
+                print(1);
+              },
+            ),
+          ),
+          const SizedBox(height: 10.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Upload File',
+                  style: TextStyle(
+                    color: AppColors.textColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: const Text(
+                    'Select',
+                    style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10.0),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.all(15.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(width: 1, color: Colors.grey),
+            ),
+            child: Text(
+              'Select File',
+              style: TextStyle(
+                  color: Colors.grey[350]!,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14),
             ),
           ),
         ],
@@ -276,6 +365,100 @@ class _AddTaskScreenState extends State<AddTaskScreen>
   }
 }
 
+class SelectCoverScreen extends StatelessWidget {
+  SelectCoverScreen({
+    Key? key,
+  }) : super(key: key);
+  RxInt selectCover = 0.obs;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.mainColor,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: CustomButton(title: 'Select Cover', onPress: () {}),
+      ),
+      appBar: AppBar(
+        backgroundColor: AppColors.mainColor,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () => Get.back(),
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.textColor,
+          ),
+        ),
+        title: const Text(
+          'Select Cover',
+          style: TextStyle(
+            color: AppColors.textColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Obx(
+          () => GridView.count(
+            crossAxisCount: 3,
+            children: [
+              for (int i = 0; i < listGradinet.length + 1; i++)
+                i < listGradinet.length
+                    ? InkWell(
+                        borderRadius: BorderRadius.circular(20.0),
+                        onTap: () => selectCover.value = i,
+                        child: Container(
+                          margin: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            boxShadow: const [
+                              BoxShadow(color: Colors.black12, blurRadius: 5.0)
+                            ],
+                            borderRadius: BorderRadius.circular(20.0),
+                            gradient: listGradinet[i],
+                          ),
+                          child: selectCover.value == i
+                              ? const Align(
+                                  alignment: Alignment.topRight,
+                                  child: Icon(
+                                    Icons.check_circle,
+                                    color: AppColors.mainColor,
+                                    size: 18.0,
+                                  ),
+                                )
+                              : const SizedBox(),
+                        ),
+                      )
+                    : InkWell(
+                        borderRadius: BorderRadius.circular(20.0),
+                        onTap: () {},
+                        child: Container(
+                          margin: const EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                            color: AppColors.mainColor,
+                            boxShadow: const [
+                              BoxShadow(color: Colors.black12, blurRadius: 5.0)
+                            ],
+                            borderRadius: BorderRadius.circular(20.0),
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          child: const Center(
+                            child: Icon(Icons.add, color: Colors.grey),
+                          ),
+                        ),
+                      ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class SelectMemberFortask extends StatefulWidget {
   const SelectMemberFortask({
     Key? key,
@@ -309,24 +492,18 @@ class _SelectMemberFortaskState extends State<SelectMemberFortask> {
             color: Colors.black,
           ),
         ),
+        title: const Text('Select Member',
+            style: TextStyle(
+                color: AppColors.textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0)),
         elevation: 0,
         backgroundColor: AppColors.mainColor,
       ),
       backgroundColor: AppColors.mainColor,
       body: ListView(
         children: [
-          const SizedBox(height: 20.0),
-          // Container(
-          //   margin: const EdgeInsets.symmetric(horizontal: 15.0),
-          //   padding: const EdgeInsets.all(10.0),
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(20.0),
-          //     color: AppColors.mainColor,
-          //     boxShadow: const [
-          //       BoxShadow(color: Colors.black26, blurRadius: 5.0)
-          //     ],
-          //   ),
-          // ),
+          const SizedBox(height: 10.0),
           DragTarget<Item>(
             builder: (context, candidateItems, rejectedItems) {
               return (listItem.isNotEmpty)
@@ -433,7 +610,7 @@ class _SelectMemberFortaskState extends State<SelectMemberFortask> {
                       width: 40.0,
                       height: 40.0,
                       margin: const EdgeInsets.only(
-                          right: 10.0, top: 5.0, bottom: 5.0),
+                          right: 10.0, top: 7.0, bottom: 7.0),
                       decoration: BoxDecoration(
                           color: AppColors.mainColor,
                           shape: BoxShape.circle,
@@ -742,7 +919,7 @@ class Item {
 //                 ),
 //               ),
 //               const SizedBox(height: 10),
-             
+
 //         ),
 //         const SizedBox(height: 20),
 //         SizedBox(

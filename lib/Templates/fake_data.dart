@@ -68,6 +68,27 @@ class Data {
       required this.color});
 }
 
+List<Gradient> listGradinet = [
+  const LinearGradient(
+    colors: [Colors.yellow, Colors.purple],
+  ),
+  const LinearGradient(
+    colors: [Colors.red, Colors.blue],
+  ),
+  const LinearGradient(
+    colors: [Colors.pink, Colors.orange],
+  ),
+  const LinearGradient(
+    colors: [Colors.green, Colors.blue],
+  ),
+  const LinearGradient(
+    colors: [Colors.purple, Colors.orange],
+  ),
+  const LinearGradient(
+    colors: [Colors.yellow, Colors.red],
+  ),
+];
+
 List<Data> data = [
   Data(
       name: 'now',
