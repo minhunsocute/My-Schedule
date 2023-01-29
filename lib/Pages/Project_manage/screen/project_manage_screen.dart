@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_schedule/Pages/Profile/screen/profile_screen.dart';
 import 'package:my_schedule/Pages/Project_manage/screen/add_task_screen.dart';
+import 'package:my_schedule/Pages/Project_manage/screen/view_all_task_of_project_screen.dart';
 import 'package:my_schedule/Widgets/button_custom.dart';
 import 'package:my_schedule/Widgets/check_container.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -392,10 +393,11 @@ class ProjectManageScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 InkWell(
-                  onTap: () async => await showCupertinoModalBottomSheet(
-                    context: context,
-                    builder: (context) => BottomMytask(),
-                  ),
+                  onTap: () => Get.to(() => ViewAllTaskOfProjectScreen()),
+                  // async => await showCupertinoModalBottomSheet(
+                  //   context: context,
+                  //   builder: (context) => BottomMytask(),
+                  // ),
                   child: const Text(
                     'My Task',
                     style: TextStyle(

@@ -79,9 +79,6 @@ class CustomGradientDialog extends StatelessWidget {
                           } else {
                             listColor.removeWhere((element) => element == i);
                           }
-                          for (var item in listColor) {
-                            print(item);
-                          }
                         },
                         child: Container(
                           margin: const EdgeInsets.only(left: 10.0),
