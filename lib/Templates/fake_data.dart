@@ -89,6 +89,18 @@ List<Gradient> listGradinet = [
   ),
 ];
 
+List<Color> listColorPicker = [
+  Colors.red,
+  Colors.blue,
+  Colors.yellow,
+  Colors.green,
+  Colors.orange,
+  Colors.purple,
+  Colors.pink,
+  Colors.black,
+  Colors.white,
+];
+
 List<Data> data = [
   Data(
       name: 'now',
