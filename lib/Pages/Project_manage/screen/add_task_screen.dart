@@ -104,10 +104,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
                         color: AppColors.mainColor,
-                        border: Border.all(
-                            width: 1,
-                            strokeAlign: StrokeAlign.center,
-                            color: Colors.grey),
+                        border: Border.all(width: 1, color: Colors.grey),
                         boxShadow: const [
                           BoxShadow(color: Colors.black26, blurRadius: 5.0)
                         ],
