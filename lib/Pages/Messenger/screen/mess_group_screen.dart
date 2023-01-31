@@ -117,33 +117,31 @@ class MessGroupScreen extends StatelessWidget {
       // bottomNavigationBar:
       body: Stack(
         children: <Widget>[
-          Obx(
-            () => Container(
-              decoration: const BoxDecoration(
-                color: AppColors.mainColor,
+          Container(
+            decoration: const BoxDecoration(
+              color: AppColors.mainColor,
+            ),
+            child: ListView(
+              physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
               ),
-              child: ListView(
-                physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
-                ),
-                children: [
-                  const SizedBox(height: 20),
-                  LocateTime(
-                    date: DateTime.now().subtract(
-                      const Duration(days: 1),
-                    ),
+              children: [
+                const SizedBox(height: 20),
+                LocateTime(
+                  date: DateTime.now().subtract(
+                    const Duration(days: 1),
                   ),
-                  // ...listMess.value.map((e) => (e['rs'] == 0)
-                  //     ? SendCard(
-                  //         title: e['title'],
-                  //         typeMess: e['typeMess'],
-                  //         time: e['date'])
-                  //     : RecCard(
-                  //         title: e['title'],
-                  //         time: e['date'])),
-                  const SizedBox(height: 80),
-                ],
-              ),
+                ),
+                // ...listMess.value.map((e) => (e['rs'] == 0)
+                //     ? SendCard(
+                //         title: e['title'],
+                //         typeMess: e['typeMess'],
+                //         time: e['date'])
+                //     : RecCard(
+                //         title: e['title'],
+                //         time: e['date'])),
+                const SizedBox(height: 80),
+              ],
             ),
           ),
           _inputField()

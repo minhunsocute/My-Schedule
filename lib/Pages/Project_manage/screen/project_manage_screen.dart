@@ -20,6 +20,7 @@ import '../../Profile/screen/profile_dif_screen.dart';
 import '../../Task_project_manager/screen/task_project_screen.dart';
 import '../widgets/activiti_card.dart';
 import '../widgets/bottom_my_task.dart';
+import '../widgets/list_member_quick_view.dart';
 import '../widgets/profile_card.dart';
 
 class ProjectManageScreen extends StatelessWidget {
@@ -98,8 +99,51 @@ class ProjectManageScreen extends StatelessWidget {
           parent: AlwaysScrollableScrollPhysics(),
         ),
         children: [
+          Container(
+            width: double.infinity,
+            height: Get.height / 4.5,
+            margin: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              gradient: const LinearGradient(
+                colors: [
+                  Colors.blue,
+                  Colors.yellow,
+                ],
+              ),
+              boxShadow: const [
+                BoxShadow(color: Colors.black12, blurRadius: 5.0),
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.edit, color: Colors.white),
+                      onPressed: () {},
+                    ),
+                    ListMemberQuickView(
+                      size: 30.0,
+                      listImage: const [
+                        'assets/images/hoang.png',
+                        'assets/images/face.png',
+                        'assets/images/google.png',
+                        'assets/images/hoang.png',
+                        'assets/images/hoang.png'
+                      ],
+                      length: 3,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: Text(
               'Window Develop Project',
               style: TextStyle(
@@ -108,135 +152,27 @@ class ProjectManageScreen extends StatelessWidget {
                   fontSize: 18),
             ),
           ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 50,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Members',
-                          style: TextStyle(
-                            color: AppColors.textColor1,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          children: [
-                            for (int i = 1; i <= 3; i++)
-                              Container(
-                                width: 22,
-                                height: 22,
-                                margin: const EdgeInsets.only(
-                                  right: 5,
-                                ),
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.mainColor,
-                                  image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/images/hoang.png'),
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.black12,
-                                        blurRadius: 10.0),
-                                  ],
-                                ),
-                              ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: SizedBox(
-                    height: 50,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Start date',
-                          style: TextStyle(
-                            color: AppColors.textColor1,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/Calendar.svg',
-                              width: 16.0,
-                              height: 16.0,
-                              color: AppColors.primaryColor,
-                            ),
-                            Text(
-                              ' ${DateFormat().add_MMMEd().format(DateTime.now())}',
-                              style: const TextStyle(
-                                color: AppColors.textColor,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: SizedBox(
-                    height: 50,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Due date',
-                          style: TextStyle(
-                            color: AppColors.textColor1,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/Calendar.svg',
-                              width: 16.0,
-                              height: 16.0,
-                              color: Colors.red,
-                            ),
-                            Text(
-                              ' ${DateFormat().add_MMMEd().format(DateTime.now())}',
-                              style: const TextStyle(
-                                color: AppColors.textColor,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                )
+          Container(
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.symmetric(horizontal: 15.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: AppColors.mainColor,
+              boxShadow: const [
+                BoxShadow(color: Colors.black26, blurRadius: 10.0)
               ],
             ),
+            child: const Text(
+              'Responsive and fluid design - looks great on: desktops, tablets and mobile devices, Dashboard with differents stats, Project and task managerment (create , edit, assign, etc) Client and staff management',
+              style: TextStyle(
+                color: AppColors.textColor1,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -278,41 +214,7 @@ class ProjectManageScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Description ',
-                style: TextStyle(
-                  color: AppColors.textColor2,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.all(10),
-            margin: const EdgeInsets.symmetric(horizontal: 20.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: AppColors.mainColor,
-              boxShadow: const [
-                BoxShadow(color: Colors.black26, blurRadius: 10.0)
-              ],
-            ),
-            child: const Text(
-              'Responsive and fluid design - looks great on: desktops, tablets and mobile devices, Dashboard with differents stats, Project and task managerment (create , edit, assign, etc) Client and staff management',
-              style: TextStyle(
-                color: AppColors.textColor1,
-                fontSize: 12.0,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -399,7 +301,7 @@ class ProjectManageScreen extends StatelessWidget {
                   //   builder: (context) => BottomMytask(),
                   // ),
                   child: const Text(
-                    'My Task',
+                    'View All',
                     style: TextStyle(
                       color: AppColors.textColor1,
                       fontWeight: FontWeight.w500,
